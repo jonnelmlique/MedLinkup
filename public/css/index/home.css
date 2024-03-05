@@ -2,7 +2,7 @@
   background-image: url("https://source.unsplash.com/random");
   background-size: cover;
   background-position: center;
-  height: 40vh; 
+  height: 40vh;
   width: 155vh;
   display: flex;
   justify-content: center;
@@ -10,7 +10,7 @@
   color: white;
   text-align: center;
   padding: 0 20px;
-  margin-top: 56px; 
+  margin-top: 56px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -20,10 +20,12 @@
   margin-bottom: 20px;
   font-weight: bold;
 }
+
 .hero-section p {
   font-size: 1.2rem;
   margin-bottom: 40px;
 }
+
 .product-section {
   padding: 50px 0;
   background-color: #ffffff;
@@ -33,21 +35,43 @@
   border-radius: 8px;
   margin-bottom: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 210px;
+  margin-right: 18px;  
 }
+
 .product-card img {
   width: 100%;
   border-radius: 8px 8px 0 0;
 }
+
 .product-card-body {
-  padding: 20px;
+  padding: 15px;
 }
+
 .product-card-title {
   font-weight: bold;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
+  font-size: 16px;
+}
+.product-card-title {
+  color: #212529;
+}
+
+.product-card:hover {
+  transform: scale(1);
+  transition: transform 0.2s ease-in-out;
+  border-color: blue;
 }
 .product-card-price {
   color: #007bff;
   font-weight: bold;
+  margin-bottom: 5px;
+}
+
+
+.btn {
+  padding: 5px 10px;
+  font-size: 14px;
 }
 
 .card-product:hover {
@@ -55,10 +79,11 @@
   transition: transform 0.2s ease-in-out;
   border-color: blue;
 }
+
 .category-section {
-  margin-top: 50px; 
+  margin-top: 50px;
 }
 
 #categoryCarousel {
-  margin-top: 30px; 
+  margin-top: 30px;
 }

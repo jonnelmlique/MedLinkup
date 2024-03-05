@@ -3,6 +3,9 @@ body {
   background-color: #ffffff;
   color: #555555;
 }
+.product-card a {
+  text-decoration: none;
+}
 .navbar {
   background-color: #ffffff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);

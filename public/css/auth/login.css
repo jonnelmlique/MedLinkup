@@ -1,0 +1,77 @@
+.login-section {
+  margin-top: 50px;
+  margin-bottom: 100px;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  transition: box-shadow 0.3s;
+}
+
+.login-section:hover {
+  box-shadow: 0 8px 12px rgba(10, 32, 234, 0.2);
+}
+.login-section h1 {
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333;
+}
+
+.login-section p {
+  margin-bottom: 20px;
+  text-align: center;
+  color: #555;
+}
+
+.login-section form {
+  margin-bottom: 20px;
+}
+
+.login-section form input[type="email"],
+.login-section form input[type="password"] {
+  margin-bottom: 20px;
+  border-radius: 5px;
+  padding: 10px;
+  width: 100%;
+  border: 1px solid #ddd;
+}
+
+.login-section form button[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 15px 40px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 100%;
+}
+
+.login-section form button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.login-section .form-check {
+  margin-bottom: 20px;
+}
+
+.login-section .form-check label {
+  margin-left: 5px;
+  color: #555;
+}
+
+.login-section .forgot-password {
+  margin-bottom: 20px;
+  text-align: center;
+  color: #555;
+}
+
+.login-section .signup-link {
+  text-align: center;
+  color: #555;
+}
+
+.login-section .signup-link a {
+  color: #007bff;
+  text-decoration: none;
+}
