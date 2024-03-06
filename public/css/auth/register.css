@@ -9,7 +9,7 @@
 }
 
 .register-section:hover {
-  box-shadow: 0 8px 12px rgba(10, 32, 234, 0.2);
+  box-shadow: 0 8px 12px rgba(28, 150, 1, 0.2);
 }
 
 .register-section h1 {
@@ -40,7 +40,7 @@
 }
 
 .register-section form button[type="submit"] {
-  background-color: #007bff;
+  background-color: #4caf50;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -51,7 +51,7 @@
 }
 
 .register-section form button[type="submit"]:hover {
-  background-color: #0056b3;
+  background-color: #1c9601;
 }
 
 .register-section .form-check {
@@ -69,6 +69,6 @@
 }
 
 .register-section .signup-link a {
-  color: #007bff;
+  color: #4caf50;
   text-decoration: none;
 }

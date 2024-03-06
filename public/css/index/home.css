@@ -60,15 +60,13 @@
 .product-card:hover {
   transform: scale(1);
   transition: transform 0.2s ease-in-out;
-  border-color: blue;
+  border-color: #1c9601;
 }
 .product-card-price {
-  color: #007bff;
+  color: #5AB347;
   font-weight: bold;
   margin-bottom: 5px;
 }
-
-
 .btn {
   padding: 5px 10px;
   font-size: 14px;
@@ -77,7 +75,7 @@
 .card-product:hover {
   transform: scale(1);
   transition: transform 0.2s ease-in-out;
-  border-color: blue;
+  border-color: #1c9601;
 }
 
 .category-section {
@@ -87,3 +85,15 @@
 #categoryCarousel {
   margin-top: 30px;
 }
+.btn.btn-primary {
+  background-color: #4caf50;
+  border-color: #4caf50;
+}
+.btn.btn-primary:hover {
+  background-color: #1c9601; 
+  border-color: #1c9601;
+}
+.text-truncate {
+  color: #5AB347;
+}
+

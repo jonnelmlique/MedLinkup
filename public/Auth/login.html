@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
     <link href="/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/public/css/index/nav.css">
     <link rel="stylesheet" href="/public/css/auth/login.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 </head>
@@ -15,36 +14,45 @@
     <main>
         <section class="login-section">
             <div class="container">
-                <h1>Login to Pharmawell</h1>
-                <p>Welcome back to Pharmawell! Enter your email and password to Login.</p>
-
-                <form action="#" method="POST" class="needs-validation" novalidate>
-                    <div class="mb-3">
-                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
-                        <div class="invalid-feedback">Please enter your email.</div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="logologin text-center">
+                            <img src="/public/img/PharmawelAuthLogo.png" alt="Logo class="img-fluid">
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <input type="password" class="form-control" id="password" name="password" placeholder="Password"
-                            required>
-                        <div class="invalid-feedback">Please enter your password.</div>
-                    </div>
-                    <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" id="rememberMe">
-                        <label class="form-check-label" for="rememberMe">Remember me</label>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-block">Login</button>
-                </form>
+                    <div class="col-md-6">
+                        <h1>Login to Pharmawell</h1>
+                        <p>Welcome back to Pharmawell! Enter your email and password to Login.</p>
 
-                <div class="forgot-password text-center">
-                    <a href="#">Forgot password?</a>
-                </div>
+                        <form action="#" method="POST" class="needs-validation" novalidate>
+                            <div class="mb-3">
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+                                <div class="invalid-feedback">Please enter your email.</div>
+                            </div>
+                            <div class="mb-3">
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                                <div class="invalid-feedback">Please enter your password.</div>
+                            </div>
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="rememberMe">
+                                <label class="form-check-label" for="rememberMe">Remember me</label>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Login</button>
+                        </form>
 
-                <div class="signup-link text-center">
-                    Don’t have an account? <a href="/public/Auth/register.html">Register</a>
+                        <div class="forgot-password text-center">
+                            <a href="#">Forgot password?</a>
+                        </div>
+
+                        <div class="signup-link text-center">
+                            Don’t have an account? <a href="/public/Auth/register.html">Register</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
+
 
 
 
