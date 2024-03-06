@@ -1,4 +1,4 @@
-fetch('/navbarindex.html')
+fetch('/public/Shared/Layout/navbarindex.html')
 .then(response => response.text())
 .then(data => {
     document.querySelector('body').insertAdjacentHTML('afterbegin', data);
