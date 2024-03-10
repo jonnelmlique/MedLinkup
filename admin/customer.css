@@ -1,0 +1,66 @@
+main {
+    margin-left: 280px;
+    padding: 20px;
+    display: block;
+}
+
+#customer {
+    padding: 20px;
+}
+
+#customer h2 {
+    margin-bottom: 20px;
+}
+
+.customer-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    list-style: none;
+    padding: 0;
+}
+
+.customer-item {
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.customer-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.customer-info img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.customer-details {
+    flex: 1;
+}
+
+.customer-name {
+    font-weight: bold;
+}
+
+.customer-email {
+    color: #666;
+}
+
+.customer-actions {
+    margin-top: 10px;
+}
+
+.customer-actions a {
+    color: blue;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+.customer-actions a:hover {
+    text-decoration: underline;
+}
