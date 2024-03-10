@@ -4,11 +4,12 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
+    <title>Register</title>
     <link href="/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/public/css/index/nav.css">
-    <link rel="stylesheet" href="/public/css/auth/login.css">
+    <link rel="stylesheet" href="/public/css/auth/register.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+   
 </head>
 
 <body>
@@ -45,19 +46,37 @@
         </div>
         </nav>
     <main>
-        <section class="login-section">
+        <section class="register-section">
             <div class="container">
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="logologin text-center">
-                            <img src="/public/img/PharmawelAuthLogo.png" alt="Logo class="img-fluid">
+                        <div class="logoregister text-center">
+                            <img src="/public/img/PharmawelAuthLogo.png" alt="Logo" class="img-fluid">
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <h1>Login to Pharmawell</h1>
-                        <p>Welcome back to Pharmawell! Enter your email and password to Login.</p>
-
+                        <h1>Register to Pharmawell</h1>
+                        <p>Create your account to get started with Pharmawell.</p>
+    
                         <form action="#" method="POST" class="needs-validation" novalidate>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First Name" required>
+                                        <div class="invalid-feedback">Please enter your first name.</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last Name" required>
+                                        <div class="invalid-feedback">Please enter your last name.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <input type="tel" class="form-control" id="contactNo" name="contactNo" placeholder="Contact Number" required>
+                                <div class="invalid-feedback">Please enter your contact number.</div>
+                            </div>
                             <div class="mb-3">
                                 <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
                                 <div class="invalid-feedback">Please enter your email.</div>
@@ -66,34 +85,42 @@
                                 <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
                                 <div class="invalid-feedback">Please enter your password.</div>
                             </div>
-                            <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" id="rememberMe">
-                                <label class="form-check-label" for="rememberMe">Remember me</label>
+                            <div class="mb-3">
+                                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
+                                <div class="invalid-feedback">Please confirm your password.</div>
                             </div>
-                            <button type="submit" class="btn btn-primary btn-block">Login</button>
+                            <button type="submit" class="btn btn-primary btn-block">Register</button>
                         </form>
-
-                        <div class="forgot-password text-center">
-                            <a href="#">Forgot password?</a>
-                        </div>
-
+    
                         <div class="signup-link text-center">
-                            Don’t have an account? <a href="/public/Auth/register.html">Register</a>
+                            Already have an account? <a href="/auth/login.html">Login</a>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
     </main>
-
+    <section class="design-element">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h3>Our Mission</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec dictum nunc. Nullam vitae
+                        ligula sed nisi sagittis facilisis vitae nec velit. Integer scelerisque magna sit amet dui
+                        suscipit, sed aliquam nunc scelerisque.</p>
+                </div>
+            </div>
+        </div>
+    </section>
     <footer>
         <div class="container">
             <p>
                 &copy; 2024 Pharmawell. All rights reserved. |
-                <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+                <a href="/privacypolicy.html">Privacy Policy</a> | <a href="#">Terms of Service</a>
             </p>
         </div>
-    </footer> 
+    </footer>   
+
 
 
     <!-- node -->
@@ -102,7 +129,8 @@
     <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-   
+
+    
 </body>
 
 </html>

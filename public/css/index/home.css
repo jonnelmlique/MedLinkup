@@ -30,13 +30,14 @@
   padding: 50px 0;
   background-color: #ffffff;
 }
+
 .product-card {
   border: 1px solid #dee2e6;
   border-radius: 8px;
   margin-bottom: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 210px;
-  margin-right: 18px;  
+  margin-right: 18px;
 }
 
 .product-card img {
@@ -53,6 +54,7 @@
   margin-bottom: 5px;
   font-size: 16px;
 }
+
 .product-card-title {
   color: #212529;
 }
@@ -62,11 +64,13 @@
   transition: transform 0.2s ease-in-out;
   border-color: #1c9601;
 }
+
 .product-card-price {
   color: #5AB347;
   font-weight: bold;
   margin-bottom: 5px;
 }
+
 .btn {
   padding: 5px 10px;
   font-size: 14px;
@@ -85,15 +89,16 @@
 #categoryCarousel {
   margin-top: 30px;
 }
+
 .btn.btn-primary {
   background-color: #4caf50;
   border-color: #4caf50;
 }
 .btn.btn-primary:hover {
-  background-color: #1c9601; 
+  background-color: #1c9601;
   border-color: #1c9601;
 }
+
 .text-truncate {
   color: #5AB347;
 }
-
