@@ -12,7 +12,38 @@
 </head>
 
 <body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand" href="/index.html">
+                <img src="/public/img/logo.png" alt="Pharmawell Logo" class="logo"> Pharmawell
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contact.html">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/shop.html">Shop</a>
+                    </li>
+                </ul>
+                <div class="navbar-icons d-flex align-items-center">
+                    <a href="/public/Auth/login.html" class="nav-link"><i class="fas fa-user"></i> Login </a>
+                    <a href="#" class="nav-link"><i class="fas fa-shopping-cart"></i> Cart </a>
+                </div>
+            </div>
+        </div>
+        </nav>
 
     <div class="container product-details">
         <div class="row">
@@ -112,7 +143,14 @@
             </div>
         </div>
     </div>
-
+    <footer>
+        <div class="container">
+            <p>
+                &copy; 2024 Pharmawell. All rights reserved. |
+                <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+            </p>
+        </div>
+    </footer> 
 
     <!-- node -->
     <script src="./node_modules/jquery/dist/jquery.min.js"></script>
@@ -122,10 +160,7 @@
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 
     <script src="./public/js/index/productcart.js"></script>
-    <!-- Navbar -->
-    <script src="/public/js/index/navbarindex.js"></script>
-    <!-- footer -->
-    <script src="/public/js/index/footerindex.js"></script>
+
 
 
 </body>
