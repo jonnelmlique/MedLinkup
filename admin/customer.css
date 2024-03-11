@@ -4,63 +4,82 @@ main {
     display: block;
 }
 
-#customer {
-    padding: 20px;
+.table-data {
+    display: flex;
+    justify-content: space-between;
 }
 
-#customer h2 {
+.order{
+    width: 100%;
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.order .head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 20px;
 }
 
-.customer-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
-    list-style: none;
-    padding: 0;
+.order .head h3 {
+    font-size: 20px;
 }
 
-.customer-item {
-    border: 1px solid #ccc;
-    padding: 20px;
-    border-radius: 5px;
+.order .head .bx{
+    font-size: 24px;
+    cursor: pointer;
 }
 
-.customer-info {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
+table {
+    width: 100%;
+    border-collapse: collapse;
 }
 
-.customer-info img {
-    width: 50px;
-    height: 50px;
+table th,
+table td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+table th {
+    text-align: left;
+    background-color: #f4f4f4;
+}
+
+.order tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.order tbody tr:hover {
+    background-color: #ddd;
+}
+
+.order tbody td img {
+    width: 30px;
     border-radius: 50%;
     margin-right: 10px;
 }
 
-.customer-details {
-    flex: 1;
-}
-
-.customer-name {
+.status {
+    padding: 5px 10px;
+    border-radius: 5px;
     font-weight: bold;
 }
 
-.customer-email {
-    color: #666;
+.status.completed {
+    background-color: #28a745;
+    color: #fff;
 }
 
-.customer-actions {
-    margin-top: 10px;
+.status.pending {
+    background-color: #ffc107;
+    color: #333;
 }
 
-.customer-actions a {
-    color: blue;
-    text-decoration: none;
-    margin-right: 10px;
-}
-
-.customer-actions a:hover {
-    text-decoration: underline;
+.status.process {
+    background-color: #007bff;
+    color: #fff;
 }
