@@ -1,5 +1,4 @@
 .hero-section {
-  background-image: url("https://source.unsplash.com/random");
   background-size: cover;
   background-position: center;
   height: 40vh;
@@ -13,7 +12,17 @@
   margin-top: 56px;
   margin-left: auto;
   margin-right: auto;
+  animation: changeBackground 10s infinite;
 }
+
+@keyframes changeBackground {
+  0% { background-image: url("/public/img/HeroSection/HeroSectionC1.jpg"); }
+  25% { background-image: url("/public/img/HeroSection/HeroSectionC1.jpg"); }
+  50% { background-image: url("/public/img/HeroSection/HeroSectionC1.jpg"); }
+  75% { background-image: url("/public/img/HeroSection/HeroSectionC1.jpg"); }
+  100% { background-image: url("/public/img/HeroSection/HeroSectionC1.jpg"); }
+}
+
 
 .hero-section h1 {
   font-size: 2rem;
