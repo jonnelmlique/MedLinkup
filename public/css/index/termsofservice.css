@@ -1,0 +1,22 @@
+.terms-of-service-section {
+    margin-top: 50px;
+    margin-bottom: 100px;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    transition: box-shadow 0.3s;
+}
+.terms-of-service-sectionhover {
+box-shadow: 0 8px 12px rgba(28, 150, 1, 0.2);
+}
+
+.terms-of-service-section h1 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.terms-of-service-section p {
+    color: #555;
+    line-height: 1.6;
+}
