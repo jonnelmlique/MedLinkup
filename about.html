@@ -7,73 +7,75 @@
     <title>About Us</title>
     <link href="./node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./public/css/index/nav.css">
+    <link rel="stylesheet" href="./public/css/index/about.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-    <style>
-        .about-section {
-            padding: 80px 0;
-        }
-
-        .about-section h2 {
-            font-size: 36px;
-            color: #333;
-            margin-bottom: 30px;
-        }
-
-        .about-section p {
-            font-size: 18px;
-            line-height: 1.6;
-            margin-bottom: 30px;
-        }
-
-        .about-section img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-        }
-
-       
-
-        /* Design Element */
-        .design-element {
-            background-color: #f9f9f9;
-            padding: 40px 20px;
-            border-radius: 8px;
-            margin-top: 40px;
-        }
-
-        .design-element h3 {
-            font-size: 24px;
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        .design-element p {
-            font-size: 16px;
-            color: #555;
-        }
-
-        /* Media Query for smaller screens */
-        @media (max-width: 768px) {
-            .about-section {
-                padding: 60px 0;
-            }
-
-            .about-section h2 {
-                font-size: 28px;
-            }
-
-            .about-section p {
-                font-size: 16px;
-            }
-        }
-    </style>
+ 
 </head>
 
 <body>
-    
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand" href="/index.html">
+                <img src="/public/img/logo.png" alt="Pharmawell Logo" class="logo"> Pharmawell
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contact.html">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/shop.html">Shop</a>
+                    </li>
+                </ul>
+                <div class="navbar-icons d-flex align-items-center">
+                    <a href="/auth/login.html" class="nav-link"><i class="fas fa-user"></i> Login </a>
+                    <a href="#" class="nav-link"><i class="fas fa-shopping-cart"></i> Cart </a>
+                </div>
+            </div>
+        </div>
+        </nav>
+
+        <div class="container about-us">
+            <section class="about-section">
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>About Pharmawell</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec dictum nunc. Nullam vitae
+                        ligula sed nisi sagittis facilisis vitae nec velit. Integer scelerisque magna sit amet dui
+                        suscipit, sed aliquam nunc scelerisque. </p>
+                    <p>Mauris vel tortor vel nunc tincidunt tristique. Nullam accumsan neque id suscipit mattis.
+                        Quisque ullamcorper euismod velit, eu laoreet turpis faucibus eget. Duis posuere, felis a
+                        gravida vulputate, justo ex aliquam justo, nec venenatis orci ex et lorem.</p>
+                </div>
+                <div class="col-md-6">
+                    <img src="https://via.placeholder.com/600x370" alt="About Us Image 1" class="img-fluid">
+                </div>
+                <div class="col-md-6">
+                    <img src="https://via.placeholder.com/600x300" alt="About Us Image 1" class="img-fluid">
+                </div>
+                <div class="col-md-6">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec dictum nunc. Nullam vitae
+                        ligula sed nisi sagittis facilisis vitae nec velit. Integer scelerisque magna sit amet dui
+                        suscipit, sed aliquam nunc scelerisque. </p>
+                    <p>Mauris vel tortor vel nunc tincidunt tristique. Nullam accumsan neque id suscipit mattis.
+                        Quisque ullamcorper euismod velit, eu laoreet turpis faucibus eget. Duis posuere, felis a
+                        gravida vulputate, justo ex aliquam justo, nec venenatis orci ex et lorem.</p>
+                </div>
+            </div>
+        </div></section>
     <!-- About Section -->
-    <section class="about-section">
+   <!-- <section class="about-section">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
@@ -86,13 +88,12 @@
                         gravida vulputate, justo ex aliquam justo, nec venenatis orci ex et lorem.</p>
                 </div>
                 <div class="col-md-6">
-                    <img src="https://via.placeholder.com/400x300" alt="About Us Image 1" class="img-fluid">
+                    <img src="https://via.placeholder.com/600x370" alt="About Us Image 1" class="img-fluid">
                 </div>
                 <div class="col-md-6">
-                    <img src="https://via.placeholder.com/400x300" alt="About Us Image 1" class="img-fluid">
+                    <img src="https://via.placeholder.com/600x300" alt="About Us Image 1" class="img-fluid">
                 </div>
                 <div class="col-md-6">
-                    <h2>About Pharmawell</h2>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec dictum nunc. Nullam vitae
                         ligula sed nisi sagittis facilisis vitae nec velit. Integer scelerisque magna sit amet dui
                         suscipit, sed aliquam nunc scelerisque. </p>
@@ -102,7 +103,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section>-->
 
     <!-- Design Element -->
     <section class="design-element">
@@ -117,17 +118,21 @@
             </div>
         </div>
     </section>
-
+    <footer>
+        <div class="container">
+            <p>
+                &copy; 2024 Pharmawell. All rights reserved. |
+                <a href="/privacypolicy.html">Privacy Policy</a> | <a href="/termsofservice.html">Terms of Service</a>
+            </p>
+        </div>
+    </footer> 
     <!-- JavaScript imports -->
     <script src="./node_modules/jquery/dist/jquery.min.js"></script>
     <script src="./node_modules/popper.js/dist/umd/popper.min.js"></script>
     <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-    <!-- Navbar script -->
-    <script src="/public/js/index/navbarindex.js"></script>
-    <!-- Footer script -->
-    <script src="/public/js/index/footerindex.js"></script>
+
 </body>
 
 </html>

@@ -12,6 +12,38 @@
 </head>
 
 <body>   
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand" href="/index.html">
+                <img src="/public/img/logo.png" alt="Pharmawell Logo" class="logo"> Pharmawell
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contact.html">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/shop.html">Shop</a>
+                    </li>
+                </ul>
+                <div class="navbar-icons d-flex align-items-center">
+                    <a href="/auth/login.html" class="nav-link"><i class="fas fa-user"></i> Login </a>
+                    <a href="#" class="nav-link"><i class="fas fa-shopping-cart"></i> Cart </a>
+                </div>
+            </div>
+        </div>
+        </nav>
     <div class="row">
     <div class="col-md-3">
         <div class="filter-section">
@@ -260,17 +292,34 @@
         </div>
     </div>
     </div>
-
+</div>
+<section class="design-element">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h3>Our Mission</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec dictum nunc. Nullam vitae
+                    ligula sed nisi sagittis facilisis vitae nec velit. Integer scelerisque magna sit amet dui
+                    suscipit, sed aliquam nunc scelerisque.</p>
+            </div>
+        </div>
+    </div>
+</section>
+    <footer>
+        <div class="container">
+            <p>
+                &copy; 2024 Pharmawell. All rights reserved. |
+                <a href="/privacypolicy.html">Privacy Policy</a> | <a href="/termsofservice.html">Terms of Service</a>
+            </p>
+        </div>
+    </footer> 
     <!-- node -->
     <script src="./node_modules/jquery/dist/jquery.min.js"></script>
     <script src="./node_modules/popper.js/dist/umd/popper.min.js"></script>
     <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-    <!-- Navbar -->
-    <script src="/public/js/index/navbarindex.js"></script>
-    <!-- footer -->
-    <script src="/public/js/index/footerindex.js"></script>
+
 </body>
 
 </html>

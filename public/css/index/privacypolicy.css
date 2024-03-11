@@ -1,0 +1,22 @@
+.privacy-policy-section {
+    margin-top: 50px;
+    margin-bottom: 100px;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    transition: box-shadow 0.3s;
+}
+.privacy-policy-section:hover {
+box-shadow: 0 8px 12px rgba(28, 150, 1, 0.2);
+}
+
+.privacy-policy-section h1 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.privacy-policy-section p {
+    color: #555;
+    line-height: 1.6;
+}
