@@ -57,29 +57,7 @@ table th {
     background-color: #ddd;
 }
 
-.order tbody td img {
-    width: 30px;
-    border-radius: 50%;
-    margin-right: 10px;
-}
 
-.status {
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-weight: bold;
-}
 
-.status.completed {
-    background-color: #28a745;
-    color: #fff;
-}
 
-.status.pending {
-    background-color: #ffc107;
-    color: #333;
-}
 
-.status.process {
-    background-color: #007bff;
-    color: #fff;
-}
