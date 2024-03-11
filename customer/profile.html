@@ -6,6 +6,7 @@
         <title>Customer</title>
         <link href="./node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
             <link rel="stylesheet" href="sidebar.css">
+            <link rel="stylesheet" href="profile.css">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
         
      </head>
@@ -13,7 +14,7 @@
     <body>
         <section id="sidebar">
             <a href="dashboard.html" class="brand">
-                <i class='fas fa-pills' ></i>
+                <img src="logo.png">
                 <span class="text"> Pharmawell</span>
             </a>
             <ul class="side-menu top">
@@ -74,12 +75,48 @@
             <nav>
                 <i class='fa-pills' ></i>
                 <a href="admin.html" class="nav-link">Pharmawell</a>
-                <a href="#" class="profile">
-                    <img src="C:\Users\admin\source\repos\IPT-MOVIES-ACT2\Pharmawell\admin\pics\picture1.jpg">
+                <a href="profile.html" class="profile">
+                    <img src="https://i.pinimg.com/originals/f1/0f/f7/f10ff70a7155e5ab666bcdd1b45b726d.jpg">
                 </a>
             </nav>
             </section>
-
+            
+            <section id="profile">
+                <main>
+                <h2>Profile</h2>
+                <div class="profile-details">
+                    <div class="profile-image">
+                        <img src="https://i.pinimg.com/originals/f1/0f/f7/f10ff70a7155e5ab666bcdd1b45b726d.jpg" alt="Profile Picture">
+                    </div>
+                    <div class="profile-info">
+                        <p><strong>Name:</strong> John Doe</p>
+                        <p><strong>Email:</strong> johndoe@example.com</p>
+                        <p><strong>Phone:</strong> +1234567890</p>
+                        <p><strong>Address:</strong> 123 Main Street, Anytown, Countryland</p>
+                    </div>
+                </div>
+                <button class="edit-profile-btn">Edit Profile</button>
+            </section>
+    
+            <section id="edit-profile" style="display: none;">
+                <h2>Edit Profile</h2>
+                <form id="edit-profile-form">
+                    <div class="form-group">
+                        <label for="edit-name">Name:</label>
+                        <input type="text" id="edit-name" name="edit-name" value="John Doe" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-email">Email:</label>
+                        <input type="email" id="edit-email" name="edit-email" value="johndoe@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-phone">Phone:</label>
+                        <input type="tel" id="edit-phone" name="edit-phone" value="+1234567890" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-address">Address:</label>
+                    </main>
+                    </section>
         <!-- node -->
     <script src="./node_modules/jquery/dist/jquery.min.js"></script>
     <script src="./node_modules/popper.js/dist/umd/popper.min.js"></script>

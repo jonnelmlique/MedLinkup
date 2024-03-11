@@ -6,6 +6,7 @@
         <title>Customer</title>
         <link href="./node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
             <link rel="stylesheet" href="sidebar.css">
+            <link rel="stylesheet" href="delivery.css">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
         
      </head>
@@ -13,7 +14,7 @@
     <body>
         <section id="sidebar">
             <a href="dashboard.html" class="brand">
-                <i class='fas fa-pills' ></i>
+                <img src="logo.png">
                 <span class="text"> Pharmawell</span>
             </a>
             <ul class="side-menu top">
@@ -74,17 +75,61 @@
             <nav>
                 <i class='fa-pills' ></i>
                 <a href="admin.html" class="nav-link">Pharmawell</a>
-                <a href="#" class="profile">
-                    <img src="C:\Users\admin\source\repos\IPT-MOVIES-ACT2\Pharmawell\admin\pics\picture1.jpg">
+                <a href="profile.html" class="profile">
+                    <img src="https://i.pinimg.com/originals/f1/0f/f7/f10ff70a7155e5ab666bcdd1b45b726d.jpg">
                 </a>
             </nav>
-            </section>
+        </section>
+        
+        <section id="delivery-address">
+            <main>
+                <h2>Delivery Address</h2>
+                <div id="existing-address">
+                    <h3>Existing Address</h3>
+                    <p><strong>Recipient Name:</strong> John Doe</p>
+                    <p><strong>Delivery Address:</strong> 123 Main Street</p>
+                    <p><strong>City:</strong> Anytown</p>
+                    <p><strong>Country:</strong> Countryland</p>
+                </div>
+                <div class="edit-container">
+                    <button class="edit" onclick="showEditForm()">Edit</button>
+                </div>
+            </main>
+        </section>
+        
+        <section id="edit-address" style="display: none;">
+            <main>
+                <h2>Edit Delivery Address</h2>
+                <form id="edit-address-form">
+                    <div class="form-group">
+                        <label for="recipient-name">Recipient Name:</label>
+                        <input type="text" id="recipient-name" name="recipient-name" value="John Doe" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="delivery-address">Delivery Address:</label>
+                        <textarea id="delivery-address" name="delivery-address" rows="4" required>123 Main Street</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="city">City:</label>
+                        <input type="text" id="city" name="city" value="Anytown" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="country">Country:</label>
+                        <input type="text" id="country" name="country" value="Countryland" required>
+                    </div>
+                    <button type="submit">Submit</button>
+                    <button type="button" onclick="hideEditForm()">Cancel</button>
+                </form>
+            </main>
+        </section>
+          
 
         <!-- node -->
     <script src="./node_modules/jquery/dist/jquery.min.js"></script>
     <script src="./node_modules/popper.js/dist/umd/popper.min.js"></script>
     <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="./node_modules/bootstrap/js/src/sidebar.js"></script>
+    <script src="editform.js"></script>
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
         

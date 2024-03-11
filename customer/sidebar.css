@@ -26,7 +26,11 @@ body {
     margin-bottom: 20px;
     padding: 30px;
 }
-
+.brand img {
+    max-width: 90%;
+    height: auto;
+    margin-bottom: 5px; 
+}
 .brand i {
     margin-right: 10px;
 }
@@ -54,11 +58,11 @@ body {
 	color: #d92222;
 }
 .side-menu a:hover {
-    background-color: #007bff;
+    background-color: #1c9601;
 }
 
 .active a {
-    background-color: #007bff;
+    background-color: #1c9601;
 }
 
 .text {
