@@ -2,10 +2,22 @@ body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    background-color: #f8f9fa; 
-    color: #343a40; 
+    background-color: #ffffff; 
+    color: #555555; 
 }
 
+.box-info li a {
+    text-decoration: none;
+}
+
+.box-info li a:hover {
+    text-decoration: none; 
+}
+
+.box-info li h3,
+.box-info li p {
+    text-decoration: none; 
+}
 #sidebar {
     width: 240px;
     background-color: #f0f3f2;
@@ -26,13 +38,22 @@ body {
     margin-bottom: 20px;
     padding: 30px;
 }
-.brand img {
-    max-width: 90%;
-    height: auto;
-    margin-bottom: 5px; 
-}
+
 .brand i {
     margin-right: 10px;
+}
+
+.box-info li a {
+    text-decoration: none;
+}
+
+.box-info li a:hover {
+    text-decoration: none; 
+}
+
+.box-info li h3,
+.box-info li p {
+    text-decoration: none; 
 }
 
 .side-menu {
@@ -58,11 +79,11 @@ body {
 	color: #d92222;
 }
 .side-menu a:hover {
-    background-color: #1c9601;
+    background-color: rgba(51, 169, 25, 0.767);
 }
 
 .active a {
-    background-color: #1c9601;
+    background-color: #7acb68;
 }
 
 .text {
@@ -95,4 +116,15 @@ nav .profile img {
     border-radius: 50%;
     object-fit: cover;
 }
-
+.logo {
+    width: 50px; 
+    height: auto; 
+    margin-left: 50px;
+}
+.submenu {
+    display: none; 
+  }
+  .side-menu li:hover .submenu {
+    display: block;
+  }
+  

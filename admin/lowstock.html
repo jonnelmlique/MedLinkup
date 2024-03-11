@@ -4,16 +4,16 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Products</title>
+    <title>Add Product</title>
     <link rel="stylesheet" href="/public/css/admin/sidebar.css">
-    <link rel="stylesheet" href="/public/css/admin/products.css">
-
+    <link rel="stylesheet" href="/public/css/admin/lowstock.css">
     <link href="./node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-  
+   
 </head>
 
 <body>
+
     <section id="sidebar">
         <a href="/supplier/dashboard.html" class="brand">
             <img src="/public/img/logo.png" alt="Pharmawell Logo" class="logo">
@@ -32,8 +32,8 @@
                     <span class="text">Inventory</span>
                 </a>
                 <ul class="submenu">
-                    <li class="active"><a href="/admin/products.html">Products</a></li>
-                    <li><a href="/admin/lowstock.html">Low Stock</a></li>
+                    <li><a href="/admin/products.html">Products</a></li>
+                    <li class="active"><a href="/admin/lowstock.html">Low Stock</a></li>
                 </ul>
             </li>
             <li>
@@ -43,7 +43,7 @@
                 </a>
                 <ul class="submenu">
                     <li><a href="/admin/pending.html">Pending</a></li>
-                    <li><a href="/admin/completed.html">Completed</a></li>
+                    <li class="active"><a href="/admin/completed.html">Completed</a></li>
                 </ul>
             </li>
             <li>
@@ -99,9 +99,9 @@
     <section id="medicine-list">
         <main>
             <div class="search-bar">
-                <div class="add-button">
-                    <a href="/admin/addproducts.html" class="btn-link"> 
-                        <button>Add</button>
+                <div class="print">
+                    <a href="#" class="btn-link"> 
+                        <button>Print</button>
                     </a>
                 </div>
                 
@@ -109,14 +109,13 @@
                 <button><i class="fas fa-search"></i></button>
             </div>
 
-            <h2>Medicine List</h2>
+            <h2>Low Stock Medicine List</h2>
             <table class="table">
                 <thead>
                     <tr>
                         <th>Image</th>
                         <th>Name</th>
                         <th>Price</th>
-                        <th>Details</th>
                         <th>Category</th>
                         <th>Stock</th>
                         <th>Action</th> <!-- New column for actions -->
@@ -127,9 +126,8 @@
                         <td><img src="https://via.placeholder.com/100x100" alt="Medicine Image"></td>
                         <td>Sample</td>
                         <td class="price">&#8369;7.49</td>
-                        <td>Lorem ipsum dolor sit amet consectetur adipisicing elit lorem ipsum. </td>
                         <td>Sample</td>
-                        <td>100</td>
+                        <td>1</td>
                         <td class="actions">
                             <button class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></button>
                             <button class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button>
@@ -140,9 +138,8 @@
                         <td><img src="https://via.placeholder.com/100x100" alt="Medicine Image"></td>
                         <td>Antibiotics</td>
                         <td class="price">&#8369;7.49</td>
-                        <td>Lorem ipsum dolor sit amet consectetur adipisicing elit lorem ipsum. </td>
                         <td>Sample</td>
-                        <td>100</td>
+                        <td>10</td>
                         <td class="actions">
                             <button class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></button>
                             <button class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button>
@@ -158,8 +155,23 @@
     <script src="./node_modules/jquery/dist/jquery.min.js"></script>
     <script src="./node_modules/popper.js/dist/umd/popper.min.js"></script>
     <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Font Awesome -->
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+    <script>
+        function previewImage(event) {
+            var preview = document.getElementById('preview-image');
+            var file = event.target.files[0];
+            var reader = new FileReader();
+
+            reader.onloadend = function () {
+                preview.style.display = 'block';
+                preview.querySelector('img').src = reader.result;
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
 </body>
 
 </html>

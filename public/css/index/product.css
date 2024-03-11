@@ -68,3 +68,6 @@
     margin-bottom: 5px;
   }
   
+  .product-card a.product-card-link {
+    text-decoration: none;
+}

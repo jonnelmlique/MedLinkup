@@ -1,0 +1,98 @@
+main {
+    margin-left: 280px;
+    padding: 20px;
+    display: block;
+}
+
+#medicine-list {
+    padding: 20px;
+}
+
+#medicine-list h2 {
+    margin-bottom: 20px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th,
+.table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.table th {
+    font-weight: bold;
+    background-color: #f8f9fa;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+.price {
+    color: #007bff;
+}
+
+.actions {
+    white-space: nowrap;
+}
+
+/* Search Bar Styles */
+.search-bar {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.search-bar input[type="text"] {
+    width: 200px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+}
+
+.search-bar button {
+    padding: 8px 15px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.3s; 
+}
+.search-bar button:hover{
+    background-color: #1c9601;
+
+}
+.print {
+    margin-bottom: 20px;
+    margin-right: auto;
+}
+
+.print button {
+    padding: 8px 15px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.3s; 
+}
+
+.print button:hover {
+    background-color: #1c9601;
+}
+
+
+@media (max-width: 768px) {
+    main {
+        margin-left: 0;
+    }
+}
