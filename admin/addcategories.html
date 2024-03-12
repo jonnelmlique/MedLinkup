@@ -4,16 +4,16 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Products</title>
+    <title>Add Categories</title>
     <link rel="stylesheet" href="/public/css/admin/sidebar.css">
-    <link rel="stylesheet" href="/public/css/admin/products.css">
-
+    <link rel="stylesheet" href="/public/css/admin/addcategories.css">
     <link href="./node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-  
+   
 </head>
 
 <body>
+
     <section id="sidebar">
         <a href="/supplier/dashboard.html" class="brand">
             <img src="/public/img/logo.png" alt="Pharmawell Logo" class="logo">
@@ -32,10 +32,9 @@
                     <span class="text">Inventory</span>
                 </a>
                 <ul class="submenu">
-                    <li class="active"><a href="/admin/products.html">Products</a></li>
+                    <li><a href="/admin/products.html">Products</a></li>
                     <li><a href="/admin/lowstock.html">Low Stock</a></li>
                     <li><a href="/admin/categories.html">Categories</a></li>
-
                 </ul>
             </li>
             <li>
@@ -98,70 +97,37 @@
     </nav>
     </section>
 
-    <section id="medicine-list">
-        <main>
-            <div class="search-bar">
-                <div class="add-button">
-                    <a href="/admin/addproducts.html" class="btn-link"> 
-                        <button>Add</button>
-                    </a>
-                </div>
-                
-                <input type="text" placeholder="Search...">
-                <button><i class="fas fa-search"></i></button>
-            </div>
 
-            <h2>Medicine List</h2>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Image</th>
-                        <th>Name</th>
-                        <th>Price</th>
-                        <th>Details</th>
-                        <th>Category</th>
-                        <th>Stock</th>
-                        <th>Action</th> <!-- New column for actions -->
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><img src="https://via.placeholder.com/100x100" alt="Medicine Image"></td>
-                        <td>Sample</td>
-                        <td class="price">&#8369;7.49</td>
-                        <td>Lorem ipsum dolor sit amet consectetur adipisicing elit lorem ipsum. </td>
-                        <td>Sample</td>
-                        <td>100</td>
-                        <td class="actions">
-                            <button class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></button>
-                            <button class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button>
-                        </td>
-                    </tr>
-                    <!-- Add more table rows as needed -->
-                    <tr>
-                        <td><img src="https://via.placeholder.com/100x100" alt="Medicine Image"></td>
-                        <td>Antibiotics</td>
-                        <td class="price">&#8369;7.49</td>
-                        <td>Lorem ipsum dolor sit amet consectetur adipisicing elit lorem ipsum. </td>
-                        <td>Sample</td>
-                        <td>100</td>
-                        <td class="actions">
-                            <button class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></button>
-                            <button class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button>
-                        </td>
-                    </tr>
-                    <!-- Add more table rows as needed -->
-                </tbody>
-            </table>
-        </main>
-    </section>
+    <main>
+        <div class="head-title">
+            <div class="left">
+                <h1>Add Category</h1>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="add-product-section">
+                     
+                        <div id="form-container">
+                            <form action="#" method="POST" class="needs-validation" novalidate>
+                                <div class="mb-3">
+                                    <label for="categoryname">Category Name</label>
+                                    <input type="text" class="form-control" id="categoryname" name="categoryname" placeholder="Category Name" required>
+                                </div>                       
+                                <button type="submit" class="btn btn-submit">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 
     <!-- node -->
     <script src="./node_modules/jquery/dist/jquery.min.js"></script>
     <script src="./node_modules/popper.js/dist/umd/popper.min.js"></script>
     <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Font Awesome -->
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 </body>
 
 </html>

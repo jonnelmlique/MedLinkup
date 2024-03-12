@@ -4,13 +4,11 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Products</title>
+    <title>Categories</title>
     <link rel="stylesheet" href="/public/css/admin/sidebar.css">
-    <link rel="stylesheet" href="/public/css/admin/products.css">
-
+    <link rel="stylesheet" href="/public/css/admin/categories.css">
     <link href="./node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-  
 </head>
 
 <body>
@@ -32,9 +30,9 @@
                     <span class="text">Inventory</span>
                 </a>
                 <ul class="submenu">
-                    <li class="active"><a href="/admin/products.html">Products</a></li>
+                    <li><a href="/admin/products.html">Products</a></li>
                     <li><a href="/admin/lowstock.html">Low Stock</a></li>
-                    <li><a href="/admin/categories.html">Categories</a></li>
+                    <li class="active"><a href="/admin/categories.html">Categories</a></li>
 
                 </ul>
             </li>
@@ -102,8 +100,8 @@
         <main>
             <div class="search-bar">
                 <div class="add-button">
-                    <a href="/admin/addproducts.html" class="btn-link"> 
-                        <button>Add</button>
+                    <a href="/admin/addcategories.html" class="btn-link"> 
+                        <button>Add Category</button>
                     </a>
                 </div>
                 
@@ -111,40 +109,34 @@
                 <button><i class="fas fa-search"></i></button>
             </div>
 
-            <h2>Medicine List</h2>
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Image</th>
-                        <th>Name</th>
-                        <th>Price</th>
-                        <th>Details</th>
-                        <th>Category</th>
-                        <th>Stock</th>
-                        <th>Action</th> <!-- New column for actions -->
+                        <th>Category ID</th>
+                        <th>Category Name</th>
+                        <th>Medicine</th>
+                        <th>Action</th> 
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><img src="https://via.placeholder.com/100x100" alt="Medicine Image"></td>
+                        <td>1</td>
                         <td>Sample</td>
-                        <td class="price">&#8369;7.49</td>
-                        <td>Lorem ipsum dolor sit amet consectetur adipisicing elit lorem ipsum. </td>
-                        <td>Sample</td>
-                        <td>100</td>
+                        <td>10</td>
                         <td class="actions">
-                            <button class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></button>
-                            <button class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button>
+                            <a href="/admin/editcategories.html">
+                                <button class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></button>
+                            </a>
+                            <a href="/admin/editcategories.html">
+                         <button class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button>
+                        </a>
                         </td>
                     </tr>
                     <!-- Add more table rows as needed -->
                     <tr>
-                        <td><img src="https://via.placeholder.com/100x100" alt="Medicine Image"></td>
-                        <td>Antibiotics</td>
-                        <td class="price">&#8369;7.49</td>
-                        <td>Lorem ipsum dolor sit amet consectetur adipisicing elit lorem ipsum. </td>
+                        <td>2</td>
                         <td>Sample</td>
-                        <td>100</td>
+                        <td>0</td>
                         <td class="actions">
                             <button class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></button>
                             <button class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button>

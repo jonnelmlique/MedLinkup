@@ -10,7 +10,7 @@ main {
     margin-top: 50px;
     padding: 30px;
     border-radius: 10px;
-    margin-bottom: 45%;
+    margin-right: 450px;
 }
 
 .add-product-section h1 {
@@ -54,34 +54,19 @@ main {
   max-width: 360px;
   margin-left: 80px;
   border: 2px solid #1c9601;
-  border-radius: 10px;
-   background-color: #fff;
-   padding: 30px;
-   border-radius: 10px;
-   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-   transition: box-shadow 0.3s;
+ border-radius: 10px;
+ padding: 10px; 
 }
-#preview-image:hover {
-    box-shadow: 0 8px 12px rgba(28, 150, 1, 0.2);
-  }
 
 #preview-image img {
     max-width: 100%;
     height: auto;
 }
 #image {
-border: 2px solid #1c9601;
+    border: 2px solid #1c9601;
  border-radius: 10px;
  padding: 10px; 
  margin-left: 130px;
- background-color: #fff;
- border-radius: 10px;
- box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
- transition: box-shadow 0.3s;
-
-}
-#image:hover {
-    box-shadow: 0 8px 12px rgba(28, 150, 1, 0.2);
 
 }
 
@@ -94,8 +79,8 @@ border: 2px solid #1c9601;
     padding: 15px 40px;
     cursor: pointer;
     transition: background-color 0.3s;
+    width: 130px;
     display: block;
-    margin: 0 auto;
     margin-left: 0px;
 }
 
