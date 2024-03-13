@@ -1,0 +1,66 @@
+main {
+    margin-left: 280px;
+    padding: 20px;
+}
+
+#history-list {
+    padding: 20px;
+}
+
+#history-list h2 {
+    margin-bottom: 20px;
+}
+
+.table {
+    width: 100%;
+}
+
+.table th,
+.table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.table th {
+    font-weight: bold;
+    background-color: #f8f9fa;}
+
+.price{
+    color: #007bff;
+}
+
+.status {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.status.history {
+    background-color: red;
+    color: #fff;
+}
+.history-section .lefth {
+    font-size:  24px;
+    margin-left: 10px;
+    margin-bottom: 50px;
+    }
+    
+    .history-section {
+        margin-top: 20px;
+        margin-right: 6px;
+        padding: 5px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    
+    }
+    
+    .history-section h1 {
+        margin-bottom: 20px;
+        color: #333;
+    }
+    .status.completed {
+        background-color: green;
+        color: #fff;
+    }

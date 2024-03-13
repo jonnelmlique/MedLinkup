@@ -4,17 +4,18 @@ main {
     display: block;
 }
 
-#medicine-list {
+.box-section {
     padding: 20px;
 }
 
-#medicine-list h2 {
+.box-section h2 {
     margin-bottom: 20px;
 }
 
 .table {
     width: 100%;
     border-collapse: collapse;
+    margin-bottom: 80px;
 }
 
 .table th,
@@ -84,13 +85,34 @@ main {
     cursor: pointer;
     outline: none;
     transition: background-color 0.3s; 
+    margin-top: 20px;
+    margin-right: 10px ;
 }
 
 .print button:hover {
     background-color: #1c9601;
 }
 
+.box-section .lefth {
+    font-size: 24px;
+    margin-left: 10px;
+    margin-bottom: 20px;
+}
 
+.box-section {
+    margin-top: 20px;
+    margin-right: 6px;
+    padding: 5px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+
+}
+
+.box-section h1 {
+    margin-bottom: 20px;
+    color: #333;
+}
 @media (max-width: 768px) {
     main {
         margin-left: 0;

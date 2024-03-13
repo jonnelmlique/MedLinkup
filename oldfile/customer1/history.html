@@ -6,7 +6,7 @@
         <title>Customer</title>
         <link href="./node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
             <link rel="stylesheet" href="sidebar.css">
-            <link rel="stylesheet" href="profile.css">
+            <link rel="stylesheet" href="history.css">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
         
      </head>
@@ -24,7 +24,7 @@
                         <span class="text"> Dashboard</span>
                     </a>
                 </li>
-                <li class="active">
+                <li>
                     <a href="profile.html">
                         <i class='fas fa-portrait' ></i>
                         <span class="text"> Profile</span>
@@ -48,7 +48,7 @@
                         <span class="text"> Pending Order</spvan>
                     </a>
                 </li>
-                <li>
+                <li class="active">
                     <a href="history.html">
                         <i class='fas fa-shopping-basket' ></i>
                         <span class="text"> History</span>
@@ -80,43 +80,56 @@
                 </a>
             </nav>
             </section>
-            
-            <section id="profile">
+
+            <section id="history">
                 <main>
-                <h2>Profile</h2>
-                <div class="profile-details">
-                    <div class="profile-image">
-                        <img src="https://i.pinimg.com/originals/f1/0f/f7/f10ff70a7155e5ab666bcdd1b45b726d.jpg" alt="Profile Picture">
-                    </div>
-                    <div class="profile-info">
-                        <p><strong>Name:</strong> John Doe</p>
-                        <p><strong>Email:</strong> johndoe@example.com</p>
-                        <p><strong>Phone:</strong> +1234567890</p>
-                        <p><strong>Address:</strong> 123 Main Street, Anytown, Countryland</p>
-                    </div>
-                </div>
-                <button class="edit-profile-btn">Edit Profile</button>
+                    <h2>History</h2>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Price</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><img src="https://via.placeholder.com/100x100" alt="history Image"></td>
+                                <td>Antibiotics</td>
+                                <td class="price">$7.49</td>
+                                <td><span class="status completed">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td><img src="https://via.placeholder.com/100x100" alt="history Image"></td>
+                                <td>Antibiotics</td>
+                                <td class="price">$7.49</td>
+                                <td><span class="status completed">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td><img src="https://via.placeholder.com/100x100" alt="history Image"></td>
+                                <td>Antibiotics</td>
+                                <td class="price">$7.49</td>
+                                <td><span class="status completed">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td><img src="https://via.placeholder.com/100x100" alt="history Image"></td>
+                                <td>Antibiotics</td>
+                                <td class="price">$7.49</td>
+                                <td><span class="status completed">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td><img src="https://via.placeholder.com/100x100" alt="history Image"></td>
+                                <td>Antibiotics</td>
+                                <td class="price">$7.49</td>
+                                <td><span class="status completed">Completed</span></td>
+                            </a>
+                            </tr>
+                        </tbody>
+                    </table>
+                </main>
             </section>
-    
-            <section id="edit-profile" style="display: none;">
-                <h2>Edit Profile</h2>
-                <form id="edit-profile-form">
-                    <div class="form-group">
-                        <label for="edit-name">Name:</label>
-                        <input type="text" id="edit-name" name="edit-name" value="John Doe" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="edit-email">Email:</label>
-                        <input type="email" id="edit-email" name="edit-email" value="johndoe@example.com" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="edit-phone">Phone:</label>
-                        <input type="tel" id="edit-phone" name="edit-phone" value="+1234567890" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="edit-address">Address:</label>
-                    </main>
-                    </section>
+
         <!-- node -->
     <script src="./node_modules/jquery/dist/jquery.min.js"></script>
     <script src="./node_modules/popper.js/dist/umd/popper.min.js"></script>

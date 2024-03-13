@@ -41,7 +41,7 @@
                 </ul>
                 <div class="navbar-icons d-flex align-items-center">
                     <a href="/auth/login.html" class="nav-link"><i class="fas fa-user"></i> Login </a>
-                    <a href="#" class="nav-link"><i class="fas fa-shopping-cart"></i> Cart </a>
+                    <a href="/cart.html" class="nav-link"><i class="fas fa-shopping-cart"></i> Cart </a>
                 </div>
             </div>
         </div>
@@ -238,7 +238,30 @@
 
     <script src="./public/js/index/productcart.js"></script>
 
-
+    <script>
+        function addToCart() {
+            var productName = document.querySelector('.product-details-title').textContent;
+            var productPrice = document.querySelector('.product-details-price').textContent;
+            var quantity = parseInt(document.getElementById('quantity').value);
+    
+            var cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    
+            var existingItem = cartItems.find(function(item) {
+                return item.name === productName;
+            });
+    
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                var newItem = { name: productName, price: productPrice, quantity: quantity };
+                cartItems.push(newItem);
+            }
+    
+            localStorage.setItem('cartItems', JSON.stringify(cartItems));
+        }
+    </script>
+    
+    
 
 </body>
 

@@ -1,0 +1,116 @@
+main {
+    margin-left: 280px;
+    padding: 20px;
+}
+
+
+    
+#delivery-address {
+    margin-top: 20px;
+    margin-right: 6px;
+    padding: 5px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+#delivery-address h1 {
+        font-size:  24px;
+        margin-left: 10px;
+        margin-bottom: 50px;
+        }
+
+#existing-address {
+    margin-bottom: 20px;
+}
+
+#existing-address h3 {
+    font-size: 18px;
+    color: #333;
+    font-weight: bold;
+    margin-left: 25px;
+
+}
+
+#existing-address p {
+    margin-bottom: 10px;
+    margin-left: 25px;
+
+}
+.edit-container .edit {
+    background-color: #4caf50; 
+    color: #fff;
+    border: none; 
+    border-radius: 5px; 
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 25px;
+    margin-bottom: 35px;
+
+}
+
+.edit-container .edit:hover {
+    background-color: #1c9601; 
+}
+#edit-address {
+    display: none;
+    margin-right: 6px;
+    padding: 5px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);    
+    margin-top: -20px;
+}
+
+#edit-address h1 {
+    font-size:  24px;
+    margin-left: 10px;
+    margin-bottom: 50px;
+    }
+
+
+
+#edit-address form {
+    max-width: 500px;
+    margin-left: 25px;
+}
+
+#edit-address form .form-group {
+    margin-bottom: 20px;
+}
+
+
+#edit-address form label {
+    font-weight: bold;
+    color: #333;
+}
+
+#edit-address form input[type="text"],
+#edit-address form textarea {
+    border-radius: 5px;
+    padding: 10px;
+    width: calc(100% - 22px); 
+    border: 1px solid #ddd;
+    margin-top: 10px;
+}
+
+#edit-address form button[type="submit"],
+#edit-address form button[type="button"] {
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 15px 40px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 15px;
+    margin-right: 10px;
+    margin-bottom: 35px;
+    
+}
+
+#edit-address form button[type="submit"]:hover,
+#edit-address form button[type="button"]:hover {
+    background-color: #1c9601;
+}
