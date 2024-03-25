@@ -1,3 +1,52 @@
+<?php
+include '../src/config/config.php';
+
+$message = '';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (empty($_POST['email']) || empty($_POST['password'])) {
+        $message = "Email and password are required.";
+    } else {
+
+        $email = trim($_POST['email']);
+        $password = trim($_POST['password']);
+
+        $sql = "SELECT * FROM users WHERE email=?";
+        $stmt = $conn->prepare($sql);
+        if (!$stmt) {
+            $message = "Error preparing statement: " . $conn->error;
+        } else {
+
+            $stmt->bind_param("s", $email);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result->num_rows == 1) {
+                $row = $result->fetch_assoc();
+                $storedPassword = $row['password'];
+
+                if (password_verify($password, $storedPassword)) {
+
+                    if ($row['usertype'] == 'admin') {
+                        header("Location: admin_dashboard.php");
+                        exit();
+                    } else {
+                        header("Location: customer_dashboard.php");
+                        exit();
+                    }
+                } else {
+                    $message = "Incorrect password.";
+                }
+            } else {
+                $message = "Email not found.";
+            }
+            $stmt->close(); 
+        }
+    }
+    $conn->close(); 
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,9 +54,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
-    <link href="/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/public/css/index/nav.css">
-    <link rel="stylesheet" href="/public/css/auth/login.css">
+    <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../public/css/index/nav.css">
+    <link rel="stylesheet" href="../public/css/auth/login.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
   
 </head>
@@ -16,7 +65,7 @@
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
             <a class="navbar-brand" href="/index.html">
-                <img src="/public/img/logo.png" alt="Pharmawell Logo" class="logo"> Pharmawell
+                <img src="../public/img/logo.png" alt="Pharmawell Logo" class="logo"> Pharmawell
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,21 +75,21 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/index.html">Home</a>
+                        <a class="nav-link" href="../index.html">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/about.html">About</a>
+                        <a class="nav-link" href="../about.html">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/contact.html">Contact</a>
+                        <a class="nav-link" href="../contact.html">Contact</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/shop.html">Shop</a>
+                        <a class="nav-link" href="../shop.html">Shop</a>
                     </li>
                 </ul>
                 <div class="navbar-icons d-flex align-items-center">
-                    <a href="/auth/login.html" class="nav-link"><i class="fas fa-user"></i> Login </a>
-                    <a href="/cart.html" class="nav-link"><i class="fas fa-shopping-cart"></i> Cart </a>
+                    <a href="../auth/login.html" class="nav-link"><i class="fas fa-user"></i> Login </a>
+                    <a href="../cart.html" class="nav-link"><i class="fas fa-shopping-cart"></i> Cart </a>
                 </div>
             </div>
         </div>
@@ -51,14 +100,14 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="logologin text-center">
-                            <img src="/public/img/Auth/CoverLogin.png" alt="Logo" class="img-fluid custom-image">
+                            <img src="../public/img/Auth/CoverLogin.png" alt="Logo" class="img-fluid custom-image">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <h1>Login to Pharmawell</h1>
                         <p>Welcome back to Pharmawell! Enter your email and password to Login.</p>
 
-                        <form action="#" method="POST" class="needs-validation" novalidate>
+                        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="needs-validation">
                             <div class="mb-3">
                                 <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
                                 <div class="invalid-feedback">Please enter your email.</div>
@@ -71,15 +120,15 @@
                                 <input type="checkbox" class="form-check-input" id="rememberMe">
                                 <label class="form-check-label" for="rememberMe">Remember me</label>
                             </div>
-                            <button type="submit" class="btn btn-primary btn-block">Login</button>
+                            <button type="submit" class="btn btn-success btn-block">Login</button>
                         </form>
 
                         <div class="forgot-password text-center">
-                            <a href="/auth/forgot.html">Forgot password?</a>
+                            <a href="../auth/forgot.html">Forgot password?</a>
                         </div>
 
                         <div class="signup-link text-center">
-                            Don’t have an account? <a href="/auth/register.html">Register</a>
+                            Don’t have an account? <a href="../auth/register.php">Register</a>
                         </div>
                     </div>
                 </div>
@@ -109,12 +158,25 @@
 
 
     <!-- node -->
-    <script src="/node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="/node_modules/popper.js/dist/umd/popper.min.js"></script>
-    <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-   
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <?php
+    if (!empty($message)) {
+        echo "<script>
+            Swal.fire({
+                title: 'Error',
+                text: '" . $message . "',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        </script>";
+    }
+    ?>
 </body>
 
 </html>
