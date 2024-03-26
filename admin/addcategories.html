@@ -99,30 +99,49 @@
 
 
     <main>
+        <div class="box-section">
 
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <div class="box-section">
+            <div class="head-title">
+                <div class="left">
+                    <h1 class="lefth">Add Category</h1>
+                </div>
+            </div>
 
-                        <div class="head-title">
-                            <div class="left">
-                                <h1 class="lefth">Add Category</h1>
-                            </div>
-
-
-                            <form action="#" method="POST" class="needs-validation" novalidate>
-                                <div class="mb-3">
-                                    <label for="categoryname">Category Name</label>
-                                    <input type="text" class="form-control" id="categoryname" name="categoryname"
-                                        placeholder="Category Name" required>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="add-category-section">
+                            <div id="image-container">
+                                <div id="preview-image">
+                                    <img src="https://via.placeholder.com/350x350" alt="Preview Image">
                                 </div>
-                                <button type="submit" class="btn btn-submit">Submit</button>
-                            </form>
+                                <input type="file" class="form-control" id="image" name="image" accept="image/*"
+                                    onchange="previewImage(event)" required>
+                            </div>
+                            <div id="form-container">
+                                <form action="#" method="POST" class="needs-validation" novalidate>
+                                    <div class="mb-3">
+                                        <label for="categoryname">Category Name</label>
+                                        <input type="text" class="form-control" id="categoryname" name="categoryname"
+                                            placeholder="Category Name" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-submit">Submit</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
         </div>
         </div>
     </main>

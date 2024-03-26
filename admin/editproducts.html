@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Edit Categories</title>
+    <title>Edit Product</title>
     <link rel="stylesheet" href="/public/css/admin/sidebar.css">
-    <link rel="stylesheet" href="/public/css/admin/addcategories.css">
+    <link rel="stylesheet" href="/public/css/admin/addproducts.css">
     <link href="./node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
    
@@ -35,6 +35,7 @@
                     <li><a href="/admin/products.html">Products</a></li>
                     <li><a href="/admin/lowstock.html">Low Stock</a></li>
                     <li><a href="/admin/categories.html">Categories</a></li>
+
                 </ul>
             </li>
             <li>
@@ -100,57 +101,86 @@
 
     <main>
         <div class="box-section">
-
-            <div class="head-title">
-                <div class="left">
-                    <h1 class="lefth">Edit Category</h1>
-                </div>
+        <div class="head-title">
+            <div class="left">
+                <h1>Edit Product</h1>
             </div>
+        </div>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="add-product-section">
+                        <div id="image-container">
+                            <div id="preview-image">
+                                <img src="https://via.placeholder.com/350x350" alt="Preview Image">
+                            </div>
+                            <input type="file" class="form-control" id="image" name="image"
+                                accept="image/*" onchange="previewImage(event)" required>
+                        </div>
+                        <div id="form-container">
+                            <form action="#" method="POST" class="needs-validation" novalidate>
+                                <div class="mb-3">
+                                    <label for="categoryname">Product Name</label>
 
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-md-8">
-                        <div class="add-category-section">
-                            <div id="image-container">
-                                <div id="preview-image">
-                                    <img src="https://via.placeholder.com/350x350" alt="Preview Image">
+                                    <input type="text" class="form-control" id="productName" name="productName"
+                                        placeholder="Product Name" required>
                                 </div>
-                                <input type="file" class="form-control" id="image" name="image" accept="image/*"
-                                    onchange="previewImage(event)" required>
-                            </div>
-                            <div id="form-container">
-                                <form action="#" method="POST" class="needs-validation" novalidate>
-                                    <div class="mb-3">
-                                        <label for="categoryname">Category Name</label>
-                                        <input type="text" class="form-control" id="categoryname" name="categoryname"
-                                            placeholder="Category Name" required>
-                                    </div>
-                                    <button type="submit" class="btn btn-submit">Update</button>
-                                </form>
-                            </div>
+                                <div class="mb-3">
+                                    <label for="categoryname">Price</label>
+                                    <input type="number" class="form-control" id="price" name="price"
+                                        placeholder="Price" min="0" step="0.01" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="categoryname">Product Details</label>
+                                    <textarea class="form-control" id="details" name="details" rows="4"
+                                        placeholder="Product Details" required></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="categoryname">Select Category</label>
+                                    <select class="form-control" id="category" name="category" required>
+                                        <option value="" disabled selected>Select Category</option>
+                                        <option value="category1">Category 1</option>
+                                        <option value="category2">Category 2</option>
+                                        <option value="category3">Category 3</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="categoryname">Stock</label>
+                                    <input type="text" class="form-control" id="stock" name="stock"
+                                        placeholder="Stock" required>
+                                </div>
+
+                                <button type="submit" class="btn btn-submit">Update</button>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        </div>
-        </div>
-        </div>
-        </div>
-        </div>
-        </div>
-        </div>
-        </div>
-        </div>
         </div>
     </main>
-
 
     <!-- node -->
     <script src="./node_modules/jquery/dist/jquery.min.js"></script>
     <script src="./node_modules/popper.js/dist/umd/popper.min.js"></script>
     <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function previewImage(event) {
+            var preview = document.getElementById('preview-image');
+            var file = event.target.files[0];
+            var reader = new FileReader();
+
+            reader.onloadend = function () {
+                preview.style.display = 'block';
+                preview.querySelector('img').src = reader.result;
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
 </body>
 
 </html>
