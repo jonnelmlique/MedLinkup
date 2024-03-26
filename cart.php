@@ -16,8 +16,8 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
-            <a class="navbar-brand" href="/index.html">
-                <img src="/public/img/logo.png" alt="Pharmawell Logo" class="logo"> Pharmawell
+            <a class="navbar-brand" href="/index.php">
+                <img src="./public/img/logo.png" alt="Pharmawell Logo" class="logo"> Pharmawell
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,20 +27,20 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/index.html">Home</a>
+                        <a class="nav-link" href="./index.php">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/about.html">About</a>
+                        <a class="nav-link" href="./about.php">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/contact.html">Contact</a>
+                        <a class="nav-link" href="./contact.php">Contact</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/shop.html">Shop</a>
+                        <a class="nav-link" href="./shop.php">Shop</a>
                     </li>
                 </ul>
                 <div class="navbar-icons d-flex align-items-center">
-                    <a href="/auth/login.html" class="nav-link"><i class="fas fa-user"></i> Login </a>
+                    <a href="./auth/login.php" class="nav-link"><i class="fas fa-user"></i> Login </a>
                     <a href="#" class="nav-link"><i class="fas fa-shopping-cart"></i> Cart </a>
                 </div>
             </div>
@@ -75,7 +75,7 @@
             <div class="container">
                 <p>
                     &copy; 2024 Pharmawell. All rights reserved. |
-                    <a href="/privacypolicy.html">Privacy Policy</a> | <a href="/termsofservice.html">Terms of Service</a>
+                    <a href="./privacypolicy.php">Privacy Policy</a> | <a href="./termsofservice.php">Terms of Service</a>
                 </p>
             </div>
         </footer> 

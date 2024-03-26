@@ -12,7 +12,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
-            <a class="navbar-brand" href="./index.html">
+            <a class="navbar-brand" href="./index.php">
                 <img src="./public/img/logo.png" alt="Pharmawell Logo" class="logo"> Pharmawell
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -22,21 +22,21 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/index.html">Home</a>
+                        <a class="nav-link" href="./index.php">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/about.html">About</a>
+                        <a class="nav-link" href="./about.php">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/contact.html">Contact</a>
+                        <a class="nav-link" href="./contact.php">Contact</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/shop.html">Shop</a>
+                        <a class="nav-link" href="./shop.php">Shop</a>
                     </li>
                 </ul>
                 <div class="navbar-icons d-flex align-items-center">
                     <a href="./auth/login.php" class="nav-link"><i class="fas fa-user"></i> Login </a>
-                    <a href="/cart.html" class="nav-link"><i class="fas fa-shopping-cart"></i> Cart </a>
+                    <a href="./cart.php" class="nav-link"><i class="fas fa-shopping-cart"></i> Cart </a>
                 </div>
             </div>
         </div>
@@ -45,7 +45,7 @@
         <h2>Contact Us</h2>
 
         <div class="alert alert-success" role="alert">
-            You can also send a direct email to <a href="pharmawell@gmail.com" class="alert-link">pharmawell@gmail.com</a>
+            You can also send a direct email to <a href="pharmawellcontact@gmail.com" class="alert-link">pharmawellcontact@gmail.com</a>
         </div>
 
         <?php
@@ -66,20 +66,20 @@
             try {
                
                 $mail->isSMTP(); 
-                $mail->Host = 'smtp.example.com'; 
+                $mail->Host = 'smtp.gmail.com'; 
                 $mail->SMTPAuth = true; 
-                $mail->Username = 'your_smtp_username'; 
-                $mail->Password = 'your_smtp_password'; 
+                $mail->Username = 'pharmawellcontact@gmail.com'; 
+                $mail->Password = 'ynlaogsvvbmlrsob'; 
                 $mail->SMTPSecure = 'tls'; 
                 $mail->Port = 587; 
 
-                $mail->setFrom('your_email@example.com', 'Your Name');
-                $mail->addAddress('pharmawell@gmail.com'); 
+                $mail->setFrom('pharmawellcontact@gmail.com', 'Pharmawell Contact');
+                $mail->addAddress('pharmawellofficial@gmail.com'); 
                 $mail->addReplyTo($email); 
 
                 $mail->isHTML(true); 
                 $mail->Subject = $subject;
-                $message .= "<p>Sender's Email: $email</p>";
+                $message = "<p><strong>Sender Email:</strong> $email</p><br>" . $message;
                 $mail->Body = $message;
 
                 $mail->send();
@@ -120,7 +120,7 @@
         <div class="container">
             <p>
                 &copy; 2024 Pharmawell. All rights reserved. |
-                <a href="/privacypolicy.html">Privacy Policy</a> | <a href="/termsofservice.html">Terms of Service</a>
+                <a href="./privacypolicy.php">Privacy Policy</a> | <a href="./termsofservice.php">Terms of Service</a>
             </p>
         </div>
     </footer> 
