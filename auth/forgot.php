@@ -1,70 +1,21 @@
-<?php
-include '../src/config/config.php';
-
-$message = '';
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (empty($_POST['email']) || empty($_POST['password'])) {
-        $message = "Email and password are required.";
-    } else {
-
-        $email = trim($_POST['email']);
-        $password = trim($_POST['password']);
-
-        $sql = "SELECT * FROM users WHERE email=?";
-        $stmt = $conn->prepare($sql);
-        if (!$stmt) {
-            $message = "Error preparing statement: " . $conn->error;
-        } else {
-
-            $stmt->bind_param("s", $email);
-            $stmt->execute();
-            $result = $stmt->get_result();
-
-            if ($result->num_rows == 1) {
-                $row = $result->fetch_assoc();
-                $storedPassword = $row['password'];
-
-                if (password_verify($password, $storedPassword)) {
-
-                    if ($row['usertype'] == 'admin') {
-                        header("Location: admin_dashboard.php");
-                        exit();
-                    } else {
-                        header("Location: customer_dashboard.php");
-                        exit();
-                    }
-                } else {
-                    $message = "Incorrect password.";
-                }
-            } else {
-                $message = "Email not found.";
-            }
-            $stmt->close(); 
-        }
-    }
-    $conn->close(); 
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
+    <title>Forgot Password</title>
     <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../public/css/index/nav.css">
-    <link rel="stylesheet" href="../public/css/auth/login.css">
+    <link rel="stylesheet" href="../public/css/auth/forgotpassword.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-  
+   
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
-            <a class="navbar-brand" href="/index.php">
+            <a class="navbar-brand" href="../index.php">
                 <img src="../public/img/logo.png" alt="Pharmawell Logo" class="logo"> Pharmawell
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -95,40 +46,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
         </nav>
     <main>
-        <section class="login-section">
+        <section class="forgot-section">
             <div class="container">
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="logologin text-center">
-                            <img src="../public/img/Auth/CoverLogin.png" alt="Logo" class="img-fluid custom-image">
+                        <div class="logoforgot text-center">
+                            <img src="../public/img/Auth/CoverRegistration.png" alt="Logo" class="img-fluid custom-image">
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <h1>Login to Pharmawell</h1>
-                        <p>Welcome back to Pharmawell! Enter your email and password to Login.</p>
+                        <h1>Forgot Password</h1>
+                        <p>Enter your email to receive the reset link.</p>
 
-                        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="needs-validation">
+                        <form action="#" method="POST" class="needs-validation" novalidate>
+                            <div class="row">
+                                
+                            </div>
+                     
                             <div class="mb-3">
                                 <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
                                 <div class="invalid-feedback">Please enter your email.</div>
                             </div>
-                            <div class="mb-3">
-                                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
-                                <div class="invalid-feedback">Please enter your password.</div>
-                            </div>
-                            <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" id="rememberMe">
-                                <label class="form-check-label" for="rememberMe">Remember me</label>
-                            </div>
-                            <button type="submit" class="btn btn-success btn-block">Login</button>
+                   
+                            <button type="submit" class="btn btn-primary btn-block">Send Reset Link</button>
                         </form>
-
-                        <div class="forgot-password text-center">
-                            <a href="../auth/forgot.php">Forgot password?</a>
-                        </div>
-
+    
                         <div class="signup-link text-center">
-                            Don’t have an account? <a href="../auth/register.php">Register</a>
+                            Remember you're password? <a href="../auth/login.php">Login</a>
                         </div>
                     </div>
                 </div>
@@ -152,9 +96,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <p>
                 &copy; 2024 Pharmawell. All rights reserved. |
                 <a href="../privacypolicy.php">Privacy Policy</a> | <a href="../termsofservice.php">Terms of Service</a>
-            </p>
+                </p>
         </div>
-    </footer> 
+    </footer>   
+
 
 
     <!-- node -->
@@ -163,20 +108,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <?php
-    if (!empty($message)) {
-        echo "<script>
-            Swal.fire({
-                title: 'Error',
-                text: '" . $message . "',
-                icon: 'error',
-                confirmButtonText: 'OK'
-            });
-        </script>";
-    }
-    ?>
+    
 </body>
 
 </html>
