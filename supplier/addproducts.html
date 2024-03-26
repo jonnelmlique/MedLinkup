@@ -84,6 +84,7 @@
     </section>
 
     <main>
+        <div class="box-section">
         <div class="head-title">
             <div class="left">
                 <h1>Add Product</h1>
@@ -103,27 +104,32 @@
                         <div id="form-container">
                             <form action="#" method="POST" class="needs-validation" novalidate>
                                 <div class="mb-3">
+                                    <label for="categoryname">Product Name</label>
+
                                     <input type="text" class="form-control" id="productName" name="productName"
                                         placeholder="Product Name" required>
                                 </div>
                                 <div class="mb-3">
+                                    <label for="categoryname">Price</label>
                                     <input type="number" class="form-control" id="price" name="price"
                                         placeholder="Price" min="0" step="0.01" required>
                                 </div>
                                 <div class="mb-3">
+                                    <label for="categoryname">Product Details</label>
                                     <textarea class="form-control" id="details" name="details" rows="4"
                                         placeholder="Product Details" required></textarea>
                                 </div>
                                 <div class="mb-3">
+                                    <label for="categoryname">Select Category</label>
                                     <select class="form-control" id="category" name="category" required>
                                         <option value="" disabled selected>Select Category</option>
                                         <option value="category1">Category 1</option>
                                         <option value="category2">Category 2</option>
                                         <option value="category3">Category 3</option>
-                                        <!-- Add more options as needed -->
                                     </select>
                                 </div>
                                 <div class="mb-3">
+                                    <label for="categoryname">Stock</label>
                                     <input type="text" class="form-control" id="stock" name="stock"
                                         placeholder="Stock" required>
                                 </div>
@@ -135,7 +141,9 @@
                 </div>
             </div>
         </div>
+        </div>
     </main>
+
 
     <!-- node -->
     <script src="./node_modules/jquery/dist/jquery.min.js"></script>

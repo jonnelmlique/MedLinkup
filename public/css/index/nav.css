@@ -28,6 +28,12 @@ body {
 .navbar {
   background-color: #ffffff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s;
+
+}
+.navbar:hover{
+  box-shadow: 0 8px 12px rgba(28, 150, 1, 0.2);
+
 }
 
 .navbar-brand {
@@ -74,6 +80,7 @@ footer {
   padding: 20px 0;
   text-align: center;
   font-size: 0.9rem;
+ 
 }
 
 footer p {
