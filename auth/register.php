@@ -135,7 +135,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </li>
                 </ul>
                 <div class="navbar-icons d-flex align-items-center">
-                    <a href="../public/Auth/login.html" class="nav-link"><i class="fas fa-user"></i> Login </a>
+                    <a href="../public/auth/login.html" class="nav-link"><i class="fas fa-user"></i> Login </a>
                     <a href="../cart.html" class="nav-link"><i class="fas fa-shopping-cart"></i> Cart </a>
                 </div>
             </div>

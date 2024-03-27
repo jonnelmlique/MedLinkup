@@ -106,7 +106,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="row">
                     <div class="col-md-6">
                         <div class="logologin text-center">
-                            <img src="../public/img/Auth/CoverLogin.png" alt="Logo" class="img-fluid custom-image">
+                            <img src="../public/img/auth/CoverLogin.png" alt="Logo" class="img-fluid custom-image">
                         </div>
                     </div>
                     <div class="col-md-6">

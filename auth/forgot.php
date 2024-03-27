@@ -1,3 +1,74 @@
+<?php
+include '../src/config/config.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require '../src/contact/Exception.php';
+require '../src/contact/PHPMailer.php';
+require '../src/contact/SMTP.php';
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+function generateToken() {
+    return bin2hex(random_bytes(32));
+}
+
+date_default_timezone_set('Asia/Manila');
+
+function generateExpiration() {
+    return date('Y-m-d H:i:s', strtotime('+1 hour'));
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = $_POST['email'];
+
+    $sql = "SELECT * FROM users WHERE email = '$email'";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+
+        $token = generateToken();
+        $expiration = generateExpiration();
+        
+        $sql = "UPDATE users SET reset_token='$token', reset_token_expiration='$expiration' WHERE email='$email'";
+        if ($conn->query($sql) === TRUE) {
+
+            $mail = new PHPMailer(true);
+            try {
+                $mail->isSMTP();
+                $mail->Host = 'smtp.gmail.com';
+                $mail->SMTPAuth = true;
+                $mail->Username = 'pharmawellcontact@gmail.com';
+                $mail->Password = 'ynlaogsvvbmlrsob';
+                $mail->SMTPSecure = 'tls';
+                $mail->Port = 587;
+                
+                $mail->setFrom('pharmawellcontact@gmail.com', 'Pharmawell   ');
+                $mail->addAddress($email);
+                $mail->isHTML(true);
+                
+                $mail->Subject = 'Password Reset Link';
+                $mail->Body = 'Click <a href="http://localhost/pharmawell/auth/reset.php?token='.$token.'">here</a> to reset your password. This link is valid for 1 hour.';
+                
+                $mail->send();
+                
+                $message = "success";
+            } catch (Exception $e) {
+                $message = "Error sending email: " . $mail->ErrorInfo;
+            }
+        } else {
+            $message = "Error updating record: " . $conn->error;
+        }
+    } else {
+        $message = "Email not found.";
+    }
+}
+$conn->close();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +80,7 @@
     <link rel="stylesheet" href="../public/css/index/nav.css">
     <link rel="stylesheet" href="../public/css/auth/forgotpassword.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-   
+
 </head>
 
 <body>
@@ -44,33 +115,46 @@
                 </div>
             </div>
         </div>
-        </nav>
+    </nav>
     <main>
         <section class="forgot-section">
             <div class="container">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="logoforgot text-center">
-                            <img src="../public/img/Auth/CoverRegistration.png" alt="Logo" class="img-fluid custom-image">
+                            <img src="../public/img/auth/CoverRegistration.png" alt="Logo"
+                                class="img-fluid custom-image">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <h1>Forgot Password</h1>
                         <p>Enter your email to receive the reset link.</p>
 
-                        <form action="#" method="POST" class="needs-validation" novalidate>
+                        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                             <div class="row">
-                                
+
                             </div>
-                     
+
                             <div class="mb-3">
-                                <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Email"
+                                    required>
                                 <div class="invalid-feedback">Please enter your email.</div>
                             </div>
-                   
+
                             <button type="submit" class="btn btn-primary btn-block">Send Reset Link</button>
                         </form>
-    
+                        <?php
+                        if (!empty($message)) {
+                            echo "<script>
+        Swal.fire({
+            title: '" . ($message === "success" ? "Email sent" : "Error") . "',
+            text: '" . ($message === "success" ? "Password reset link sent to your email." : $message) . "',
+            icon: '" . ($message === "success" ? "success" : "error") . "',
+            confirmButtonText: 'OK'
+        });
+    </script>";
+                        }
+                        ?>
                         <div class="signup-link text-center">
                             Remember you're password? <a href="../auth/login.php">Login</a>
                         </div>
@@ -96,9 +180,9 @@
             <p>
                 &copy; 2024 Pharmawell. All rights reserved. |
                 <a href="../privacypolicy.php">Privacy Policy</a> | <a href="../termsofservice.php">Terms of Service</a>
-                </p>
+            </p>
         </div>
-    </footer>   
+    </footer>
 
 
 
@@ -108,8 +192,32 @@
     <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <?php
+if (!empty($message)) {
+    if ($message === "success") {
+        echo "<script>
+            Swal.fire({
+                title: 'Reset Link Sent Successfully',
+                text: 'You have successfully sent the reset link to your email.',
+                icon: 'success',
+                confirmButtonText: 'OK',
+               
+            });
+        </script>";
+    } else {
+        echo "<script>
+            Swal.fire({
+                title: 'Error',
+                text: '" . $message . "',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        </script>";
+    }
+}
+?>
 
-    
 </body>
 
 </html>

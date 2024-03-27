@@ -1,3 +1,44 @@
+<?php
+include '../src/config/config.php';
+
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $password = $_POST['password'];
+    $confirm_password = $_POST['confirm_password'];
+    $token = $_GET['token']; // Assuming token is passed in the URL
+
+    // Check if passwords match
+    if ($password !== $confirm_password) {
+        $message = "Passwords do not match.";
+    } else {
+        // Check if token exists and is still valid
+        $sql = "SELECT * FROM users WHERE reset_token='$token' AND reset_token_expiration > NOW()";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $email = $row['email'];
+            // Hash the password
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+            // Update user's password
+            $update_sql = "UPDATE users SET password='$hashed_password', reset_token=NULL, reset_token_expiration=NULL WHERE email='$email'";
+            if ($conn->query($update_sql) === TRUE) {
+                $message = "success ";
+            } else {
+                $message = "Error updating password: " . $conn->error;
+            }
+        } else {
+            $message = "Invalid or expired token.";
+        }
+    }
+}
+
+$conn->close();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -51,14 +92,14 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="logoreset text-center">
-                            <img src="../public/img/Auth/CoverLogin.png" alt="Logo" class="img-fluid custom-image">
+                            <img src="../public/img/auth/CoverLogin.png" alt="Logo" class="img-fluid custom-image">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <h1>Reset Password</h1>
                         <p>Enter your New Password.</p>
 
-                        <form action="#" method="POST" class="needs-validation" novalidate>
+                        <form action="#" method="POST" class="needs-validation">
                             <div class="row">
                                 
                             </div>
@@ -68,7 +109,7 @@
                                 <div class="invalid-feedback">Please your New Password.</div>
                             </div>
                             <div class="mb-3">
-                                <input type="password" class="form-control" id="password" name="password" placeholder="Confirm Password" required>
+                                <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required>
                                 <div class="invalid-feedback">Please Confirm your Password.</div>
                             </div>
                    
@@ -78,6 +119,7 @@
                         <div class="signup-link text-center">
                             Remember you're password? <a href="../auth/login.php">Login</a>
                         </div>
+                       
                     </div>
                 </div>
             </div>
@@ -112,8 +154,40 @@
     <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    
+    <?php
+    if (!empty($message)) {
+        if ($message === "success") {
+            echo "<script>
+            Swal.fire({
+                title: 'Reset successful',
+                text: 'Your password has been successfully reset.',
+                icon: 'success',
+                showCancelButton: true,
+                confirmButtonText: 'OK',
+                cancelButtonText: 'Login'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Do something if user clicks OK
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    window.location.href = '../auth/login.php';
+                }
+            });
+            </script>";
+        } else {
+            echo "<script>
+                Swal.fire({
+                    title: 'Error',
+                    text: '" . $message . "',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            </script>";
+        }
+    }
+    ?>
+
 </body>
 
 </html>
