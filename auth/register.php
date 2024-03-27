@@ -1,6 +1,13 @@
 <?php
 include '../src/config/config.php';
+// Send email
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
+require '../src/contact/Exception.php';
+require '../src/contact/PHPMailer.php';
+require '../src/contact/SMTP.php';
+// end Send email
 $defaultUserType = 'customer';
 $message = '';
 
@@ -48,6 +55,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $stmt->bind_param("ssssss", $username, $firstname, $lastname, $email, $hashedPassword, $defaultUserType);
                     if ($stmt->execute()) {
                         $message = "success";
+
+                        // Send email
+                        try {
+                            $mail = new PHPMailer(true);
+
+                            $mail->isSMTP();
+                            $mail->Host = 'smtp.gmail.com';
+                            $mail->SMTPAuth = true;
+                            $mail->Username = 'pharmawellcontact@gmail.com';
+                            $mail->Password = 'ynlaogsvvbmlrsob';
+                            $mail->SMTPSecure = 'tls';
+                            $mail->Port = 587;
+
+                            $mail->setFrom('pharmawellcontact@gmail.com', 'Pharmawell');
+                            $mail->addAddress($email);
+                            $mail->isHTML(true);
+
+                            $mail->Subject = 'Account Created Successfully';
+                            $mail->Body = 'Welcome to Pharmawell. Your account has been successfully created.';
+
+                            $mail->send();
+                        } catch (Exception $e) {
+
+                            $message = "Error sending email: " . $mail->ErrorInfo;
+                        }
+                        // end Send email
+
+
                     } else {
                         $message = "Error: " . $stmt->error;
                     }
@@ -55,11 +90,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
     }
-    $stmt->close(); 
-    $conn->close(); 
+    $stmt->close();
+    $conn->close();
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -71,7 +105,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="../public/css/index/nav.css">
     <link rel="stylesheet" href="../public/css/auth/register.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-   
+
 </head>
 
 <body>
@@ -106,59 +140,69 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
             </div>
         </div>
-        </nav>
+    </nav>
     <main>
         <section class="register-section">
             <div class="container">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="logoregister text-center">
-                            <img src="../public/img/Auth/CoverRegistration.png" alt="Logo" class="img-fluid custom-image">
+                            <img src="../public/img/Auth/CoverRegistration.png" alt="Logo"
+                                class="img-fluid custom-image">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <h1>Register to Pharmawell</h1>
                         <p>Create your account to get started with Pharmawell.</p>
-    
-                        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="needs-validation">
+
+                        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST"
+                            class="needs-validation">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <input type="text" class="form-control" id="firstname" name="firstName" placeholder="First Name" required>
+                                        <input type="text" class="form-control" id="firstname" name="firstName"
+                                            placeholder="First Name" required>
                                         <div class="invalid-feedback">Please enter your first name.</div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <input type="text" class="form-control" id="lastname" name="lastName" placeholder="Last Name" required>
+                                        <input type="text" class="form-control" id="lastname" name="lastName"
+                                            placeholder="Last Name" required>
                                         <div class="invalid-feedback">Please enter your last name.</div>
                                     </div>
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
+                                <input type="text" class="form-control" id="username" name="username"
+                                    placeholder="Username" required>
                                 <div class="invalid-feedback">Please enter your Username.</div>
                             </div>
                             <div class="mb-3">
-                            <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Email"
+                                    required>
                                 <div class="invalid-feedback">Please enter a valid email address.</div>
                             </div>
                             <div class="mb-3">
-                                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                                <input type="password" class="form-control" id="password" name="password"
+                                    placeholder="Password" required>
                                 <div class="invalid-feedback">Please enter your password.</div>
                             </div>
                             <div class="mb-3">
-                                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
+                                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
+                                    placeholder="Confirm Password" required>
                                 <div class="invalid-feedback">Please confirm your password.</div>
                             </div>
                             <div class="form-group form-check">
-                            <input type="checkbox" class="form-check-input" id="agreeCheckbox" required>
-                            <label class="form-check-label" for="agreeCheckbox">I accept the <a href="/privacypolicy.html" target="_blank">Privacy Policy</a> and <a href="/termsofservice.html" target="_blank">Terms of Service</a></label>
-                            <div class="invalid-feedback">You must agree to the privacy policy and terms.</div>
+                                <input type="checkbox" class="form-check-input" id="agreeCheckbox" required>
+                                <label class="form-check-label" for="agreeCheckbox">I accept the <a
+                                        href="/privacypolicy.html" target="_blank">Privacy Policy</a> and <a
+                                        href="/termsofservice.html" target="_blank">Terms of Service</a></label>
+                                <div class="invalid-feedback">You must agree to the privacy policy and terms.</div>
                             </div>
                             <button type="submit" class="btn btn-success btn-block">Register</button>
                         </form>
-    
+
                         <div class="signup-link text-center">
                             Already have an account? <a href="../auth/login.php">Login</a>
                         </div>
@@ -184,10 +228,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <p>
                 &copy; 2024 Pharmawell. All rights reserved. |
                 <a href="/privacypolicy.html">Privacy Policy</a> | <a href="/termsofservice.html">Terms of Service</a>
-                </p>
+            </p>
         </div>
-    </footer>   
-   
+    </footer>
+
     <!-- node -->
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
@@ -195,8 +239,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-   
-   <?php
+
+    <?php
     if (!empty($message)) {
         if ($message === "success") {
             echo "<script>
@@ -227,7 +271,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
     ?>
-    
+
 </body>
 
 </html>

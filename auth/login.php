@@ -28,10 +28,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 if (password_verify($password, $storedPassword)) {
 
                     if ($row['usertype'] == 'admin') {
-                        header("Location: admin_dashboard.php");
+                        header("Location: ../admin/dashboard.php");
                         exit();
                     } else {
-                        header("Location: customer_dashboard.php");
+                        header("Location: ../customer/dashboard.php");
                         exit();
                     }
                 } else {
@@ -40,10 +40,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } else {
                 $message = "Email not found.";
             }
-            $stmt->close(); 
+            $stmt->close();
         }
     }
-    $conn->close(); 
+    $conn->close();
 }
 ?>
 
@@ -58,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="../public/css/index/nav.css">
     <link rel="stylesheet" href="../public/css/auth/login.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-  
+
 </head>
 
 <body>
@@ -93,7 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
             </div>
         </div>
-        </nav>
+    </nav>
     <main>
         <section class="login-section">
             <div class="container">
@@ -107,13 +107,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <h1>Login to Pharmawell</h1>
                         <p>Welcome back to Pharmawell! Enter your email and password to Login.</p>
 
-                        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="needs-validation">
+                        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST"
+                            class="needs-validation">
                             <div class="mb-3">
-                                <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Email"
+                                    required>
                                 <div class="invalid-feedback">Please enter your email.</div>
                             </div>
                             <div class="mb-3">
-                                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                                <input type="password" class="form-control" id="password" name="password"
+                                    placeholder="Password" required>
                                 <div class="invalid-feedback">Please enter your password.</div>
                             </div>
                             <div class="mb-3 form-check">
@@ -154,7 +157,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <a href="../privacypolicy.php">Privacy Policy</a> | <a href="../termsofservice.php">Terms of Service</a>
             </p>
         </div>
-    </footer> 
+    </footer>
 
 
     <!-- node -->

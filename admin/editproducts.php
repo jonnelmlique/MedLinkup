@@ -7,7 +7,7 @@
     <title>Edit Product</title>
     <link rel="stylesheet" href="../public/css/admin/sidebar.css">
     <link rel="stylesheet" href="../public/css/admin/addproducts.css">
-    <link href="./node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
    
 </head>
@@ -66,7 +66,7 @@
                     <span class="text"> Supplier</span>
                 </a>
                 <ul class="submenu">
-                    <li><a href="../public/Shared/Layout/error.php">Order</a></li>
+                    <li><a href="z">Order</a></li>
                     <li><a href="../public/Shared/Layout/error.php">Pending Order</a></li>
                     <li><a href="../public/Shared/Layout/error.php">Completed Order</a></li>
                     <li><a href="../public/Shared/Layout/error.php">Add Supplier</a></li>
@@ -161,9 +161,9 @@
     </main>
 
     <!-- node -->
-    <script src="./node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="./node_modules/popper.js/dist/umd/popper.min.js"></script>
-    <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
         function previewImage(event) {
