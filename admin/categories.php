@@ -1,3 +1,11 @@
+<?php
+include '../src/config/config.php';
+
+$sql = "SELECT * FROM categories";
+$result = $conn->query($sql);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -114,45 +122,40 @@
             </div>
 
             <table class="table">
-                <thead>
-                    <tr>
-                        <th>Category ID</th>
-                        <th>Category Name</th>
-                        <th>Medicine</th>
-                        <th>Action</th> 
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Sample</td>
-                        <td>10</td>
-                        <td class="actions">
-                            <a href="../admin/editcategories.php" class="button-like btn btn-sm btn-primary">
-                                <i class="fas fa-edit"></i>
-                            </a>
-                            <a href="#" class="button-like btn btn-sm btn-primary">
-                                <i class="fas fa-trash-alt"></i>
-                            </a>  
-                        </td>
-                    </tr>
-                    <!-- Add more table rows as needed -->
-                    <tr>
-                        <td>2</td>
-                        <td>Sample</td>
-                        <td>0</td>
-                        <td class="actions">
-                            <a href="../admin/editcategories.php" class="button-like btn btn-sm btn-primary">
-                                <i class="fas fa-edit"></i>
-                            </a>
-                            <a href="#" class="button-like btn btn-sm btn-primary">
-                                <i class="fas fa-trash-alt"></i>
-                            </a>                  
-                        </td>
-                    </tr>
-                    <!-- Add more table rows as needed -->
-                </tbody>
-            </table>
+                            <thead>
+                                <tr>
+                                    <th>Category ID</th>
+                                    <th>Category Name</th>
+                                    <th>Image</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                
+                                if ($result->num_rows > 0) {
+                                    while ($row = $result->fetch_assoc()) {
+                                        echo "<tr>";
+                                        echo "<td>" . $row["categoryid"] . "</td>";
+                                        echo "<td>" . $row["categoryname"] . "</td>";
+                                        echo "<td><img src='" . $row["imagepath"] . "' alt='Category Image' width='100'></td>";
+                                        echo "<td class='actions'>";
+                                        echo "<a href='../admin/editcategories.php?id=" . $row["categoryid"] . "' class='button-like btn btn-sm btn-primary'>";
+                                        echo "<i class='fas fa-edit'></i>";
+                                        echo "</a>";
+                                        echo "<a href='#' class='button-like btn btn-sm btn-primary'>";
+                                        echo "<i class='fas fa-trash-alt'></i>";
+                                        echo "</a>";
+                                        echo "</td>";
+                                        echo "</tr>";
+                                    }
+                                } else {
+                                    echo "<tr><td colspan='4'>No categories found</td></tr>";
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+
                     </div>
                 </div>
             </div>

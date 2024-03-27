@@ -1,3 +1,50 @@
+<?php
+include '../src/config/config.php';
+
+try {
+  
+    if ($conn->connect_error) {
+        throw new Exception("Connection failed: " . $conn->connect_error);
+    }
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if (!empty($_POST["categoryname"]) && isset($_FILES["image"])) {
+            $targetDir = "../uploads/";
+            $targetFilePath = $targetDir . basename($_FILES["image"]["name"]);
+            $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
+
+            $allowedTypes = array('jpg', 'png', 'jpeg', 'gif');
+            if (in_array($fileType, $allowedTypes)) {
+                if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFilePath)) {
+                    $categoryname = $_POST["categoryname"];
+                    $sql = "INSERT INTO categories (categoryname, imagepath) VALUES (?, ?)";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bind_param("ss", $categoryname, $targetFilePath);
+                    if ($stmt->execute()) {
+                        echo "Category added successfully!";
+                    } else {
+                        throw new Exception("Error executing SQL statement: " . $stmt->error);
+                    }
+                    $stmt->close();
+                } else {
+                    throw new Exception("Sorry, there was an error uploading your file.");
+                }
+            } else {
+                throw new Exception("Sorry, only JPG, JPEG, PNG, GIF files are allowed.");
+            }
+        } else {
+            throw new Exception("Please fill all fields.");
+        }
+    }
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+}
+
+if (isset($conn)) {
+    $conn->close();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,6 +54,7 @@
     <title>Add Categories</title>
     <link rel="stylesheet" href="../public/css/admin/sidebar.css">
     <link rel="stylesheet" href="../public/css/admin/addcategories.css">
+    
     <!-- <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 
@@ -88,6 +136,7 @@
             </ul>
     </section>
 
+
     <section id="content">
         <nav>
             <i class='fa-pills'></i>
@@ -96,60 +145,60 @@
             </a>
         </nav>
     </section>
-
-
     <main>
-        <div class="box-section">
-
-            <div class="head-title">
-                <div class="left">
-                    <h1 class="lefth">Add Category</h1>
-                </div>
+    <div class="box-section">
+        <div class="head-title">
+            <div class="left">
+                <h1 class="lefth">Add Category</h1>
             </div>
-
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-md-8">
-                        <div class="add-category-section">
-                            <div id="image-container">
-                                <div id="preview-image">
-                                    <img src="https://via.placeholder.com/350x350" alt="Preview Image">
-                                </div>
-                                <input type="file" class="form-control" id="image" name="image" accept="image/*"
-                                    onchange="previewImage(event)" required>
+        </div>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="add-category-section">
+                        <div class="image-container">
+                            <div class="preview-image" id="preview-image">
+                                <img src="https://via.placeholder.com/350x350" alt="Preview Image">
                             </div>
-                            <div id="form-container">
-                                <form action="#" method="POST" class="needs-validation" novalidate>
+                            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+                                <input type="file" class="form-control" id="image" name="image" accept="image/*" onchange="previewImage(event)" required>
+                                <div id="form-container">
                                     <div class="mb-3">
                                         <label for="categoryname">Category Name</label>
-                                        <input type="text" class="form-control" id="categoryname" name="categoryname"
-                                            placeholder="Category Name" required>
+                                        <input type="text" class="form-control" id="categoryname" name="categoryname" placeholder="Category Name" required>
                                     </div>
                                     <button type="submit" class="btn btn-submit">Submit</button>
-                                </form>
-                            </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</main>
 
-        </div>
-        </div>
-        </div>
-        </div>
-        </div>
-        </div>
-        </div>
-        </div>
-        </div>
-        </div>
-    </main>
 
     <!-- node -->
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
     <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function previewImage(event) {
+            var preview = document.getElementById('preview-image');
+            var file = event.target.files[0];
+            var reader = new FileReader();
+
+            reader.onloadend = function () {
+                preview.style.display = 'block';
+                preview.querySelector('img').src = reader.result;
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
 </body>
 
 </html>
