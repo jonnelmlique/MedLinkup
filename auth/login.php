@@ -1,6 +1,8 @@
 <?php
 include '../src/config/config.php';
 
+session_start();
+
 $message = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -26,6 +28,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $storedPassword = $row['password'];
 
                 if (password_verify($password, $storedPassword)) {
+
+                    $_SESSION['userid'] = $row['userid'];
+                    $_SESSION['usertype'] = $row['usertype'];
+
 
                     if ($row['usertype'] == 'admin') {
                         header("Location: ../admin/dashboard.php");
