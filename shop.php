@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 </head>
 
-<body>   
+<body>
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
             <a class="navbar-brand" href="./index.php">
@@ -43,268 +43,124 @@
                 </div>
             </div>
         </div>
-        </nav>
+    </nav>
     <div class="row">
-    <div class="col-md-3">
-        <div class="filter-section">
-            <h4>Filters</h4>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="category1">
-                <label class="form-check-label" for="category1">
-                    Category 1
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="category2">
-                <label class="form-check-label" for="category2">
-                    Category 2
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="category1">
-                <label class="form-check-label" for="category1">
-                    Category 3
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="category1">
-                <label class="form-check-label" for="category1">
-                    Category 4
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="category1">
-                <label class="form-check-label" for="category1">
-                    Category 5
-                </label>
-            </div>
+        <div class="col-md-3">
+            <div class="filter-section">
+                <h4>Filters</h4>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="category1">
+                    <label class="form-check-label" for="category1">
+                        Category 1
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="category2">
+                    <label class="form-check-label" for="category2">
+                        Category 2
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="category1">
+                    <label class="form-check-label" for="category1">
+                        Category 3
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="category1">
+                    <label class="form-check-label" for="category1">
+                        Category 4
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="category1">
+                    <label class="form-check-label" for="category1">
+                        Category 5
+                    </label>
+                </div>
 
+            </div>
         </div>
-    </div>
 
-    <div class="product-section">
-        <div class="container">
-            
-            <div class="search-bar">
-                <input type="text" class="form-control" placeholder="Search Products" aria-label="Search Products"
-                    aria-describedby="button-addon2">
-                <button class="btn btn-outline-secondary" type="button" id="button-addon2"><i
-                        class="fas fa-search"></i></button>
-            </div>
-            <h4 class="mb-4">Products</h4>
+        <div class="product-section">
+            <div class="container">
+
+                <div class="search-bar">
+                    <input type="text" class="form-control" placeholder="Search Products" aria-label="Search Products"
+                        aria-describedby="button-addon2">
+                    <button class="btn btn-outline-secondary" type="button" id="button-addon2"><i
+                            class="fas fa-search"></i></button>
+                </div>
+                <h4 class="mb-4">Products</h4>
 
                 <div class="row">
                     <!-- Example Product Card -->
-                    <div class="col-md-15">
+                    <!-- <div class="col-md-15">
                         <div class="product-card">
                             <a class="product-card-link" href="product.php">
                                 <img src="https://via.placeholder.com/200x200" alt="Product Image" />
                                 <div class="product-card-body">
                                     <h3 class="product-card-title">Example Product 1</h3>
                                     <p class="product-card-price">₱19.99</p>
+                                    <button class="btn btn-primary">Add to Cart</button>
+                                </div>
+                            </a>
+                        </div>
+                    </div> -->
+                    <?php
+include './src/config/config.php';
+
+try {
+    $sql = "SELECT productname, price, image FROM products";
+    $result = $conn->query($sql);
+
+    // Check if there are any products
+    if ($result->num_rows > 0) {
+        // Output data of each row
+        while ($row = $result->fetch_assoc()) {
+            ?>
+                    <!-- Product Card HTML -->
+                    <div class="col-md-15">
+                        <div class="product-card">
+                            <a class="product-card-link" href="product.php">
+                                <img src="./productimg/<?php echo $row["image"]; ?>" alt="Product Image" />
+                                <div class="product-card-body">
+                                    <h3 class="product-card-title"><?php echo $row["productname"]; ?></h3>
+                                    <p class="product-card-price">₱<?php echo $row["price"]; ?></p>
                                     <!--<button class="btn btn-primary">Add to Cart</button>-->
                                 </div>
                             </a>
                         </div>
                     </div>
-                    <!-- Example Product Card -->
-                    <div class="col-md-15">
-                        <div class="product-card">
-                            <a class="product-card-link" href="product.php">
-                                <img src="https://via.placeholder.com/200x200" alt="Product Image" />
-                                <div class="product-card-body">
-                                    <h3 class="product-card-title">Example Product 2</h3>
-                                    <p class="product-card-price">₱29.99</p>
-                                    <!--     <button class="btn btn-primary">Add to Cart</button>-->
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- Example Product Card -->
-                    <div class="col-md-15">
-                        <div class="product-card">
-                            <a class="product-card-link" href="product.php">
-                                <img src="https://via.placeholder.com/200x200" alt="Product Image" />
-                                <div class="product-card-body">
-                                    <h3 class="product-card-title">Example Product 3</h3>
-                                    <p class="product-card-price">₱39.99</p>
-                                    <!--     <button class="btn btn-primary">Add to Cart</button>-->
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- Example Product Card -->
-                    <div class="col-md-15">
-                        <div class="product-card">
-                            <a class="product-card-link" href="product.php">
-                                <img src="https://via.placeholder.com/200x200" alt="Product Image" />
-                                <div class="product-card-body">
-                                    <h3 class="product-card-title">Example Product 3</h3>
-                                    <p class="product-card-price">₱39.99</p>
-                                    <!--     <button class="btn btn-primary">Add to Cart</button>-->
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- Example Product Card -->
-                    <div class="col-md-15">
-                        <div class="product-card">
-                            <a class="product-card-link" href="product.php">
-                                <img src="https://via.placeholder.com/200x200" alt="Product Image" />
-                                <div class="product-card-body">
-                                    <h3 class="product-card-title">Example Product 3</h3>
-                                    <p class="product-card-price">₱39.99</p>
-                                    <!--     <button class="btn btn-primary">Add to Cart</button>-->
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- Example Product Card -->
-                    <div class="col-md-15">
-                        <div class="product-card">
-                            <a class="product-card-link" href="product.php">
-                                <img src="https://via.placeholder.com/200x200" alt="Product Image" />
-                                <div class="product-card-body">
-                                    <h3 class="product-card-title">Example Product 3</h3>
-                                    <p class="product-card-price">₱39.99</p>
-                                    <!--     <button class="btn btn-primary">Add to Cart</button>-->
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- Example Product Card -->
-                    <div class="col-md-15">
-                        <div class="product-card">
-                            <a class="product-card-link" href="product.php">
-                                <img src="https://via.placeholder.com/200x200" alt="Product Image" />
-                                <div class="product-card-body">
-                                    <h3 class="product-card-title">Example Product 3</h3>
-                                    <p class="product-card-price">₱39.99</p>
-                                    <!--     <button class="btn btn-primary">Add to Cart</button>-->
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- Example Product Card -->
-                    <div class="col-md-15">
-                        <a class="product-card-link" href="product.php">
-                            <div class="product-card">
-                                <img src="https://via.placeholder.com/200x200" alt="Product Image" />
-                                <div class="product-card-body">
-                                    <h3 class="product-card-title">Example Product 3</h3>
-                                    <p class="product-card-price">₱39.99</p>
-                                    <!--     <button class="btn btn-primary">Add to Cart</button>-->
-                                </div>
-                        </a>
-                    </div>
-                </div>
-                <!-- Example Product Card -->
-                <div class="col-md-15">
-                    <div class="product-card">
-                        <a class="product-card-link" href="product.php">
-                            <img src="https://via.placeholder.com/200x200" alt="Product Image" />
-                            <div class="product-card-body">
-                                <h3 class="product-card-title">Example Product 3</h3>
-                                <p class="product-card-price">₱39.99</p>
-                                <!--     <button class="btn btn-primary">Add to Cart</button>-->
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <!-- Example Product Card -->
-                <div class="col-md-15">
-                    <div class="product-card">
-                        <a class="product-card-link" href="product.php">
-                            <img src="https://via.placeholder.com/200x200" alt="Product Image" />
-                            <div class="product-card-body">
-                                <h3 class="product-card-title">Example Product 3</h3>
-                                <p class="product-card-price">₱39.99</p>
-                                <!--     <button class="btn btn-primary">Add to Cart</button>-->
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                   <!-- Example Product Card -->
-                   <div class="col-md-15">
-                    <div class="product-card">
-                        <a class="product-card-link" href="product.php">
-                            <img src="https://via.placeholder.com/200x200" alt="Product Image" />
-                            <div class="product-card-body">
-                                <h3 class="product-card-title">Example Product 3</h3>
-                                <p class="product-card-price">₱39.99</p>
-                                <!--     <button class="btn btn-primary">Add to Cart</button>-->
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <!-- Example Product Card -->
-                <div class="col-md-15">
-                    <div class="product-card">
-                        <a class="product-card-link" href="product.php">
-                            <img src="https://via.placeholder.com/200x200" alt="Product Image" />
-                            <div class="product-card-body">
-                                <h3 class="product-card-title">Example Product 3</h3>
-                                <p class="product-card-price">₱39.99</p>
-                                <!--     <button class="btn btn-primary">Add to Cart</button>-->
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <!-- Example Product Card -->
-                <div class="col-md-15">
-                    <a class="product-card-link" href="product.php">
-                        <div class="product-card">
-                            <img src="https://via.placeholder.com/200x200" alt="Product Image" />
-                            <div class="product-card-body">
-                                <h3 class="product-card-title">Example Product 3</h3>
-                                <p class="product-card-price">₱39.99</p>
-                                <!--     <button class="btn btn-primary">Add to Cart</button>-->
-                            </div>
-                    </a>
-                </div>
-            </div>
-            <!-- Example Product Card -->
-            <div class="col-md-15">
-                <div class="product-card">
-                    <a class="product-card-link" href="product.php">
-                        <img src="https://via.placeholder.com/200x200" alt="Product Image" />
-                        <div class="product-card-body">
-                            <h3 class="product-card-title">Example Product 3</h3>
-                            <p class="product-card-price">₱39.99</p>
-                            <!--     <button class="btn btn-primary">Add to Cart</button>-->
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <!-- Example Product Card -->
-            <div class="col-md-15">
-                <div class="product-card">
-                    <a class="product-card-link" href="product.php">
-                        <img src="https://via.placeholder.com/200x200" alt="Product Image" />
-                        <div class="product-card-body">
-                            <h3 class="product-card-title">Example Product 3</h3>
-                            <p class="product-card-price">₱39.99</p>
-                            <!--     <button class="btn btn-primary">Add to Cart</button>-->
-                        </div>
-                    </a>
+                    <?php
+        }
+    } else {
+        echo "No products available.";
+    }
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+}
+
+$conn->close();
+?>
+
+
                 </div>
             </div>
         </div>
     </div>
-    </div>
-</div>
-<section class="design-element">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <h3>Our Mission</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec dictum nunc. Nullam vitae
-                    ligula sed nisi sagittis facilisis vitae nec velit. Integer scelerisque magna sit amet dui
-                    suscipit, sed aliquam nunc scelerisque.</p>
+    <section class="design-element">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h3>Our Mission</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec dictum nunc. Nullam vitae
+                        ligula sed nisi sagittis facilisis vitae nec velit. Integer scelerisque magna sit amet dui
+                        suscipit, sed aliquam nunc scelerisque.</p>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
     <footer>
         <div class="container">
             <p>
@@ -312,7 +168,7 @@
                 <a href="./privacypolicy.php">Privacy Policy</a> | <a href="./termsofservice.php">Terms of Service</a>
             </p>
         </div>
-    </footer> 
+    </footer>
     <!-- node -->
     <script src="./node_modules/jquery/dist/jquery.min.js"></script>
     <script src="./node_modules/popper.js/dist/umd/popper.min.js"></script>

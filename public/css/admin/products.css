@@ -4,12 +4,10 @@ main {
     display: block;
 }
 
-
 .table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 80px;
-
 }
 
 .table th,
@@ -17,16 +15,28 @@ main {
     padding: 12px;
     text-align: left;
     border-bottom: 1px solid #dee2e6;
+    border-right: 1px solid #dee2e6; 
 }
 
 .table th {
     font-weight: bold;
     background-color: #f8f9fa;
+    text-align: center;
+    border-top: 1px solid #dee2e6; 
+}
+
+.table td:last-child {
+    border-right: none;
+}
+
+.table tr:last-child td {
+    border-bottom: none;
 }
 
 .table td {
     vertical-align: middle;
 }
+
 
 .price {
     color: #007bff;
@@ -70,8 +80,9 @@ main {
     margin-right: auto;
 }
 
+
 .add-button button {
-    padding: 8px 15px;
+    padding: 15px 20px;
     background-color: #28a745;
     color: #fff;
     border: none;
@@ -80,9 +91,9 @@ main {
     outline: none;
     transition: background-color 0.3s; 
     margin-top: 20px;
-    margin-right: 10px ;
+    margin-left: 10px;
+    font-weight: bold;
 }
-
 .add-button button:hover {
     background-color: #1c9601;
 }
@@ -119,6 +130,7 @@ a.button-like {
     transition: all 0.15s ease-in-out;
     background-color: #28a745;
     color: white;
+    margin-left: 10px
 }
 
 a.button-like:hover {

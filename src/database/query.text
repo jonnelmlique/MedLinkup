@@ -1,0 +1,35 @@
+CREATE DATABASE pharmawell;
+
+CREATE TABLE users (
+    userid INT AUTO_INCREMENT PRIMARY KEY,
+    firstname VARCHAR(50) NOT NULL,
+    lastname VARCHAR(50) NOT NULL,
+    username VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    password VARCHAR(64) NOT NULL,
+    usertype VARCHAR(20) NOT NULL,
+    UNIQUE KEY (email),
+    UNIQUE KEY (username)
+);
+
+ALTER TABLE users
+ADD COLUMN reset_token VARCHAR(100),
+ADD COLUMN reset_token_expiration DATETIME;
+
+ CREATE TABLE categories (
+      categoryid INT AUTO_INCREMENT PRIMARY KEY,
+      categoryname VARCHAR(255) NOT NULL,
+      imagepath VARCHAR(255) NOT NULL,
+     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+   );
+
+
+CREATE TABLE products (
+    productid INT AUTO_INCREMENT PRIMARY KEY,
+    productname VARCHAR(255) NOT NULL,
+    image VARCHAR(255) NOT NULL,
+    price DECIMAL(10, 2) NOT NULL,
+    productdetails TEXT NOT NULL,
+    productcategory VARCHAR(255) NOT NULL,
+    stock INT NOT NULL
+);

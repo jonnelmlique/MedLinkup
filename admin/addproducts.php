@@ -114,11 +114,12 @@
                             <div id="preview-image">
                                 <img src="https://via.placeholder.com/350x350" alt="Preview Image">
                             </div>
-                            <input type="file" class="form-control" id="image" name="image"
-                                accept="image/*" onchange="previewImage(event)" required>
+                   
                         </div>
                         <div id="form-container">
-                            <form action="#" method="POST" class="needs-validation" novalidate>
+                        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" enctype="multipart/form-data">
+                            <input type="file" class="form-control" id="image" name="image"
+                                accept="image/*" onchange="previewImage(event)" required>
                                 <div class="mb-3">
                                     <label for="categoryname">Product Name</label>
 
@@ -139,18 +140,33 @@
                                     <label for="categoryname">Select Category</label>
                                     <select class="form-control" id="category" name="category" required>
                                         <option value="" disabled selected>Select Category</option>
-                                        <option value="category1">Category 1</option>
-                                        <option value="category2">Category 2</option>
-                                        <option value="category3">Category 3</option>
+                                              <?php
+                                                include '../src/config/config.php';
+
+                                                $sql = "SELECT categoryname FROM categories";
+                                                $result = $conn->query($sql);
+
+                                                if ($result->num_rows > 0) {
+                                                    while($row = $result->fetch_assoc()) {
+                                                        echo "<option value='" . $row['categoryname'] . "'>" . $row['categoryname'] . "</option>";
+                                                    }
+                                                }
+                                            ?>
                                     </select>
                                 </div>
                                 <div class="mb-3">
                                     <label for="categoryname">Stock</label>
-                                    <input type="text" class="form-control" id="stock" name="stock"
+                                    <input type="number" class="form-control" id="stock" name="stock"
                                         placeholder="Stock" required>
                                 </div>
 
                                 <button type="submit" class="btn btn-submit">Add Product</button>
+                                <a href="./products.php" class="cancel-btn" 
+                                        style="display: inline-block; padding: 13px 16px; 
+                                        background-color: #f44336; color: #fff; text-decoration: 
+                                        none; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;"
+                                        onmouseover="this.style.backgroundColor='#d32f2f';"
+                                         onmouseout="this.style.backgroundColor='#f44336';">Cancel</a>
                             </form>
                         </div>
                     </div>
@@ -164,7 +180,78 @@
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
     <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <?php
+    try {
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $productName = $_POST['productName'];
+        $price = $_POST['price'];
+        $details = $_POST['details'];
+        $category = $_POST['category'];
+        $stock = $_POST['stock'];
+
+        $targetDir = "../productimg/";
+        $fileName = basename($_FILES["image"]["name"]);
+        $targetFilePath = $targetDir . $fileName;
+        $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
+
+        $allowedTypes = array('jpg', 'png', 'jpeg', 'gif');
+        if (in_array($fileType, $allowedTypes)) {
+
+            if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFilePath)) {
+
+                $sql = "INSERT INTO products (productname, image, price, productdetails, productcategory, stock) VALUES ('$productName', '$fileName', '$price', '$details', '$category', '$stock')";
+                if ($conn->query($sql) === TRUE) {
+                    $message = "success";
+                } else {
+                    throw new Exception("Error executing SQL statement: " . $stmt->error);
+                }
+            } else {
+                throw new Exception("Sorry, there was an error uploading your file.");
+            }
+        } else {
+            throw new Exception("Sorry, only JPG, JPEG, PNG, GIF files are allowed.");
+        }
+    }
+} catch (Exception $e) {
+   
+    $message = $e->getMessage();
+
+}
+    ?>
+<?php
+if (!empty($message)) {
+    if ($message === "success") {
+        echo "<script>
+            Swal.fire({
+                title: 'Product Added Successfully!',
+                text: 'You have successfully added the Product.',
+                icon: 'success',
+                showCancelButton: true,
+                confirmButtonText: 'OK',
+                cancelButtonText: 'View Products'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Do something if user clicks OK
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    window.location.href = '../admin/products.php';
+                }
+            });
+        </script>";
+    } else {
+        echo "<script>
+            Swal.fire({
+                title: 'Error',
+                text: '" . $message . "',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        </script>";
+    }
+}
+?>
     <script>
         function previewImage(event) {
             var preview = document.getElementById('preview-image');
@@ -181,6 +268,7 @@
             }
         }
     </script>
+    
 </body>
 
 </html>

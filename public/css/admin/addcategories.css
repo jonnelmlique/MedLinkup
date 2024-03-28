@@ -24,20 +24,19 @@ main {
     border-radius: 5px;
     padding: 10px;
     width: 300px;
-    border: 2px solid #70c45e;
+    border: 2px solid #1c9601;
     padding: 13px;
     font-size:14px;
 }
 
 
-.box-section form input[type="file"],
-.box-section form textarea,
-.box-section form select {
+.box-section form input[type="file"]
+{
     margin-bottom: 20px;
     border-radius: 5px;
     padding: 10px;
     width: 300px;
-    border: 2px solid #70c45e;
+    border: 2px solid #1c9601;
     padding: 13px;
 }
 .add-category-section {
@@ -70,7 +69,7 @@ main {
     border: 2px solid #1c9601;
     border-radius: 10px;
     background-color: #fff;
-    padding: 10px;
+    padding: 30px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.3s;
 }
@@ -109,6 +108,9 @@ main {
     cursor: pointer;
     transition: background-color 0.3s;
     width: 130px;
+    font-size: 14px;
+    font-weight: bold;
+    
 }
 
 .btn-submit:hover {
@@ -143,3 +145,4 @@ label {
     margin-bottom: 20px;
     color: #333;
 }
+

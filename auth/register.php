@@ -120,18 +120,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mx-auto">
+            <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="../index.html">Home</a>
+                        <a class="nav-link" href="../index.php">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../about.html">About</a>
+                        <a class="nav-link" href="../about.php">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../contact.html">Contact</a>
+                        <a class="nav-link" href="../contact.php">Contact</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../shop.html">Shop</a>
+                        <a class="nav-link" href="../shop.php">Shop</a>
                     </li>
                 </ul>
                 <div class="navbar-icons d-flex align-items-center">

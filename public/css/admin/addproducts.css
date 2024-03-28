@@ -13,7 +13,7 @@ main {
     margin-top: 50px;
     padding: 30px;
     border-radius: 10px;
-    margin-bottom: 45%;
+    margin-bottom: 55%;
 }
 
 .add-product-section h1 {
@@ -29,14 +29,26 @@ main {
 
 .add-product-section form input[type="text"],
 .add-product-section form input[type="number"],
-.add-product-section form input[type="file"],
 .add-product-section form textarea,
 .add-product-section form select {
     margin-bottom: 20px;
     border-radius: 5px;
     padding: 10px;
-    width: 100%;
-    border: 1px solid #ddd;
+    width: 300px;
+    border: 2px solid #1c9601;
+    padding: 13px;
+    font-size:14px;
+}
+.add-product-section form input[type="file"]
+{
+    
+        margin-bottom: 20px;
+        border-radius: 5px;
+        padding: 10px;
+        width: 300px;
+        border: 2px solid #1c9601;
+        padding: 13px;
+    
 }
 
 #image-container {
@@ -52,17 +64,17 @@ main {
 }
 
 #preview-image {
-  margin-bottom: 20px;
-  text-align: center;
-  max-width: 360px;
-  margin-left: 80px;
-  border: 2px solid #1c9601;
-  border-radius: 10px;
-   background-color: #fff;
-   padding: 30px;
-   border-radius: 10px;
-   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-   transition: box-shadow 0.3s;
+    margin-bottom: 20px;
+    text-align: center;
+    max-width: 360px;
+    margin-left: 80px;
+    border: 2px solid #1c9601;
+    border-radius: 10px;
+     background-color: #fff;
+     padding: 30px;
+     border-radius: 10px;
+     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+     transition: box-shadow 0.3s;
 }
 #preview-image:hover {
     box-shadow: 0 8px 12px rgba(28, 150, 1, 0.2);
@@ -73,14 +85,13 @@ main {
     height: auto;
 }
 #image {
-border: 2px solid #1c9601;
- border-radius: 10px;
- padding: 10px; 
- margin-left: 130px;
- background-color: #fff;
- border-radius: 10px;
- box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
- transition: box-shadow 0.3s;
+    border: 2px solid #1c9601;
+    border-radius: 10px;
+    padding: 10px;
+    width: 61%;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s;
 
 }
 #image:hover {
@@ -96,9 +107,10 @@ border: 2px solid #1c9601;
     padding: 15px 40px;
     cursor: pointer;
     transition: background-color 0.3s;
-    display: block;
-    margin: 0 auto;
-    margin-left: 0px;
+    width: 200px;
+    font-size: 14px;
+    font-weight: bold;
+    
 }
 
 .btn-submit:hover {

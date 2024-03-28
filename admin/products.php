@@ -130,40 +130,42 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><img src="https://via.placeholder.com/100x100" alt="Medicine Image"></td>
-                        <td>Sample</td>
-                        <td class="price">&#8369;7.49</td>
-                        <td>Lorem ipsum dolor sit amet consectetur adipisicing elit lorem ipsum. </td>
-                        <td>Sample</td>
-                        <td>100</td>
-                        <td class="actions">
-                            <a href="../admin/editproducts.php" class="button-like btn btn-sm btn-primary">
-                                <i class="fas fa-edit"></i>
-                            </a>
-                            <a href="#" class="button-like btn btn-sm btn-primary">
-                                <i class="fas fa-trash-alt"></i>
-                            </a>  
-                        </td>
-                    </tr>
-                    <!-- Add more table rows as needed -->
-                    <tr>
-                        <td><img src="https://via.placeholder.com/100x100" alt="Medicine Image"></td>
-                        <td>Antibiotics</td>
-                        <td class="price">&#8369;7.49</td>
-                        <td>Lorem ipsum dolor sit amet consectetur adipisicing elit lorem ipsum. </td>
-                        <td>Sample</td>
-                        <td>100</td>
-                        <td class="actions">
-                            <a href="../admin/editproducts.php" class="button-like btn btn-sm btn-primary">
-                                <i class="fas fa-edit"></i>
-                            </a>
-                            <a href="#" class="button-like btn btn-sm btn-primary">
-                                <i class="fas fa-trash-alt"></i>
-                            </a>  
-                        </td>
-                    </tr>
-                    <!-- Add more table rows as needed -->
+                <?php
+    // Fetch products data from your database and populate the table
+    include '../src/config/config.php';
+
+    try {
+        $sql = "SELECT * FROM products";
+        $result = $conn->query($sql);
+
+        if ($result !== false && $result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                echo "<tr>";
+                echo "<td><img src='../productimg/{$row['image']}' alt='{$row['productname']}' style='width: 100px; height: auto;'></td>";
+                echo "<td>{$row['productname']}</td>";
+                echo "<td class='price'>₱{$row['price']}</td>";
+                echo "<td>{$row['productdetails']}</td>";
+                echo "<td>{$row['productcategory']}</td>";
+                echo "<td>{$row['stock']}</td>";
+                echo "<td class='actions'>";
+                echo "<a href='../admin/editcategories.php?id=" . $row["productid"] . "' class='button-like btn btn-sm btn-primary'>";
+                echo "<i class='fas fa-edit'></i>";
+                echo "</a>";
+                echo "<a href='#' class='button-like btn btn-sm btn-primary'>";
+                echo "<i class='fas fa-trash-alt'></i>";
+                echo "</a>";
+                echo "</td>";
+                echo "</tr>";
+            }
+        } else {
+            echo "<tr><td colspan='7'>No products found</td></tr>";
+        }
+    } catch (Exception $e) {
+        echo "<tr><td colspan='7'>Error fetching products: " . $e->getMessage() . "</td></tr>";
+    }
+?>
+
+               
                 </tbody>
             </table>
                 </div>
