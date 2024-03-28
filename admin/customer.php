@@ -22,20 +22,15 @@ if ($_SESSION['usertype'] != 'admin') {
 }
 
 try {
-
     if ($_SESSION['usertype'] == 'admin') {
-
         $query = "SELECT firstname, lastname, username, email FROM users WHERE usertype = 'customer'";
         $result = mysqli_query($conn, $query);
 
         if (!$result) {
             throw new Exception("Query failed: " . mysqli_error($conn));
         }
+?>
 
-        if (mysqli_num_rows($result) == 0) {
-            echo "<p>No customers found</p>";
-        } else {
-            ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -140,37 +135,32 @@ try {
                     <div class="head">
                         <h3>Customers</h3>
                     </div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Username</th>
-                                <th>Email</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                                        while ($row = mysqli_fetch_assoc($result)) {
-                                            echo "<tr>";
-                                            echo "<td>" . $row['firstname'] . " " . $row['lastname'] . "</td>";
-                                            echo "<td>" . $row['username'] . "</td>";
-                                            echo "<td>" . $row['email'] . "</td>";
-                                            echo "</tr>";
-                                        }
-                                        ?>
-                        </tbody>
-                    </table>
-                    <?php
-                                }
-                                mysqli_free_result($result);
-                            } else {
-                                echo "<p>You are not authorized to view this page.</p>";
-                            }
-                        } catch (Exception $e) {
-                            echo "Error: " . $e->getMessage();
-                        }
-                        mysqli_close($conn);
-                        ?>
+              <table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        try {
+            while ($row = mysqli_fetch_assoc($result)) {
+                echo "<tr>";
+                echo "<td>" . $row['firstname'] . " " . $row['lastname'] . "</td>";
+                echo "<td>" . $row['username'] . "</td>";
+                echo "<td>" . $row['email'] . "</td>";
+                echo "</tr>";
+            }
+        } catch (Exception $e) {
+            echo "<tr><td colspan='3'>No customers found</td></tr>";
+        }
+        ?>
+    </tbody>
+</table>
+
+                   
                 </div>
             </div>
         </main>
@@ -181,7 +171,14 @@ try {
     <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-
+<?php
+    }
+    mysqli_free_result($result);
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+}
+mysqli_close($conn);
+?>
 </body>
 
 </html>
