@@ -21,7 +21,7 @@ try {
                     $stmt = $conn->prepare($sql);
                     $stmt->bind_param("ss", $categoryname, $targetFilePath);
                     if ($stmt->execute()) {
-                        echo "Category added successfully!";
+                        $message = "success";
                     } else {
                         throw new Exception("Error executing SQL statement: " . $stmt->error);
                     }
@@ -37,7 +37,9 @@ try {
         }
     }
 } catch (Exception $e) {
-    echo "Error: " . $e->getMessage();
+    // echo "Error: " . $e->getMessage();
+    $message = $e->getMessage();
+
 }
 
 if (isset($conn)) {
@@ -183,6 +185,39 @@ if (isset($conn)) {
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
     <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<?php
+if (!empty($message)) {
+    if ($message === "success") {
+        echo "<script>
+            Swal.fire({
+                title: 'Category Added Successfully!',
+                text: 'You have successfully added the category.',
+                icon: 'success',
+                showCancelButton: true,
+                confirmButtonText: 'OK',
+                cancelButtonText: 'View Categories'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Do something if user clicks OK
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    window.location.href = '../admin/categories.php';
+                }
+            });
+        </script>";
+    } else {
+        echo "<script>
+            Swal.fire({
+                title: 'Error',
+                text: '" . $message . "',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        </script>";
+    }
+}
+?>
+
     <script>
         function previewImage(event) {
             var preview = document.getElementById('preview-image');

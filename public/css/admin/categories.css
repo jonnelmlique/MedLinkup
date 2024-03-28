@@ -130,6 +130,7 @@ a.button-like {
     transition: all 0.15s ease-in-out;
     background-color: #28a745;
     color: white;
+    margin-left: 5px
 }
 
 a.button-like:hover {
