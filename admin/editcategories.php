@@ -1,6 +1,6 @@
 <?php
-session_start();
 include '../src/config/config.php';
+session_start();
 
 $category_data = [];
 

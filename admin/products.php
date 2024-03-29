@@ -148,7 +148,7 @@
                 echo "<td>{$row['productcategory']}</td>";
                 echo "<td>{$row['stock']}</td>";
                 echo "<td class='actions'>";
-                echo "<a href='../admin/editcategories.php?id=" . $row["productid"] . "' class='button-like btn btn-sm btn-primary'>";
+                echo "<a href='../admin/editproducts.php?id=" . $row["productid"] . "' class='button-like btn btn-sm btn-primary'>";
                 echo "<i class='fas fa-edit'></i>";
                 echo "</a>";
                 echo "<a href='#' class='button-like btn btn-sm btn-primary'>";
