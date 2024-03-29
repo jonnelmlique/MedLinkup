@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home</title>
-    
+
     <link href="./node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./public/css/index/shop.css">
     <link rel="stylesheet" href="./public/css/index/nav.css">
@@ -95,7 +95,6 @@
                 <h4 class="mb-4">Products</h4>
 
                 <div class="row">
-                    <!-- Example Product Card -->
                     <!-- <div class="col-md-15">
                         <div class="product-card">
                             <a class="product-card-link" href="product.php">
@@ -112,28 +111,29 @@
 include './src/config/config.php';
 
 try {
-    $sql = "SELECT productname, price, image FROM products";
+    $sql = "SELECT productid, productname, price, image FROM products";
     $result = $conn->query($sql);
 
-    // Check if there are any products
     if ($result->num_rows > 0) {
-        // Output data of each row
+
         while ($row = $result->fetch_assoc()) {
             ?>
                     <!-- Product Card HTML -->
                     <div class="col-md-15">
-                        <div class="product-card">
-                            <a class="product-card-link" href="product.php">
+                        <a href="./product.php?id=<?php echo $row["productid"]; ?>" class="product-card-link">
+
+                            <div class="product-card">
+                                <!-- <a class="product-card-link" href="product.php"> -->
                                 <img src="./productimg/<?php echo $row["image"]; ?>" alt="Product Image" />
                                 <div class="product-card-body">
                                     <h3 class="product-card-title"><?php echo $row["productname"]; ?></h3>
                                     <p class="product-card-price">₱<?php echo $row["price"]; ?></p>
                                     <!--<button class="btn btn-primary">Add to Cart</button>-->
                                 </div>
-                            </a>
-                        </div>
+                        </a>
                     </div>
-                    <?php
+                </div>
+                <?php
         }
     } else {
         echo "No products available.";
@@ -146,9 +146,9 @@ $conn->close();
 ?>
 
 
-                </div>
             </div>
         </div>
+    </div>
     </div>
     <section class="design-element">
         <div class="container">

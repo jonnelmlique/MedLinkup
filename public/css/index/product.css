@@ -5,9 +5,26 @@
   text-align: center;
 }
 .product-details-img img {
-  width: 70%;
+  width: 90%;
   border-radius: 8px;
   margin-bottom: 20px;
+  border: 2px solid #1c9601;
+
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s;
+}
+.product-details-img img:hover{
+  box-shadow: 0 8px 12px rgba(28, 150, 1, 0.2);
+
+}
+.product-stock{
+  font-weight: bold;
+  font-size: 18px;
+  color: #1c9601;
+  padding: 10px;
+  border: 2px solid #1c9601;
+  width:  36%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 .product-details-title {
   font-size: 2rem;

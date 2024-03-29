@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="../public/css/admin/lowstock.css">
     <!-- <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-   
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -98,18 +99,17 @@
     </nav>
     </section>
 
-
-<main>
+ 
+    <main>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="box-section">
                     
-
             <div class="search-bar">
-                <div class="print">
-                    <a href="#" class="btn-link"> 
-                        <button>Print</button>
+                <div class="print-button">
+                  
+                <button id="print-button">Print</button>
                     </a>
                 </div>
                 
@@ -117,44 +117,59 @@
                 <button><i class="fas fa-search"></i></button>
             </div>
 
+
             <h1 class="lefth">Low Stock Medicine List</h1>
-            <table class="table">
+            <table class="table" id="medicine-table">
                 <thead>
                     <tr>
                         <th>Image</th>
                         <th>Name</th>
                         <th>Price</th>
+                        <th>Details</th>
                         <th>Category</th>
                         <th>Stock</th>
-                        <th>Action</th> <!-- New column for actions -->
+                        <th>Action</th> 
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><img src="https://via.placeholder.com/100x100" alt="Medicine Image"></td>
-                        <td>Sample</td>
-                        <td class="price">&#8369;7.49</td>
-                        <td>Sample</td>
-                        <td>1</td>
-                        <td class="actions">
-                            <button class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></button>
-                            <button class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button>
-                        </td>
-                    </tr>
-                    <!-- Add more table rows as needed -->
-                    <tr>
-                        <td><img src="https://via.placeholder.com/100x100" alt="Medicine Image"></td>
-                        <td>Antibiotics</td>
-                        <td class="price">&#8369;7.49</td>
-                        <td>Sample</td>
-                        <td>10</td>
-                        <td class="actions">
-                            <button class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></button>
-                            <button class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button>
-                        </td>
-                    </tr>
-                    <!-- Add more table rows as needed -->
-                </tbody>
+                <?php
+
+include '../src/config/config.php';
+
+    try {
+        $sql = "SELECT * FROM products WHERE stock BETWEEN 0 AND 20";
+        $result = $conn->query($sql);
+
+        if ($result !== false && $result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                echo "<tr>";
+                echo "<td><img src='../productimg/{$row['image']}' alt='{$row['productname']}' style='width: 100px; height: auto;'></td>";
+                echo "<td>{$row['productname']}</td>";
+                echo "<td class='price'>₱{$row['price']}</td>";
+                echo "<td>{$row['productdetails']}</td>";
+                echo "<td>{$row['productcategory']}</td>";
+                echo "<td>{$row['stock']}</td>";
+                echo "<td class='actions'>";
+                echo "<a href='../admin/editproducts.php?id=" . $row["productid"] . "' class='button-like btn btn-sm btn-primary'>";
+                echo "<i class='fas fa-edit'></i>";
+                echo "</a>";
+                echo "<a href='#' class='button-like btn btn-sm btn-primary'>";
+                echo "<i class='fas fa-trash-alt'></i>";
+                echo "</a>";
+                echo "</td>";
+                echo "</tr>";
+            }
+        } else {
+            echo "<tr><td colspan='7'>No products found</td></tr>";
+        }
+    } catch (Exception $e) {
+        echo "<tr><td colspan='7'>Error fetching products: " . $e->getMessage() . "</td></tr>";
+    }
+?>
+
+ 
+               
+</tbody>
             </table>
                 </div>
             </div>
@@ -162,12 +177,46 @@
     </div>
         </main>
     </section>
+    <?php
+
+try {
+
+    $sql = "SELECT * FROM products WHERE stock <= 20"; // Assuming 20 is the threshold for low stock
+    $result = $conn->query($sql);
+    $low_stock_products = [];
+    if ($result !== false && $result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $low_stock_products[] = $row;
+        }
+    }
+
+    $low_stock_products_json = json_encode($low_stock_products);
+} catch (Exception $e) {
+    $error_message = "Error fetching low stock products: " . $e->getMessage();
+}
+
+$conn->close();
+?>
 
     <!-- node -->
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
     <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Link Toastr JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script>
+    $(document).ready(function() {
+        var lowStockProducts = <?php echo isset($low_stock_products_json) ? $low_stock_products_json : '[]'; ?>;
 
+        lowStockProducts.forEach(function(product) {
+            toastr.options.positionClass = 'toast-bottom-right'; 
+            toastr.options.progressBar = true; 
+            toastr.options.closeButton = true; 
+            toastr.warning('<div class="toast-title">Low stock for:</div><div class="toast-message">' + product.productname + ' (' + product.stock + ' remaining)</div>');
+        });
+    });
+</script>
     <script>
         function previewImage(event) {
             var preview = document.getElementById('preview-image');
@@ -184,6 +233,64 @@
             }
         }
     </script>
+ <script>
+    document.getElementById('print-button').addEventListener('click', function() {
+        var table = document.getElementById('medicine-table');
+        if (table) {
+            var printWindow = window.open('', '_blank');
+            if (printWindow) {
+                printWindow.document.open();
+                printWindow.document.write('<html><head><title>Pharmawell - Low Stock Medicine List</title>');
+
+                printWindow.document.write('<style>');
+                printWindow.document.write('table { width: 100%; border-collapse: collapse; }');
+                printWindow.document.write('th, td { border: 1px solid #dddddd; text-align: left; padding: 8px; }');
+                printWindow.document.write('th { background-color: #f2f2f2; }');
+                printWindow.document.write('</style>');
+                printWindow.document.write('</head><body>');
+                printWindow.document.write('<h1>Pharmawell - Low Stock Medicine List</h1>');
+
+                printWindow.document.write('<table>');
+
+                printWindow.document.write('<thead><tr>');
+                printWindow.document.write('<th>Image</th>');
+                printWindow.document.write('<th>Name</th>');
+                printWindow.document.write('<th>Price</th>');
+                printWindow.document.write('<th>Category</th>');
+                printWindow.document.write('<th>Stock</th>');
+                printWindow.document.write('</tr></thead>');
+
+                printWindow.document.write('<tbody>');
+                var tbody = table.getElementsByTagName('tbody')[0];
+                for (var i = 0; i < tbody.rows.length; i++) {
+                    printWindow.document.write('<tr>');
+
+                    for (var j = 0; j < 3; j++) {
+                        printWindow.document.write(tbody.rows[i].cells[j].outerHTML);
+                    }
+
+                    printWindow.document.write(tbody.rows[i].cells[4].outerHTML); 
+                    printWindow.document.write(tbody.rows[i].cells[5].outerHTML); 
+                    printWindow.document.write('</tr>');
+                }
+                printWindow.document.write('</tbody>');
+                printWindow.document.write('</table>');
+                printWindow.document.write('</body></html>');
+                printWindow.document.close();
+                printWindow.print();
+            } else {
+                alert('Unable to open print window.');
+            }
+        } else {
+            alert('Table not found.');
+        }
+    });
+</script>
+
+
+
+
+
 </body>
 
 </html>

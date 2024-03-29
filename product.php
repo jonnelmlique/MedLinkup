@@ -47,29 +47,57 @@
         </div>
         </nav>
 
-    <div class="container product-details">
-        <div class="row">
-            <div class="col-md-6 product-details-img">
-                <img src="https://via.placeholder.com/400x300" alt="Product Image">
-            </div>
-            <div class="col-md-6">
-                <h2 class="product-details-title">Example Product</h2>
-                <p class="product-details-price">₱19.99</p>
-                <p class="product-details-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut
-                    risus eget est facilisis laoreet. Quisque bibendum justo nec arcu dictum, eget posuere velit cursus.
-                    Nulla fermentum sem et lacus placerat, nec fermentum arcu faucibus. Nam consequat sodales leo, at
-                    tempor lectus faucibus ac.</p>
-                <div class="form-group">
-                    <label for="quantity">Quantity:</label>
-                    <input type="number" class="form-control form-control-sm" id="quantity" value="1" min="1"
-                        style="width: 100px;">
-                </div>
-                <button class="btn btn-primary" onclick="addToCart()">Add to Cart</button>
-                <button class="btn btn-success">Buy Now</button>
-            </div>
-        </div>
+        <?php
+include './src/config/config.php';
 
-    </div>
+if (isset($_GET['id']) && !empty($_GET['id'])) {
+    $product_id = $_GET['id'];
+    try {
+        $sql = "SELECT productname, price, productdetails, image, stock FROM products WHERE productid = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $product_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            ?>
+            <div class="container product-details">
+                <div class="row">
+                    <div class="col-md-6 product-details-img">
+                        <img src="./productimg/<?php echo $row["image"]; ?>" alt="Product Image">
+                    </div>
+                    <div class="col-md-6">
+                        <h2 class="product-details-title"><?php echo $row["productname"]; ?></h2>
+                        <p class="product-details-price">₱<?php echo $row["price"]; ?></p>
+                        <p class="product-details-description"><?php echo $row["productdetails"]; ?></p>
+                        <p class="product-stock">Available Stock: <?php echo $row["stock"]; ?></p>
+
+                        <div class="form-group">
+                            <label for="quantity">Quantity:</label>
+                            <input type="number" class="form-control form-control-sm" id="quantity" value="1" min="1" style="width: 100px;">
+                        </div>
+                        <button class="btn btn-primary" onclick="addToCart()">Add to Cart</button>
+                        <button class="btn btn-success">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <?php
+        } else {
+            echo "Product not found.";
+        }
+    } catch (Exception $e) {
+        echo "Error: " . $e->getMessage();
+    }
+
+    $stmt->close();
+} else {
+    echo "Invalid product ID.";
+}
+
+$conn->close();
+?>
+
 
     <div class="product-section">
         <div class="container">
