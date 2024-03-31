@@ -143,6 +143,32 @@ a.button-like:hover {
     border-color: #1c9601;
     color: #70d284;
 }
+
+
+.print {
+    margin-bottom: 20px;
+    margin-right: auto;
+}
+
+
+.print button {
+    padding: 15px 20px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.3s; 
+    margin-top: 20px;
+    margin-right: 750px;
+    font-weight: bold;
+}
+.print button:hover {
+    background-color: #1c9601;
+}
+
+
 @media (max-width: 768px) {
     main {
         margin-left: 0;

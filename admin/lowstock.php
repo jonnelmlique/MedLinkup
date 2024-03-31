@@ -181,7 +181,7 @@ include '../src/config/config.php';
 
 try {
 
-    $sql = "SELECT * FROM products WHERE stock <= 20"; // Assuming 20 is the threshold for low stock
+    $sql = "SELECT * FROM products WHERE stock <= 20"; 
     $result = $conn->query($sql);
     $low_stock_products = [];
     if ($result !== false && $result->num_rows > 0) {

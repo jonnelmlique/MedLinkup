@@ -110,7 +110,11 @@
                     <a href="../admin/addproducts.php" class="btn-link"> 
                         <button>Add</button>
                     </a>
-                </div>
+                    </div>
+                    <div class="print">
+                    <button>Print   </button>
+                    </div>
+               
                 
                 <input type="text" placeholder="Search...">
                 <button><i class="fas fa-search"></i></button>
