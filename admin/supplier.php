@@ -15,7 +15,7 @@
         <section id="sidebar">
             <a href="admin.php" class="brand">
                 <img src="logo.png">
-                <span class="text"> Pharmawell</span>
+                <span class="text"> MedLinkup</span>
             </a>
             <ul class="side-menu top">
                 <li>
@@ -74,7 +74,7 @@
         <section id="content">
             <nav>
                 <i class='fa-pills' ></i>
-                <a href="admin.php" class="nav-link">Pharmawell</a>
+                <a href="admin.php" class="nav-link">MedLinkup</a>
                 <a href="#" class="profile">
                     <img src="https://i.pinimg.com/originals/f1/0f/f7/f10ff70a7155e5ab666bcdd1b45b726d.jpg">
                 </a>

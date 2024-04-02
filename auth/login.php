@@ -71,7 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
             <a class="navbar-brand" href="/index.php">
-                <img src="../public/img/logo.png" alt="Pharmawell Logo" class="logo"> Pharmawell
+                <img src="../public/img/logo.png" alt="MedLinkup Logo" class="logo"> MedLinkup
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -110,8 +110,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <h1>Login to Pharmawell</h1>
-                        <p>Welcome back to Pharmawell! Enter your email and password to Login.</p>
+                        <h1>Login to MedLinkup</h1>
+                        <p>Welcome back to MedLinkup! Enter your email and password to Login.</p>
 
                         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST"
                             class="needs-validation">
@@ -159,7 +159,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <footer>
         <div class="container">
             <p>
-                &copy; 2024 Pharmawell. All rights reserved. |
+                &copy; 2024 MedLinkup. All rights reserved. |
                 <a href="../privacypolicy.php">Privacy Policy</a> | <a href="../termsofservice.php">Terms of Service</a>
             </p>
         </div>

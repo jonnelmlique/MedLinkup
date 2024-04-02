@@ -16,8 +16,8 @@
 <body>
     <section id="sidebar">
         <a href="../supplier/dashboard.php" class="brand">
-            <img src="../public/img/logo.png" alt="Pharmawell Logo" class="logo">
-            <span class="text"> Pharmawell</span>
+            <img src="../public/img/logo.png" alt="MedLinkup Logo" class="logo">
+            <span class="text"> MedLinkup</span>
         </a>
         <ul class="side-menu top">
             <li>

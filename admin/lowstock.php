@@ -17,8 +17,8 @@
 
     <section id="sidebar">
         <a href="../supplier/dashboard.php" class="brand">
-            <img src="../public/img/logo.png" alt="Pharmawell Logo" class="logo">
-            <span class="text"> Pharmawell</span>
+            <img src="../public/img/logo.png" alt="MedLinkup Logo" class="logo">
+            <span class="text"> MedLinkup</span>
         </a>
         <ul class="side-menu top">
             <li>
@@ -245,7 +245,7 @@ $conn->close();
             var printWindow = window.open('', '_blank');
             if (printWindow) {
                 printWindow.document.open();
-                printWindow.document.write('<html><head><title>Pharmawell - Low Stock Medicine List</title>');
+                printWindow.document.write('<html><head><title>MedLinkup - Low Stock Medicine List</title>');
 
                 printWindow.document.write('<style>');
                 printWindow.document.write('table { width: 100%; border-collapse: collapse; }');
@@ -253,7 +253,7 @@ $conn->close();
                 printWindow.document.write('th { background-color: #f2f2f2; }');
                 printWindow.document.write('</style>');
                 printWindow.document.write('</head><body>');
-                printWindow.document.write('<h1>Pharmawell - Low Stock Medicine List</h1>');
+                printWindow.document.write('<h1>MedLinkup - Low Stock Medicine List</h1>');
 
                 printWindow.document.write('<table>');
 

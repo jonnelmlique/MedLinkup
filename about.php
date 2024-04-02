@@ -16,7 +16,7 @@
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
             <a class="navbar-brand" href="/index.php">
-                <img src="./public/img/logo.png" alt="Pharmawell Logo" class="logo"> Pharmawell
+                <img src="./public/img/logo.png" alt="MedLinkup Logo" class="logo"> MedLinkup
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,7 +50,7 @@
             <section class="about-section">
             <div class="row">
                 <div class="col-md-6">
-                    <h2>About Pharmawell</h2>
+                    <h2>About MedLinkup</h2>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec dictum nunc. Nullam vitae
                         ligula sed nisi sagittis facilisis vitae nec velit. Integer scelerisque magna sit amet dui
                         suscipit, sed aliquam nunc scelerisque. </p>
@@ -79,7 +79,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <h2>About Pharmawell</h2>
+                    <h2>About MedLinkup</h2>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec dictum nunc. Nullam vitae
                         ligula sed nisi sagittis facilisis vitae nec velit. Integer scelerisque magna sit amet dui
                         suscipit, sed aliquam nunc scelerisque. </p>
@@ -121,7 +121,7 @@
     <footer>
         <div class="container">
             <p>
-                &copy; 2024 Pharmawell. All rights reserved. |
+                &copy; 2024 MedLinkup. All rights reserved. |
                 <a href="./privacypolicy.php">Privacy Policy</a> | <a href="/termsofservice.php">Terms of Service</a>
             </p>
         </div>

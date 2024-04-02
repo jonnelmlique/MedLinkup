@@ -14,8 +14,8 @@
 
     <section id="sidebar">
         <a href="../supplier/dashboard.php" class="brand">
-            <img src="../public/img/logo.png" alt="Pharmawell Logo" class="logo">
-            <span class="text"> Pharmawell</span>
+            <img src="../public/img/logo.png" alt="MedLinkup Logo" class="logo">
+            <span class="text"> MedLinkup</span>
         </a>
         <ul class="side-menu top">
             <li>
@@ -129,7 +129,7 @@
                             <td>
                                 <img src="https://i.pinimg.com/originals/f1/0f/f7/f10ff70a7155e5ab666bcdd1b45b726d.jpg">
 
-                                <p>Pharmawell</p>
+                                <p>MedLinkup</p>
                                 <td></td>
 
                             </td>
@@ -144,7 +144,7 @@
                             <td>
                                 <img src="https://i.pinimg.com/originals/f1/0f/f7/f10ff70a7155e5ab666bcdd1b45b726d.jpg">
 
-                                <p>Pharmawell</p>
+                                <p>MedLinkup</p>
                                 <td></td>
 
                             </td>
@@ -185,7 +185,7 @@
                         <tr>
                             <td>
                                 <img src="https://i.pinimg.com/originals/f1/0f/f7/f10ff70a7155e5ab666bcdd1b45b726d.jpg">
-                                <p>Pharmawell</p>
+                                <p>MedLinkup</p>
                                 <td></td>
 
                             </td>
@@ -199,7 +199,7 @@
                         <tr>
                             <td>
                                 <img src="https://i.pinimg.com/originals/f1/0f/f7/f10ff70a7155e5ab666bcdd1b45b726d.jpg">
-                                <p>Pharmawell</p>
+                                <p>MedLinkup</p>
                                 <td></td>
 
                             </td>

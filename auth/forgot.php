@@ -41,17 +41,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $mail->isSMTP();
                 $mail->Host = 'smtp.gmail.com';
                 $mail->SMTPAuth = true;
-                $mail->Username = 'pharmawellcontact@gmail.com';
+                $mail->Username = 'medlinkupcontact@gmail.com';
                 $mail->Password = 'ynlaogsvvbmlrsob';
                 $mail->SMTPSecure = 'tls';
                 $mail->Port = 587;
                 
-                $mail->setFrom('pharmawellcontact@gmail.com', 'Pharmawell   ');
+                $mail->setFrom('medlinkupcontact@gmail.com', 'MedLinkup   ');
                 $mail->addAddress($email);
                 $mail->isHTML(true);
                 
                 $mail->Subject = 'Password Reset Link';
-                $mail->Body = 'Click <a href="http://localhost/pharmawell/auth/reset.php?token='.$token.'">here</a> to reset your password. This link is valid for 1 hour.';
+                $mail->Body = 'Click <a href="http://localhost/MedLinkup/auth/reset.php?token='.$token.'">here</a> to reset your password. This link is valid for 1 hour.';
                 
                 $mail->send();
                 
@@ -87,7 +87,7 @@ $conn->close();
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
             <a class="navbar-brand" href="../index.php">
-                <img src="../public/img/logo.png" alt="Pharmawell Logo" class="logo"> Pharmawell
+                <img src="../public/img/logo.png" alt="MedLinkup Logo" class="logo"> MedLinkup
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -178,7 +178,7 @@ $conn->close();
     <footer>
         <div class="container">
             <p>
-                &copy; 2024 Pharmawell. All rights reserved. |
+                &copy; 2024 MedLinkup. All rights reserved. |
                 <a href="../privacypolicy.php">Privacy Policy</a> | <a href="../termsofservice.php">Terms of Service</a>
             </p>
         </div>

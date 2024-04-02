@@ -15,7 +15,7 @@
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
             <a class="navbar-brand" href="./index.php">
-                <img src="./public/img/logo.png" alt="Pharmawell Logo" class="logo"> Pharmawell
+                <img src="./public/img/logo.png" alt="MedLinkup Logo" class="logo"> MedLinkup
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,8 +47,8 @@
         <h2>Contact Us</h2>
 
         <div class="alert alert-success" role="alert">
-            You can also send a direct email to <a href="pharmawellcontact@gmail.com"
-                class="alert-link">pharmawellcontact@gmail.com</a>
+            You can also send a direct email to <a href="medlinkupcontact@gmail.com"
+                class="alert-link">medlinkupcontact@gmail.com</a>
         </div>
 
         <?php
@@ -71,13 +71,13 @@
                 $mail->isSMTP();
                 $mail->Host = 'smtp.gmail.com';
                 $mail->SMTPAuth = true;
-                $mail->Username = 'pharmawellcontact@gmail.com';
+                $mail->Username = 'medlinkupcontact@gmail.com';
                 $mail->Password = 'ynlaogsvvbmlrsob';
                 $mail->SMTPSecure = 'tls';
                 $mail->Port = 587;
 
-                $mail->setFrom('pharmawellcontact@gmail.com', 'Pharmawell Contact');
-                $mail->addAddress('pharmawellofficial@gmail.com');
+                $mail->setFrom('medlinkupcontact@gmail.com', 'MedLinkup Contact');
+                $mail->addAddress('MedLinkupofficial@gmail.com');
                 $mail->addReplyTo($email);
 
                 $mail->isHTML(true);
@@ -124,7 +124,7 @@
     <footer>
         <div class="container">
             <p>
-                &copy; 2024 Pharmawell. All rights reserved. |
+                &copy; 2024 MedLinkup. All rights reserved. |
                 <a href="./privacypolicy.php">Privacy Policy</a> | <a href="./termsofservice.php">Terms of Service</a>
             </p>
         </div>

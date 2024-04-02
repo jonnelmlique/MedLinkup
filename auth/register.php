@@ -63,17 +63,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             $mail->isSMTP();
                             $mail->Host = 'smtp.gmail.com';
                             $mail->SMTPAuth = true;
-                            $mail->Username = 'pharmawellcontact@gmail.com';
+                            $mail->Username = 'medlinkupcontact@gmail.com';
                             $mail->Password = 'ynlaogsvvbmlrsob';
                             $mail->SMTPSecure = 'tls';
                             $mail->Port = 587;
 
-                            $mail->setFrom('pharmawellcontact@gmail.com', 'Pharmawell');
+                            $mail->setFrom('medlinkupcontact@gmail.com', 'MedLinkup');
                             $mail->addAddress($email);
                             $mail->isHTML(true);
 
                             $mail->Subject = 'Account Created Successfully';
-                            $mail->Body = 'Welcome to Pharmawell. Your account has been successfully created.';
+                            $mail->Body = 'Welcome to MedLinkup. Your account has been successfully created.';
 
                             $mail->send();
                         } catch (Exception $e) {
@@ -112,7 +112,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
             <a class="navbar-brand" href="/index.html">
-                <img src="../public/img/logo.png" alt="Pharmawell Logo" class="logo"> Pharmawell
+                <img src="../public/img/logo.png" alt="MedLinkup Logo" class="logo"> MedLinkup
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -152,8 +152,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <h1>Register to Pharmawell</h1>
-                        <p>Create your account to get started with Pharmawell.</p>
+                        <h1>Register to MedLinkup</h1>
+                        <p>Create your account to get started with MedLinkup.</p>
 
                         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST"
                             class="needs-validation">
@@ -226,7 +226,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <footer>
         <div class="container">
             <p>
-                &copy; 2024 Pharmawell. All rights reserved. |
+                &copy; 2024 MedLinkup. All rights reserved. |
                 <a href="/privacypolicy.html">Privacy Policy</a> | <a href="/termsofservice.html">Terms of Service</a>
             </p>
         </div>

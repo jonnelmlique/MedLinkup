@@ -15,8 +15,8 @@
     
     <section id="sidebar">
         <a href="admin.php" class="brand">
-            <img src="../public/img/logo.png" alt="Pharmawell Logo" class="logo">
-            <span class="text"> Pharmawell</span>
+            <img src="../public/img/logo.png" alt="MedLinkup Logo" class="logo">
+            <span class="text"> MedLinkup</span>
         </a>
         <ul class="side-menu top">
             <li>
@@ -107,7 +107,7 @@
                            
                         <tr>
                             <td>
-                                <p>Pharmawell</p>
+                                <p>MedLinkup</p>
                                 <td></td>
 
                             </td>
@@ -120,7 +120,7 @@
                      
                         <tr>
                             <td>
-                                <p>Pharmawell</p>
+                                <p>MedLinkup</p>
                                 <td></td>
 
                             </td>
@@ -161,7 +161,7 @@
                            
                         <tr>
                             <td>
-                            <p>Pharmawell</p>
+                            <p>MedLinkup</p>
                             </td>
                             <td>sample</td>
 
@@ -174,7 +174,7 @@
                      
                         <tr>
                             <td>
-                                <p>Pharmawell</p></td>
+                                <p>MedLinkup</p></td>
                             <td>sample</td>
                             <td>01-10-2024</td>
                             <td><span class="status process">Process</span></td>
