@@ -56,7 +56,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     if ($stmt->execute()) {
                         $message = "success";
 
-                        // Send email
                         try {
                             $mail = new PHPMailer(true);
 
@@ -64,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             $mail->Host = 'smtp.gmail.com';
                             $mail->SMTPAuth = true;
                             $mail->Username = 'medlinkupcontact@gmail.com';
-                            $mail->Password = 'ynlaogsvvbmlrsob';
+                            $mail->Password = 'suxcgpyfagvcluxi';
                             $mail->SMTPSecure = 'tls';
                             $mail->Port = 587;
 
@@ -80,7 +79,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                             $message = "Error sending email: " . $mail->ErrorInfo;
                         }
-                        // end Send email
 
 
                     } else {

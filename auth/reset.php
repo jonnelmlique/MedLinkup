@@ -9,22 +9,18 @@ if ($conn->connect_error) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
-    $token = $_GET['token']; // Assuming token is passed in the URL
+    $token = $_GET['token']; 
 
-    // Check if passwords match
     if ($password !== $confirm_password) {
         $message = "Passwords do not match.";
     } else {
-        // Check if token exists and is still valid
         $sql = "SELECT * FROM users WHERE reset_token='$token' AND reset_token_expiration > NOW()";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             $email = $row['email'];
-            // Hash the password
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-            // Update user's password
             $update_sql = "UPDATE users SET password='$hashed_password', reset_token=NULL, reset_token_expiration=NULL WHERE email='$email'";
             if ($conn->query($update_sql) === TRUE) {
                 $message = "success";

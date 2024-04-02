@@ -72,12 +72,12 @@
                 $mail->Host = 'smtp.gmail.com';
                 $mail->SMTPAuth = true;
                 $mail->Username = 'medlinkupcontact@gmail.com';
-                $mail->Password = 'ynlaogsvvbmlrsob';
+                $mail->Password = 'suxcgpyfagvcluxi';
                 $mail->SMTPSecure = 'tls';
                 $mail->Port = 587;
 
                 $mail->setFrom('medlinkupcontact@gmail.com', 'MedLinkup Contact');
-                $mail->addAddress('MedLinkupofficial@gmail.com');
+                $mail->addAddress('medLinkupofficial@gmail.com');
                 $mail->addReplyTo($email);
 
                 $mail->isHTML(true);
