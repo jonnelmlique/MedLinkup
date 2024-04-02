@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Update user's password
             $update_sql = "UPDATE users SET password='$hashed_password', reset_token=NULL, reset_token_expiration=NULL WHERE email='$email'";
             if ($conn->query($update_sql) === TRUE) {
-                $message = "success ";
+                $message = "success";
             } else {
                 $message = "Error updating password: " . $conn->error;
             }

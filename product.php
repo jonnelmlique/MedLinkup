@@ -78,7 +78,9 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                             <input type="number" class="form-control form-control-sm" id="quantity" value="1" min="1" style="width: 100px;">
                         </div>
                         <button class="btn btn-primary" onclick="addToCart()">Add to Cart</button>
-                        <button class="btn btn-success">Buy Now</button>
+                        <!-- <button class="btn btn-success">Buy Now</button> -->
+                        <div id="paypal-button"></div>
+
                     </div>
                 </div>
             </div>
@@ -265,6 +267,7 @@ $conn->close();
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 
     <script src="./public/js/index/productcart.js"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=Ac6-DA_lDGiu6FsHZRddA0716cAvXTq2FIRXyy9x_OGpL4_h_ACJOpMXgBCnL0XXJ89jNDAtG9Dr7PEH&currency=PHP" data-sdk-integration-source="button-factory"></script>
 
     <script>
         function addToCart() {
@@ -290,6 +293,24 @@ $conn->close();
     </script>
     
     
+    <script>
+    paypal.Buttons({
+        createOrder: function(data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: '<?php echo $row["price"]; ?>'
+                    }
+                }]
+            });
+        },
+        onApprove: function(data, actions) {
+            return actions.order.capture().then(function(details) {
+                alert('Transaction completed by ' + details.payer.name.given_name + '!');
+            });
+        }
+    }).render('#paypal-button');
+</script>
 
 </body>
 

@@ -9,7 +9,27 @@ try {
     if ($conn->connect_error) {
         throw new Exception("Connection failed: " . $conn->connect_error);
     }
-
+   
+    
+        $userid = $_SESSION['userid'];
+        $sql = "SELECT * FROM shippingaddresses WHERE userid = $userid";
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+          
+            $firstname = $row["firstname"];
+            $lastname = $row["lastname"];
+            $email = $row["email"];
+            $contact = $row["contact"];
+            $country = $row["country"];
+            $region = $row["region"];
+            $province = $row["province"];
+            $city = $row["city"];
+            $barangay = $row["barangay"];
+            $zipcode = $row["zipcode"];
+            $addressline1 = $row["addressline1"];
+            $addressline2 = $row["addressline2"];
+        }
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $userid = $_SESSION['userid'];
         $firstname = htmlspecialchars($_POST["firstname"]);
@@ -76,7 +96,7 @@ try {
                 </a>
                 <ul class="submenu">
                     <li><a href="../customer/myprofile.php">My Profile</a></li>
-                    <li class="active"><a href="../admin/categories.php">Delivery Address</a></li>
+                    <li class="active"><a href="../customer/delivery.php">Delivery Address</a></li>
                 </ul>
             </li>
             <li>
@@ -142,33 +162,35 @@ try {
                            
                                <div class="mb-3">
                                     <label for="country">First Name:</label>
-                                    <input type="text" class="form-control" id="firstname" name="firstname"
-                                     placeholder="First Name" required>
+                                    <input type="text" class="form-control" id="firstname" name="firstname" 
+                                    placeholder="First Name" value="<?php echo isset($firstname) ? $firstname : ''; ?>" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="country">Last Name:</label>
-                                    <input type="text" class="form-control" id="lastname" name="lastname"
-                                     placeholder="Last Name" required>
+                                    <input type="text" class="form-control" id="lastname" name="lastname" 
+                                    placeholder="Last Name" value="<?php echo isset($lastname) ? $lastname : ''; ?>" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="country">Email:</label>
-                                    <input type="email" class="form-control" id="email" name="email"
-                                     placeholder="Email" required>
+                                    <input type="email" class="form-control" id="email" name="email" 
+                                    placeholder="Email" value="<?php echo isset($email) ? $email : ''; ?>" required>
+
                                 </div>
                               
                                 <div class="mb-3">
                                     <label for="country">Contact:</label>
                                     <input type="number" class="form-control" id="contact" name="contact"
-                                     placeholder="Contact" required>
+                                     placeholder="Contact" value="<?php echo isset($contact) ? $contact : ''; ?>" required>
+
                                 </div>
                                 <div class="mb-3">
     <label for="country">Country:</label>
     <select class="form-control" id="country" name="country" onchange="fetchRegions(this.value)" required>
-        <option value="" disabled selected>Select Country</option>
+        <option value="<?php echo isset($country) ? $country : ''; ?>" disabled selected>Select Country</option>
         <?php
         // Fetch countries from the database and populate the dropdown options
         include 'config.php'; // Include database configuration file
-
+    
         $sql = "SELECT DISTINCT country FROM availablelocations";
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
@@ -184,7 +206,7 @@ try {
 <div class="mb-3">
     <label for="region">Region:</label>
     <select class="form-control" id="region" name="region" disabled onchange="fetchProvinces(this.value)" required>
-        <option value="" disabled selected>Select Region</option>
+        <option value="<?php echo isset($region) ? $region : ''; ?>"disabled selected>Select Region</option>
     </select>
 </div>
 

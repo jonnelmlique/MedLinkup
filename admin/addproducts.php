@@ -79,6 +79,11 @@
                     <i class='fa fa-cogs' ></i>
                     <span class="text"> Settings</span>
                 </a>
+                <ul class="submenu">
+                        <li><a href="../admin/location.php">Location</a></li>
+                        <li><a href="../admin/shippingfee.php">Shipping Fee</a></li>
+
+                    </ul>
             </li>
             <li>
                 <a href="#" class="logout">
@@ -114,7 +119,6 @@
                             <div id="preview-image">
                                 <img src="https://via.placeholder.com/350x350" alt="Preview Image">
                             </div>
-                   
                         </div>
                         <div id="form-container">
                         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" enctype="multipart/form-data">

@@ -29,17 +29,15 @@ main {
 
 .add-location-section form input[type="text"],
 .add-location-section form input[type="number"],
-.add-location-section form input[type="email"],
-
-.add-location-section form textarea {
-
-
+.add-location-section form textarea,
+.add-location-section form select {
     margin-bottom: 20px;
     border-radius: 5px;
-    padding: 13px;
-    width: 100%;
+    padding: 10px;
+    width: 300px;
     border: 2px solid #1c9601;
-    font-size: 14px;
+    padding: 13px;
+    font-size:14px;
 }
 .add-location-section form input[type="file"]
 {
@@ -52,13 +50,53 @@ main {
         padding: 13px;
     
 }
-.add-location-section form select {
+
+#image-container {
+    float: left;
+    width: 40%;
+    margin-right: 5%;
+    
+}
+
+#form-container {
+    float: left;
+    width: 55%;
+}
+
+#preview-image {
     margin-bottom: 20px;
-    border-radius: 5px;
-    padding: 13px;
-    width: 106%;
+    text-align: center;
+    max-width: 360px;
+    margin-left: 80px;
     border: 2px solid #1c9601;
-    font-size: 14px;
+    border-radius: 10px;
+     background-color: #fff;
+     padding: 30px;
+     border-radius: 10px;
+     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+     transition: box-shadow 0.3s;
+}
+#preview-image:hover {
+    box-shadow: 0 8px 12px rgba(28, 150, 1, 0.2);
+  }
+
+#preview-image img {
+    max-width: 100%;
+    height: auto;
+}
+#image {
+    border: 2px solid #1c9601;
+    border-radius: 10px;
+    padding: 10px;
+    width: 61%;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s;
+
+}
+#image:hover {
+    box-shadow: 0 8px 12px rgba(28, 150, 1, 0.2);
+
 }
 
 .btn-submit {
@@ -94,4 +132,3 @@ label {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 
 }
-

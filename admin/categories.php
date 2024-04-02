@@ -85,6 +85,11 @@ $result = $conn->query($sql);
                     <i class='fa fa-cogs' ></i>
                     <span class="text"> Settings</span>
                 </a>
+                <ul class="submenu">
+                        <li><a href="../admin/location.php">Location</a></li>
+                        <li><a href="../admin/shippingfee.php">Shipping Fee</a></li>
+
+                    </ul>
             </li>
             <li>
                 <a href="#" class="logout">

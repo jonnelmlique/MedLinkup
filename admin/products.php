@@ -79,6 +79,11 @@
                     <i class='fa fa-cogs' ></i>
                     <span class="text"> Settings</span>
                 </a>
+                <ul class="submenu">
+                        <li><a href="../admin/location.php">Location</a></li>
+                        <li><a href="../admin/shippingfee.php">Shipping Fee</a></li>
+
+                    </ul>
             </li>
             <li>
                 <a href="#" class="logout">
@@ -130,12 +135,11 @@
                         <th>Details</th>
                         <th>Category</th>
                         <th>Stock</th>
-                        <th>Action</th> <!-- New column for actions -->
+                        <th>Action</th> 
                     </tr>
                 </thead>
                 <tbody>
                 <?php
-    // Fetch products data from your database and populate the table
     include '../src/config/config.php';
 
     try {
