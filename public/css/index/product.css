@@ -19,17 +19,18 @@
 }
 .product-stock{
   font-weight: bold;
-  font-size: 18px;
+  font-size: 15px;
   color: #1c9601;
   padding: 10px;
   border: 2px solid #1c9601;
-  width:  36%;
+  width: 19%;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-left: 35px;
 }
 .product-details-title {
-  font-size: 2rem;
+  font-size: 1.7rem;
   font-weight: bold;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   text-align: center;
 }
 .product-details-price {
@@ -37,12 +38,43 @@
   font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 20px;
-  text-align: center;
+  margin-left: 35px;
 }
 .product-details-description {
   font-size: 1.1rem;
   line-height: 1.6;
+
 }
+
+.uldisplay {
+  list-style-type: none;
+}
+.ull{
+  margin-top: 25px;
+}
+.uldisplay li {
+  margin-bottom: 10px; 
+  font-size: 16px;
+  
+}
+.form-group {
+  display: flex;
+  align-items: center;
+margin-left: 10px ;
+}
+
+.quantity-input {
+  margin-left: 25px; 
+  margin-right: 10px;
+  padding: 5px;
+  text-align: center;
+}
+.quantityf{
+  font-size: 15px;
+  font-weight: bold;
+}
+
+
 .product-section {
   padding: 50px 0;
   background-color: #ffffff;

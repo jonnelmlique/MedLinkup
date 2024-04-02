@@ -69,21 +69,38 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                     </div>
                     <div class="col-md-6">
                         <h2 class="product-details-title"><?php echo $row["productname"]; ?></h2>
+
                         <p class="product-details-price">₱<?php echo $row["price"]; ?></p>
-                        <p class="product-details-description"><?php echo $row["productdetails"]; ?></p>
-                        <p class="product-stock">Available Stock: <?php echo $row["stock"]; ?></p>
+                        <!-- <p class="product-details-description"><?php echo $row["productdetails"]; ?></p> -->
+
+                        <p class="product-stock">Stock: <?php echo $row["stock"]; ?></p>
 
                         <div class="form-group">
-                            <label for="quantity">Quantity:</label>
-                            <input type="number" class="form-control form-control-sm" id="quantity" value="1" min="1" style="width: 100px;">
-                        </div>
-                        <button class="btn btn-primary" onclick="addToCart()">Add to Cart</button>
-                        <!-- <button class="btn btn-success">Buy Now</button> -->
-                        <div id="paypal-button"></div>
+                            <input class="quantity-input" type="number" class="form-control form-control-sm" id="quantity" value="1" min="1" style="width: 100px;">
+                            <button class="btn btn-primary" onclick="addToCart()">Add to Cart</button>
 
+                        </div>
+                        <div class="ull">
+<hr>
+                        <?php
+                        $usage_data = explode("\n", $row["productdetails"]);
+                       ?>
+                       <ul class="uldisplay">
+                      <?php foreach ($usage_data as $usage_point): ?>
+                     <li><?php echo $usage_point; ?></li>
+                       <?php endforeach; ?>
+                          </ul>
+
+                      </div>
+                        
+
+                        <!-- <button class="btn btn-success">Buy Now</button> -->
+                        <!-- <div id="paypal-button"></div> -->
+                     
                     </div>
                 </div>
             </div>
+            <hr>
             <?php
         } else {
             echo "Product not found.";
