@@ -1,3 +1,65 @@
+<?php
+include './src/config/config.php';
+session_start();
+
+function fetch_cart_items($userId, $conn, &$totalAmount) {
+    $cartItemsHtml = '';
+    $totalAmount = 0;
+
+    try {
+        $sql = "SELECT c.cartid, p.productid, c.productname, c.image, c.price, c.quantity 
+                FROM cart c
+                JOIN products p ON c.productid = p.productid
+                WHERE c.userid = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $userId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $totalPrice = $row["price"] * $row["quantity"];
+                $totalAmount += $totalPrice;
+                $cartItemsHtml .= '
+                <div class="cart-item">
+                    <div class="cart-item-content">
+                        <img src="./productimg/' . $row["image"] . '" alt="Product Image" class="cart-item-image">
+                        <div class="cart-item-details">
+                            <a href="./product.php?id=' . $row["productid"] . '" class="cart-item-link" style="text-decoration: none;">
+                                <h3 class="cart-item-title">' . $row["productname"] . '</h3>
+                            </a>
+                            <p class="cart-item-quantity">Quantity: ' . $row["quantity"] . '</p>
+                            <p class="cart-item-price">Price: ₱' . number_format($row["price"], 2) . '</p>
+                        </div>
+                        <button class="delete-item" data-cartid="' . $row["cartid"] . '"><i class="fas fa-times"></i></button>
+                    </div>
+                </div>';
+            }
+        } else {
+            $cartItemsHtml = '<p>There are no items in the cart.</p>';
+        }
+
+        $stmt->close();
+    } catch (Exception $e) {
+        $cartItemsHtml = '<p>Error fetching cart items: ' . $e->getMessage() . '</p>';
+    }
+
+    return $cartItemsHtml;
+}
+
+if (!isset($_SESSION['userid'])) {
+    header("Location: ./auth/login.php");
+    exit; 
+}
+
+$userId = $_SESSION['userid'];
+
+// Fetch cart items for the user and calculate total amount
+$cartItemsHtml = fetch_cart_items($userId, $conn, $totalAmount);
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -48,16 +110,18 @@
         </nav>
 
         <div class="main-container">
-            <div class="container">
-                <h2 class="mt-5 mb-4">Cart</h2>
-                <div id="cart-items">
-               </div>
-                <div id="total-price" class="text-right mt-4">
-                    Total: <span id="total-amount"></span>
-                    <button class="btn btn-success btn-lg ml-2" onclick="buyItems()">Check Out</button>
-                </div>
-            </div>
+    <div class="container">
+        <h2 class="mt-5 mb-4">Cart</h2>
+        <div id="cart-items">
+            <?php echo $cartItemsHtml; ?>
         </div>
+        <div id="total-price" class="text-right mt-4">
+            Total: <span id="total-amount">₱<?php echo number_format($totalAmount, 2); ?></span>
+            <a href="./checkout.php" class="btn btn-success btn-lg ml-2">Check Out</a>
+        </div>
+    </div>
+</div>
+
 
         <section class="design-element">
             <div class="container">
@@ -86,85 +150,40 @@
     <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+   
+    <script>
+        // Add event listener to all delete buttons
+        document.querySelectorAll('.delete-item').forEach(button => {
+            button.addEventListener('click', function() {
+                // Get the cart ID of the item to be deleted
+                const cartId = this.getAttribute('data-cartid');
 
+                fetch('./deletea_item.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        cartId: cartId
+                    })
+                })
+                .then(response => {
+                    if (response.ok) {
+                        // If deletion is successful, remove the corresponding cart item from the DOM
+                        this.closest('.cart-item').remove();
+                    } else {
+                        // Handle errors if needed
+                        console.error('Failed to delete item from cart');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>
 
-<script>
-    var cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-
-    function renderCart() {
-        var cartContainer = document.getElementById('cart-items');
-        var totalPrice = 0;
-        var parsedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-
-        parsedCartItems.forEach(function(item) {
-            totalPrice += parseFloat(item.price.substring(1)) * item.quantity;
-        });
-
-        cartContainer.innerHTML = '';
-
-        parsedCartItems.forEach(function(item) {
-            var cartItem = document.createElement('div');
-            cartItem.classList.add('cart-item');
-            cartItem.setAttribute('data-name', item.name);
-            cartItem.innerHTML = `
-            <div class="row">
-    <div class="col-md-2">
-        <img src="https://via.placeholder.com/100" alt="Product Image">
-    </div>
-    <div class="col-md-7 cart-item-details">
-        <h3 class="cart-item-title">${item.name}</h3>
-        <p class="cart-item-price">${item.price} x ${item.quantity}</p>
-    </div>
-    <div class="col-md-3 text-right">
-        <hr> <!-- Line added here -->
-        <button class="btn btn-sm btn-primary mr-2" onclick="decreaseQuantity('${item.name}')">-</button>
-        <span class="cart-item-quantity">${item.quantity}</span> 
-        <button class="btn btn-sm btn-primary ml-2" onclick="increaseQuantity('${item.name}')">+</button>
-        <button class="btn btn-sm btn-danger ml-2" onclick="removeItem('${item.name}')">Remove</button>
-    </div>
-</div>
-
-            `;
-            cartContainer.appendChild(cartItem);
-        });
-
-        document.getElementById('total-amount').textContent = '₱' + totalPrice.toFixed(2);
-    }
-
-    function increaseQuantity(name) {
-        var parsedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-        parsedCartItems.forEach(function(item) {
-            if (item.name === name) {
-                item.quantity += 1;
-            }
-        });
-        localStorage.setItem('cartItems', JSON.stringify(parsedCartItems));
-        renderCart();
-    }
-
-    function decreaseQuantity(name) {
-        var parsedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-        parsedCartItems.forEach(function(item) {
-            if (item.name === name && item.quantity > 1) {
-                item.quantity -= 1;
-            }
-        });
-        localStorage.setItem('cartItems', JSON.stringify(parsedCartItems));
-        renderCart();
-    }
-
-    function removeItem(name) {
-        var parsedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-        parsedCartItems = parsedCartItems.filter(function(item) {
-            return item.name !== name;
-        });
-        localStorage.setItem('cartItems', JSON.stringify(parsedCartItems));
-        renderCart();
-    }
-
-    renderCart();
-</script>
 

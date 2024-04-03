@@ -1,3 +1,12 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['userid'])) {
+    header("Location: ./auth/login.php");
+    exit; 
+}
+?> 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -69,19 +78,16 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                     </div>
                     <div class="col-md-6">
                         <h2 class="product-details-title"><?php echo $row["productname"]; ?></h2>
-
                         <p class="product-details-price">₱<?php echo $row["price"]; ?></p>
                         <!-- <p class="product-details-description"><?php echo $row["productdetails"]; ?></p> -->
-
                         <p class="product-stock">Stock: <?php echo $row["stock"]; ?></p>
 
                         <div class="form-group">
                             <input class="quantity-input" type="number" class="form-control form-control-sm" id="quantity" value="1" min="1" style="width: 100px;">
-                            <button class="btn btn-primary" onclick="addToCart()">Add to Cart</button>
-
+                            <button class="btn btn-primary" id="addToCartBtn">Add to Cart</button>
                         </div>
                         <div class="ull">
-<hr>
+                          <hr>
                         <?php
                         $usage_data = explode("\n", $row["productdetails"]);
                        ?>
@@ -116,8 +122,6 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
 
 $conn->close();
 ?>
-
-
     <div class="product-section">
         <div class="container">
             <h3 class="mb-4">Featured Products</h3>
@@ -282,34 +286,30 @@ $conn->close();
     <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-
     <script src="./public/js/index/productcart.js"></script>
     <script src="https://www.paypal.com/sdk/js?client-id=Ac6-DA_lDGiu6FsHZRddA0716cAvXTq2FIRXyy9x_OGpL4_h_ACJOpMXgBCnL0XXJ89jNDAtG9Dr7PEH&currency=PHP" data-sdk-integration-source="button-factory"></script>
-
     <script>
-        function addToCart() {
-            var productName = document.querySelector('.product-details-title').textContent;
-            var productPrice = document.querySelector('.product-details-price').textContent;
-            var quantity = parseInt(document.getElementById('quantity').value);
+    var productId = <?php echo json_encode($product_id); ?>;
     
-            var cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    document.getElementById("addToCartBtn").addEventListener("click", addToCart);
     
-            var existingItem = cartItems.find(function(item) {
-                return item.name === productName;
-            });
-    
-            if (existingItem) {
-                existingItem.quantity += quantity;
-            } else {
-                var newItem = { name: productName, price: productPrice, quantity: quantity };
-                cartItems.push(newItem);
+    function addToCart() {
+        var quantity = document.getElementById("quantity").value;
+
+        $.ajax({
+            type: "POST",
+            url: "./addToCart.php", 
+            data: { 
+                productId: productId,
+                quantity: quantity
+            },
+            success: function(response) {
+                alert(response); 
             }
-    
-            localStorage.setItem('cartItems', JSON.stringify(cartItems));
-        }
-    </script>
-    
-    
+        });
+    }
+</script>
+ 
     <script>
     paypal.Buttons({
         createOrder: function(data, actions) {
