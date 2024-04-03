@@ -3,6 +3,10 @@ include './src/config/config.php';
 
 session_start(); 
 
+if (!isset($_SESSION['userid'])) {
+  header("Location: ./auth/login.php");
+  exit; 
+}
 
 $userID = $_SESSION['userid']; 
 
@@ -139,9 +143,14 @@ $totalPrice = 0;
                     <option value="COD">Cash on Delivery</option>
                     <option value="PayPal">PayPal</option>
                 </select>
-                <button type="submit" class="btn btn-primary btn-lg btn-block">Proceed to Checkout</button>
+                <div class="btnpaypal" id="paypal-button-container"></div>
+
+                <button id="proceedButton"  class="btn btn-success btn-lg btn-block">Proceed to Checkout</button>
+                <a href="./cart.php" class="btn btn-danger btn-lg btn-block">Cancel</a>
+
 
             </div>
+            
             <div class="col-md-8 order-md-1">
                 <h4 class="mb-3">Billing address</h4>
                 <form class="needs-validation" novalidate>
@@ -290,7 +299,43 @@ $totalPrice = 0;
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=Ac6-DA_lDGiu6FsHZRddA0716cAvXTq2FIRXyy9x_OGpL4_h_ACJOpMXgBCnL0XXJ89jNDAtG9Dr7PEH&currency=PHP&disable-funding=card" data-sdk-integration-source="button-factory"></script>
+    <script>
+      document.getElementById("proceedButton").addEventListener("click", function() {
+    console.log("Clicked Proceed to Checkout button");
 
+    var paymentMethod = document.getElementById("paymentMethod").value;
+    if (paymentMethod === "PayPal") {
+
+      var container = document.getElementById("paypal-button-container");
+        container.innerHTML = "";
+
+        var totalAmount = <?php echo $totalPrice + $shippingFee; ?>;
+        console.log("Total Amount:", totalAmount);
+
+        paypal.Buttons({
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            currency_code: 'PHP',
+                            value: totalAmount
+                        }
+                    }]
+                });
+            },
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    alert('Transaction completed by ' + details.payer.name.given_name + '!');
+                });
+            }
+        }).render('#paypal-button-container');
+    } else {
+        alert("Proceeding with other payment method.");
+    }
+});
+
+    </script>
     <?php
 
 $userID = $_SESSION['userid']; 
@@ -299,7 +344,7 @@ $sql = "SELECT * FROM shippingaddresses WHERE userid = $userID";
 $result = mysqli_query($conn, $sql);
 
 if (mysqli_num_rows($result) == 0) {
-    $message = "Add shipping address"; // Setting message to "error" for SweetAlert
+    $message = "Add shipping address"; 
 
     echo "<script>
             Swal.fire({
