@@ -31,7 +31,7 @@
                     </a>
                     <ul class="submenu">
                         <li><a href="../customer/myprofile.php">My Profile</a></li>
-<li><a href="../customer/delivery.php">Delivery Address</a></li>
+                            <li><a href="../customer/delivery.php">Delivery Address</a></li>
 
 
                     </ul>
@@ -44,7 +44,7 @@
                     </a>
                 </li>
                 <li>
-                                    <a href="../customer/order.php">
+                <a href="../customer/order.php">
                     <i class="fas fa-cart-arrow-down"></i>
                     <span class="text">Order</span>
                 </a>
@@ -170,7 +170,6 @@
                     </div>
                 </div>
             </main>
-
         <!-- node -->
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
