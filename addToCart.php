@@ -2,54 +2,68 @@
 include './src/config/config.php';
 session_start();
 
+$message = "";
+
 if (isset($_POST['productId'], $_POST['quantity'])) {
     $productId = $_POST['productId'];
     $quantity = $_POST['quantity'];
-    $userId = $_SESSION['userid'];
 
-    $sql_product = "SELECT productname, price, image FROM products WHERE productid = ?";
-    $stmt_product = $conn->prepare($sql_product);
-    $stmt_product->bind_param("i", $productId);
-    $stmt_product->execute();
-    $stmt_product->bind_result($productname, $price, $image);
-    $stmt_product->fetch();
-    $stmt_product->close();
-
-    // Check if the product already exists in the cart for the user
-    $sql_check = "SELECT cartid FROM cart WHERE userid = ? AND productid = ?";
-    $stmt_check = $conn->prepare($sql_check);
-    $stmt_check->bind_param("ii", $userId, $productId);
-    $stmt_check->execute();
-    $stmt_check->store_result();
-
-    if ($stmt_check->num_rows > 0) {
-        // Product already exists in the cart, update the quantity
-        $sql_update = "UPDATE cart SET quantity = quantity + ? WHERE userid = ? AND productid = ?";
-        $stmt_update = $conn->prepare($sql_update);
-        $stmt_update->bind_param("iii", $quantity, $userId, $productId);
-        $stmt_update->execute();
-        $stmt_update->close();
-
-        echo "Quantity updated successfully.";
+    if (!is_numeric($productId) || !is_numeric($quantity) || $quantity <= 0) {
+        $message = "Invalid product ID or quantity.";
     } else {
-        // Product doesn't exist in the cart, insert a new row
-        try {
-            $sql_insert = "INSERT INTO cart (userid, productid, productname, price, quantity, image) VALUES (?, ?, ?, ?, ?, ?)";
-            $stmt_insert = $conn->prepare($sql_insert);
-            $stmt_insert->bind_param("iisdis", $userId, $productId, $productname, $price, $quantity, $image);
-            $stmt_insert->execute();
+        if (!isset($_SESSION['userid'])) {
+            $message = "You are not logged in.";
+        } else {
+            $userId = $_SESSION['userid'];
 
-            echo "Item added to cart successfully.";
-        } catch (Exception $e) {
-            echo "Error: " . $e->getMessage();
+            $sql_product = "SELECT productname, price, image, stock FROM products WHERE productid = ?";
+            $stmt_product = $conn->prepare($sql_product);
+            $stmt_product->bind_param("i", $productId);
+            $stmt_product->execute();
+            $stmt_product->bind_result($productname, $price, $image, $stock);
+            $stmt_product->fetch();
+            $stmt_product->close();
+
+            if ($stock <= 0) {
+                $message = "No stock left.";
+            } elseif ($quantity > $stock) {
+                $message = "Only $stock items left in stock.";
+            } else {
+                $sql_check = "SELECT cartid FROM cart WHERE userid = ? AND productid = ?";
+                $stmt_check = $conn->prepare($sql_check);
+                $stmt_check->bind_param("ii", $userId, $productId);
+                $stmt_check->execute();
+                $stmt_check->store_result();
+
+                if ($stmt_check->num_rows > 0) {
+                    $sql_update = "UPDATE cart SET quantity = quantity + ? WHERE userid = ? AND productid = ?";
+                    $stmt_update = $conn->prepare($sql_update);
+                    $stmt_update->bind_param("iii", $quantity, $userId, $productId);
+                    $stmt_update->execute();
+                    $stmt_update->close();
+
+                    $message = "success";
+                } else {
+                    $sql_insert = "INSERT INTO cart (userid, productid, productname, price, quantity, image) VALUES (?, ?, ?, ?, ?, ?)";
+                    $stmt_insert = $conn->prepare($sql_insert);
+                    $stmt_insert->bind_param("iisdis", $userId, $productId, $productname, $price, $quantity, $image);
+                    $stmt_insert->execute();
+
+                    $message = "success";
+                    $stmt_insert->close();
+                }
+
+                $stmt_check->close();
+            }
         }
-
-        $stmt_insert->close();
     }
-
-    $stmt_check->close();
     $conn->close();
 } else {
-    echo "Invalid request.";
+    $message = "Invalid request.";
 }
+
+$response = array('message' => $message);
+
+header('Content-Type: application/json');
+echo json_encode($response);
 ?>

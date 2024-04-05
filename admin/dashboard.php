@@ -83,7 +83,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#" class="logout">
+                    <a href="../logout.php" class="logout">
                         <i class='fas fa-user' ></i>
                         <span class="text"> Logout</span>
                     </a>
@@ -117,15 +117,44 @@
                         </span>
                     </a>
                     </li>
-                    <li>
-                        <a href="../admin/products.php">
-                        <i class='fas fa-capsules' ></i>
-                        <span class="text">
-                            <h3>34</h3>
-                            <p>Products</p>
-                        </span>
-                    </a>
-                    </li>
+                    <?php
+include '../src/config/config.php';
+
+try {
+    // Perform query to count products
+    $sql = "SELECT COUNT(*) AS product_count FROM products";
+    $result = $conn->query($sql);
+
+    // Check if query was successful
+    if ($result) {
+        $row = $result->fetch_assoc();
+        $product_count = $row['product_count'];
+    } else {
+        throw new Exception("Error executing query: " . $conn->error);
+    }
+} catch (Exception $e) {
+    // If an exception occurs, set product count to 0
+    $product_count = 0;
+    echo "An error occurred: " . $e->getMessage();
+}
+
+// Display the count
+echo "<li>
+        <a href='../admin/products.php'>
+            <i class='fas fa-capsules'></i>
+            <span class='text'>
+                <h3>$product_count</h3>
+                <p>Products</p>
+            </span>
+        </a>
+    </li>";
+
+// Close connection
+$conn->close();
+?>
+
+
+
                     <li>
                         <a href="../admin/sales.php">
                         <i class='fas fa-chart-bar'></i>

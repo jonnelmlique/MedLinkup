@@ -1,0 +1,40 @@
+
+.checkmark-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+}
+
+.checkmark {
+    font-size: 100px;
+    color: #5AB347;
+    margin-right: 20px;
+}
+
+.message-container {
+    text-align: center;
+    
+}
+
+.message {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.continue-shopping-btn {
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.continue-shopping-btn:hover {
+    background-color: #1c9601;
+}

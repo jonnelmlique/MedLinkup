@@ -2,6 +2,18 @@
 include './src/config/config.php';
 session_start();
 
+$message = '';
+
+$loginLinkText = '<i class="fas fa-user"></i> Login';
+$loginLinkURL = './auth/login.php';
+
+if(isset($_SESSION['userid']) && isset($_SESSION['username'])) {
+    $loggedInUsername = $_SESSION['username']; 
+    $loginLinkText = '<i class="fas fa-user"></i> ' . $loggedInUsername; 
+    $loginLinkURL = './customer/dashboard.php';
+}
+
+
 function fetch_cart_items($userId, $conn, &$totalAmount) {
     $cartItemsHtml = '';
     $totalAmount = 0;
@@ -102,8 +114,7 @@ $cartItemsHtml = fetch_cart_items($userId, $conn, $totalAmount);
                     </li>
                 </ul>
                 <div class="navbar-icons d-flex align-items-center">
-                    <a href="./auth/login.php" class="nav-link"><i class="fas fa-user"></i> Login </a>
-                    <a href="#" class="nav-link"><i class="fas fa-shopping-cart"></i> Cart </a>
+                    <a href="<?php echo $loginLinkURL; ?>" class="nav-link"><?php echo $loginLinkText; ?></a>                    <a href="#" class="nav-link"><i class="fas fa-shopping-cart"></i> Cart </a>
                 </div>
             </div>
         </div>
@@ -152,10 +163,8 @@ $cartItemsHtml = fetch_cart_items($userId, $conn, $totalAmount);
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
    
     <script>
-        // Add event listener to all delete buttons
         document.querySelectorAll('.delete-item').forEach(button => {
             button.addEventListener('click', function() {
-                // Get the cart ID of the item to be deleted
                 const cartId = this.getAttribute('data-cartid');
 
                 fetch('./deletea_item.php', {
@@ -169,11 +178,9 @@ $cartItemsHtml = fetch_cart_items($userId, $conn, $totalAmount);
                 })
                 .then(response => {
                     if (response.ok) {
-                        // If deletion is successful, remove the corresponding cart item from the DOM
                         this.closest('.cart-item').remove();
                     } else {
-                        // Handle errors if needed
-                        console.error('Failed to delete item from cart');
+                            console.error('Failed to delete item from cart');
                     }
                 })
                 .catch(error => {

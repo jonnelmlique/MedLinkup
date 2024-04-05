@@ -1,3 +1,20 @@
+<?php
+include './src/config/config.php';
+
+session_start();
+
+$message = '';
+
+$loginLinkText = '<i class="fas fa-user"></i> Login';
+$loginLinkURL = './auth/login.php';
+
+if(isset($_SESSION['userid']) && isset($_SESSION['username'])) {
+    $loggedInUsername = $_SESSION['username']; 
+    $loginLinkText = '<i class="fas fa-user"></i> ' . $loggedInUsername; 
+    $loginLinkURL = './customer/dashboard.php';
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,7 +54,7 @@
                     </li>
                 </ul>
                 <div class="navbar-icons d-flex align-items-center">
-                    <a href="./auth/login.php" class="nav-link"><i class="fas fa-user"></i> Login </a>
+                    <a href="<?php echo $loginLinkURL; ?>" class="nav-link"><?php echo $loginLinkText; ?></a>                    
                     <a href="./cart.php" class="nav-link"><i class="fas fa-shopping-cart"></i> Cart </a>
                 </div>
             </div>
@@ -114,9 +131,7 @@
             <div class="row">
                 <div class="col-md-12 text-center">
                     <h3>Our Mission</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec dictum nunc. Nullam vitae
-                        ligula sed nisi sagittis facilisis vitae nec velit. Integer scelerisque magna sit amet dui
-                        suscipit, sed aliquam nunc scelerisque.</p>
+                    <p>Empowering health through easy access to medications. Your trusted online platform for quality pharmaceuticals.</p>
                 </div>
             </div>
         </div>

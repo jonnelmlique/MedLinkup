@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +12,23 @@
     <link rel="stylesheet" href="./public/css/index/nav.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 </head>
+<?php
+include './src/config/config.php';
 
+session_start();
+
+$message = '';
+
+$loginLinkText = '<i class="fas fa-user"></i> Login';
+$loginLinkURL = './auth/login.php';
+
+if(isset($_SESSION['userid']) && isset($_SESSION['username'])) {
+    $loggedInUsername = $_SESSION['username']; 
+    $loginLinkText = '<i class="fas fa-user"></i> ' . $loggedInUsername; 
+    $loginLinkURL = './customer/dashboard.php';
+}
+
+?>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
@@ -39,7 +56,7 @@
                     </li>
                 </ul>
                 <div class="navbar-icons d-flex align-items-center">
-                    <a href="./auth/login.php" class="nav-link"><i class="fas fa-user"></i> Login </a>
+                <a href="<?php echo $loginLinkURL; ?>" class="nav-link"><?php echo $loginLinkText; ?></a>
                     <a href="./cart.php" class="nav-link"><i class="fas fa-shopping-cart"></i> Cart </a>
                 </div>
             </div>
@@ -108,7 +125,6 @@
                         </div>
                     </div> -->
                     <?php
-include './src/config/config.php';
 
 try {
     $sql = "SELECT productid, productname, price, image FROM products";
@@ -117,6 +133,8 @@ try {
     if ($result->num_rows > 0) {
 
         while ($row = $result->fetch_assoc()) {
+            $productName = strlen($row["productname"]) > 35 ? substr($row["productname"], 0, 35) . '...' : $row["productname"];
+
             ?>
                     <!-- Product Card HTML -->
                     <div class="col-md-15">
@@ -126,7 +144,8 @@ try {
                                 <!-- <a class="product-card-link" href="product.php"> -->
                                 <img src="./productimg/<?php echo $row["image"]; ?>" alt="Product Image" />
                                 <div class="product-card-body">
-                                    <h3 class="product-card-title"><?php echo $row["productname"]; ?></h3>
+                                    <h3 class="product-card-title"><?php echo $productName; ?></h3>
+
                                     <p class="product-card-price">₱<?php echo $row["price"]; ?></p>
                                     <!--<button class="btn btn-primary">Add to Cart</button>-->
                                 </div>
@@ -155,9 +174,7 @@ $conn->close();
             <div class="row">
                 <div class="col-md-12 text-center">
                     <h3>Our Mission</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec dictum nunc. Nullam vitae
-                        ligula sed nisi sagittis facilisis vitae nec velit. Integer scelerisque magna sit amet dui
-                        suscipit, sed aliquam nunc scelerisque.</p>
+                    <p>Empowering health through easy access to medications. Your trusted online platform for quality pharmaceuticals.</p>
                 </div>
             </div>
         </div>

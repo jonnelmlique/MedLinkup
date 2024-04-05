@@ -1,12 +1,19 @@
 <?php
+
 session_start();
 
-if (!isset($_SESSION['userid'])) {
-    header("Location: ./auth/login.php");
-    exit; 
-}
-?> 
+$message = '';
 
+$loginLinkText = '<i class="fas fa-user"></i> Login';
+$loginLinkURL = './auth/login.php';
+
+if(isset($_SESSION['userid']) && isset($_SESSION['username'])) {
+    $loggedInUsername = $_SESSION['username']; 
+    $loginLinkText = '<i class="fas fa-user"></i> ' . $loggedInUsername; 
+    $loginLinkURL = './customer/dashboard.php';
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -49,7 +56,7 @@ if (!isset($_SESSION['userid'])) {
                     </li>
                 </ul>
                 <div class="navbar-icons d-flex align-items-center">
-                    <a href="./auth/login.php" class="nav-link"><i class="fas fa-user"></i> Login </a>
+                <a href="<?php echo $loginLinkURL; ?>" class="nav-link"><?php echo $loginLinkText; ?></a>
                     <a href="./cart.php" class="nav-link"><i class="fas fa-shopping-cart"></i> Cart </a>
                 </div>
             </div>
@@ -98,10 +105,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                           </ul>
 
                       </div>
-                        
-
-                        <!-- <button class="btn btn-success">Buy Now</button> -->
-                        <!-- <div id="paypal-button"></div> -->
+                    
                      
                     </div>
                 </div>
@@ -264,9 +268,7 @@ $conn->close();
             <div class="row">
                 <div class="col-md-12 text-center">
                     <h3>Our Mission</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec dictum nunc. Nullam vitae
-                        ligula sed nisi sagittis facilisis vitae nec velit. Integer scelerisque magna sit amet dui
-                        suscipit, sed aliquam nunc scelerisque.</p>
+                    <p>Empowering health through easy access to medications. Your trusted online platform for quality pharmaceuticals.</p>
                 </div>
             </div>
         </div>
@@ -287,47 +289,52 @@ $conn->close();
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <script src="./public/js/index/productcart.js"></script>
-    <script src="https://www.paypal.com/sdk/js?client-id=Ac6-DA_lDGiu6FsHZRddA0716cAvXTq2FIRXyy9x_OGpL4_h_ACJOpMXgBCnL0XXJ89jNDAtG9Dr7PEH&currency=PHP" data-sdk-integration-source="button-factory"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-    var productId = <?php echo json_encode($product_id); ?>;
-    
-    document.getElementById("addToCartBtn").addEventListener("click", addToCart);
-    
-    function addToCart() {
-        var quantity = document.getElementById("quantity").value;
+var productId = <?php echo json_encode($product_id); ?>;
 
-        $.ajax({
-            type: "POST",
-            url: "./addToCart.php", 
-            data: { 
-                productId: productId,
-                quantity: quantity
-            },
-            success: function(response) {
-                alert(response); 
-            }
-        });
-    }
-</script>
- 
-    <script>
-    paypal.Buttons({
-        createOrder: function(data, actions) {
-            return actions.order.create({
-                purchase_units: [{
-                    amount: {
-                        value: '<?php echo $row["price"]; ?>'
-                    }
-                }]
-            });
+document.getElementById("addToCartBtn").addEventListener("click", addToCart);
+
+function addToCart() {
+    var quantity = document.getElementById("quantity").value;
+
+    $.ajax({
+        type: "POST",
+        url: "./addToCart.php",
+        data: {
+            productId: productId,
+            quantity: quantity
         },
-        onApprove: function(data, actions) {
-            return actions.order.capture().then(function(details) {
-                alert('Transaction completed by ' + details.payer.name.given_name + '!');
-            });
+        success: function(response) {
+            if (response.message === "success") {
+                Swal.fire({
+                    title: 'Cart Updated',
+                    text: 'You have successfully updated the item in your cart.',
+                    icon: 'success',
+                    showCancelButton: true,
+                    confirmButtonText: 'OK',
+                    cancelButtonText: 'View Cart'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+
+                    } else if (result.dismiss === Swal.DismissReason.cancel) {
+                        window.location.href = './cart.php'; 
+                    }
+                });
+            } else {
+                Swal.fire({
+                    title: 'Error',
+                    text: response.message,
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            }
         }
-    }).render('#paypal-button');
+    });
+}
 </script>
+
+ 
 
 </body>
 

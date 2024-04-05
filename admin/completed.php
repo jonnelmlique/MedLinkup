@@ -85,7 +85,7 @@
                     </ul>
             </li>
             <li>
-                <a href="#" class="logout">
+                <a href="../logout.php" class="logout">
                     <i class='fas fa-user'></i>
                     <span class="text"> Logout</span>
                 </a>

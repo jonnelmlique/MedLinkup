@@ -95,3 +95,25 @@ label {
 
 }
 
+.add-button {
+    margin-bottom: 20px;
+    margin-right: auto;
+}
+
+
+.add-button button {
+    padding: 15px 20px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.3s; 
+    margin-top: 20px;
+    margin-left: 10px;
+    font-weight: bold;
+}
+.add-button button:hover {
+    background-color: #1c9601;
+}

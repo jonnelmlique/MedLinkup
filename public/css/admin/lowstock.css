@@ -16,7 +16,7 @@ main {
     text-align: left;
     border-bottom: 1px solid #dee2e6;
     border-right: 1px solid #dee2e6; 
-    max-width: 520px; 
+    max-width: 20px; 
     white-space: nowrap; 
     overflow: hidden; 
     text-overflow: ellipsis; 
@@ -50,6 +50,8 @@ main {
 .actions {
     white-space: nowrap;
 }
+
+
 
 /* Search Bar Styles */
 .search-bar {

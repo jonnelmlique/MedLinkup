@@ -1,3 +1,21 @@
+<?php
+include './src/config/config.php';
+
+session_start();
+
+$message = '';
+
+$loginLinkText = '<i class="fas fa-user"></i> Login';
+$loginLinkURL = './auth/login.php';
+
+if(isset($_SESSION['userid']) && isset($_SESSION['username'])) {
+    $loggedInUsername = $_SESSION['username']; 
+    $loginLinkText = '<i class="fas fa-user"></i> ' . $loggedInUsername; 
+    $loginLinkURL = './customer/dashboard.php';
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,7 +56,7 @@
                     </li>
                 </ul>
                 <div class="navbar-icons d-flex align-items-center">
-                    <a href="./auth/login.php" class="nav-link"><i class="fas fa-user"></i> Login </a>
+                <a href="<?php echo $loginLinkURL; ?>" class="nav-link"><?php echo $loginLinkText; ?></a>
                     <a href="./cart.php" class="nav-link"><i class="fas fa-shopping-cart"></i> Cart </a>
                 </div>
             </div>
@@ -51,306 +69,113 @@
             </div>
         </a>
         
-    <!-- Category Section Start-->
-    <section class="category-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 mb-6">
-                    <h3 class="mb-0">Featured Categories</h3>
-                </div>
-            </div>
-            <div id="categoryCarousel" class="carousel slide" data-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <div class="row">
-                            <div class="col-sm-2">
-                                <a href="https://via.placeholder.com/100x100" class="text-decoration-none text-inherit">
-                                    <div class="card card-product mb-lg-4">
-                                        <div class="card-body text-center py-4">
-                                            <img src="https://via.placeholder.com/100x100" alt="Antibiotics"
-                                                class="mb-2 img-fluid" />
-                                            <div class="text-truncate">Antibiotics</div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col-sm-2">
-                                <a href="https://via.placeholder.com/100x100" class="text-decoration-none text-inherit">
-                                    <div class="card card-product mb-lg-4">
-                                        <div class="card-body text-center py-4">
-                                            <img src="https://via.placeholder.com/100x100" alt="Antibiotics"
-                                                class="mb-2 img-fluid" />
-                                            <div class="text-truncate">Antibiotics</div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col-sm-2">
-                                <a href="https://via.placeholder.com/100x100" class="text-decoration-none text-inherit">
-                                    <div class="card card-product mb-lg-4">
-                                        <div class="card-body text-center py-4">
-                                            <img src="https://via.placeholder.com/100x100" alt="Antibiotics"
-                                                class="mb-2 img-fluid" />
-                                            <div class="text-truncate">Antibiotics</div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col-sm-2">
-                                <a href="https://via.placeholder.com/100x100" class="text-decoration-none text-inherit">
-                                    <div class="card card-product mb-lg-4">
-                                        <div class="card-body text-center py-4">
-                                            <img src="https://via.placeholder.com/100x100" alt="Antibiotics"
-                                                class="mb-2 img-fluid" />
-                                            <div class="text-truncate">Antibiotics</div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col-sm-2">
-                                <a href="https://via.placeholder.com/100x100" class="text-decoration-none text-inherit">
-                                    <div class="card card-product mb-lg-4">
-                                        <div class="card-body text-center py-4">
-                                            <img src="https://via.placeholder.com/100x100" alt="Antibiotics"
-                                                class="mb-2 img-fluid" />
-                                            <div class="text-truncate">Antibiotics</div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col-sm-2">
-                                <a href="https://via.placeholder.com/100x100" class="text-decoration-none text-inherit">
-                                    <div class="card card-product mb-lg-4">
-                                        <div class="card-body text-center py-4">
-                                            <img src="https://via.placeholder.com/100x100" alt="Antibiotics"
-                                                class="mb-2 img-fluid" />
-                                            <div class="text-truncate">Antibiotics</div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="row">
-                            <div class="col-sm-2">
-                                <a href="https://via.placeholder.com/100x100" class="text-decoration-none text-inherit">
-                                    <div class="card card-product mb-lg-4">
-                                        <div class="card-body text-center py-4">
-                                            <img src="https://via.placeholder.com/100x100" alt="Antibiotics"
-                                                class="mb-2 img-fluid" />
-                                            <div class="text-truncate">Antibiotics</div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col-sm-2">
-                                <a href="https://via.placeholder.com/100x100" class="text-decoration-none text-inherit">
-                                    <div class="card card-product mb-lg-4">
-                                        <div class="card-body text-center py-4">
-                                            <img src="https://via.placeholder.com/100x100" alt="Antibiotics"
-                                                class="mb-2 img-fluid" />
-                                            <div class="text-truncate">Antibiotics</div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col-sm-2">
-                                <a href="https://via.placeholder.com/100x100" class="text-decoration-none text-inherit">
-                                    <div class="card card-product mb-lg-4">
-                                        <div class="card-body text-center py-4">
-                                            <img src="https://via.placeholder.com/100x100" alt="Antibiotics"
-                                                class="mb-2 img-fluid" />
-                                            <div class="text-truncate">Antibiotics</div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col-sm-2">
-                                <a href="https://via.placeholder.com/100x100" class="text-decoration-none text-inherit">
-                                    <div class="card card-product mb-lg-4">
-                                        <div class="card-body text-center py-4">
-                                            <img src="https://via.placeholder.com/100x100" alt="Antibiotics"
-                                                class="mb-2 img-fluid" />
-                                            <div class="text-truncate">Antibiotics</div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col-sm-2">
-                                <a href="https://via.placeholder.com/100x100" class="text-decoration-none text-inherit">
-                                    <div class="card card-product mb-lg-4">
-                                        <div class="card-body text-center py-4">
-                                            <img src="https://via.placeholder.com/100x100" alt="Antibiotics"
-                                                class="mb-2 img-fluid" />
-                                            <div class="text-truncate">Antibiotics</div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col-sm-2">
-                                <a href="https://via.placeholder.com/100x100" class="text-decoration-none text-inherit">
-                                    <div class="card card-product mb-lg-4">
-                                        <div class="card-body text-center py-4">
-                                            <img src="https://via.placeholder.com/100x100" alt="Antibiotics"
-                                                class="mb-2 img-fluid" />
-                                            <div class="text-truncate">Antibiotics</div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Add more carousel items here -->
-                </div>
-
-                <a class="carousel-control-prev" href="#categoryCarousel" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#categoryCarousel" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
+<!-- Category Section Start-->
+<section class="category-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 mb-6">
+                <h3 class="mb-0">Featured Categories</h3>
             </div>
         </div>
-    </section>
-    <!-- Category Section End-->
+        <div id="categoryCarousel" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <?php
+                $query = "SELECT * FROM categories";
+                $result = mysqli_query($conn, $query);
+                
+                // Check if there are any categories
+                if (mysqli_num_rows($result) > 0) {
+                    $count = 0;
+                    $first = true;
+                    // Iterate through each category
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        $categoryName = $row['categoryname'];
+                        $imagePath = $row['imagepath'];
+                        
+                        // Output HTML for each category
+                        if ($count % 6 == 0) { // Change 6 to the number of categories you want per slide
+                            if (!$first) {
+                                echo '</div></div>'; // Close previous carousel-item and row
+                            }
+                            echo '<div class="carousel-item' . ($first ? ' active' : '') . '"><div class="row">';
+                            $first = false;
+                        }
+                        echo '<div class="col-sm-2">
+                                <a href="#" class="text-decoration-none text-inherit">
+                                    <div class="card card-product mb-lg-4">
+                                        <div class="card-body text-center py-4">
+                                            <img src="./productimg/' . $imagePath . '" alt="' . $categoryName . '" class="mb-2 img-fluid" />
+                                            <div class="text-truncate">' . $categoryName . '</div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>';
+                        $count++;
+                    }
+                    echo '</div></div>'; // Close last carousel-item and row
+                } else {
+                    echo "No categories found";
+                }
+                ?>
+            </div>
+            <a class="carousel-control-prev" href="#categoryCarousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#categoryCarousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+</section>
+<!-- Category Section End-->
+
 
     <div class="product-section">
         <div class="container">
-            <h3 class="mb-4">Top Products</h3>
-                <div class="row">
-                    <!-- Example Product Card -->
-                    <div class="col-md-15">
-                        <div class="product-card">
-                            <a class="product-card-link" href="product.php">
-                                <img src="https://via.placeholder.com/200x200" alt="Product Image" />
-                                <div class="product-card-body">
-                                    <h3 class="product-card-title">Example Product 1</h3>
-                                    <p class="product-card-price">₱19.99</p>
-                                    <!--<button class="btn btn-primary">Add to Cart</button>-->
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- Example Product Card -->
-                    <div class="col-md-15">
-                        <div class="product-card">
-                            <a class="product-card-link" href="product.php">
-                                <img src="https://via.placeholder.com/200x200" alt="Product Image" />
-                                <div class="product-card-body">
-                                    <h3 class="product-card-title">Example Product 2</h3>
-                                    <p class="product-card-price">₱29.99</p>
-                                    <!--     <button class="btn btn-primary">Add to Cart</button>-->
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- Example Product Card -->
-                    <div class="col-md-15">
-                        <div class="product-card">
-                            <a class="product-card-link" href="product.php">
-                                <img src="https://via.placeholder.com/200x200" alt="Product Image" />
-                                <div class="product-card-body">
-                                    <h3 class="product-card-title">Example Product 3</h3>
-                                    <p class="product-card-price">₱39.99</p>
-                                    <!--     <button class="btn btn-primary">Add to Cart</button>-->
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- Example Product Card -->
-                    <div class="col-md-15">
-                        <div class="product-card">
-                            <a class="product-card-link" href="product.php">
-                                <img src="https://via.placeholder.com/200x200" alt="Product Image" />
-                                <div class="product-card-body">
-                                    <h3 class="product-card-title">Example Product 3</h3>
-                                    <p class="product-card-price">₱39.99</p>
-                                    <!--     <button class="btn btn-primary">Add to Cart</button>-->
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- Example Product Card -->
-                    <div class="col-md-15">
-                        <div class="product-card">
-                            <a class="product-card-link" href="product.php">
-                                <img src="https://via.placeholder.com/200x200" alt="Product Image" />
-                                <div class="product-card-body">
-                                    <h3 class="product-card-title">Example Product 3</h3>
-                                    <p class="product-card-price">₱39.99</p>
-                                    <!--     <button class="btn btn-primary">Add to Cart</button>-->
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- Example Product Card -->
-                    <div class="col-md-15">
-                        <div class="product-card">
-                            <a class="product-card-link" href="product.php">
-                                <img src="https://via.placeholder.com/200x200" alt="Product Image" />
-                                <div class="product-card-body">
-                                    <h3 class="product-card-title">Example Product 3</h3>
-                                    <p class="product-card-price">₱39.99</p>
-                                    <!--     <button class="btn btn-primary">Add to Cart</button>-->
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- Example Product Card -->
-                    <div class="col-md-15">
-                        <div class="product-card">
-                            <a class="product-card-link" href="product.php">
-                                <img src="https://via.placeholder.com/200x200" alt="Product Image" />
-                                <div class="product-card-body">
-                                    <h3 class="product-card-title">Example Product 3</h3>
-                                    <p class="product-card-price">₱39.99</p>
-                                    <!--     <button class="btn btn-primary">Add to Cart</button>-->
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- Example Product Card -->
-                    <div class="col-md-15">
-                        <a class="product-card-link" href="product.php">
-                            <div class="product-card">
-                                <img src="https://via.placeholder.com/200x200" alt="Product Image" />
-                                <div class="product-card-body">
-                                    <h3 class="product-card-title">Example Product 3</h3>
-                                    <p class="product-card-price">₱39.99</p>
-                                    <!--     <button class="btn btn-primary">Add to Cart</button>-->
-                                </div>
-                        </a>
-                    </div>
-                </div>
-                <!-- Example Product Card -->
+        <h3 class="mb-4">Recent Products <a href="./shop.php" class="btn btn-primary">View All Products</a></h3>
+        
+
+<div class="row">
+    <?php
+    try {
+        $sql = "SELECT productid, productname, price, image FROM products LIMIT 10"; // Limit to 10 products
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+
+            while ($row = $result->fetch_assoc()) {
+                $productName = strlen($row["productname"]) > 35 ? substr($row["productname"], 0, 35) . '...' : $row["productname"];
+    ?>
+                <!-- Product Card HTML -->
                 <div class="col-md-15">
-                    <div class="product-card">
-                        <a class="product-card-link" href="product.php">
-                            <img src="https://via.placeholder.com/200x200" alt="Product Image" />
+                    <a href="./product.php?id=<?php echo $row["productid"]; ?>" class="product-card-link">
+
+                        <div class="product-card">
+                            <!-- <a class="product-card-link" href="product.php"> -->
+                            <img src="./productimg/<?php echo $row["image"]; ?>" alt="Product Image" />
                             <div class="product-card-body">
-                                <h3 class="product-card-title">Example Product 3</h3>
-                                <p class="product-card-price">₱39.99</p>
-                                <!--     <button class="btn btn-primary">Add to Cart</button>-->
+                                <h3 class="product-card-title"><?php echo $productName; ?></h3>
+
+                                <p class="product-card-price">₱<?php echo $row["price"]; ?></p>
+                                <!--<button class="btn btn-primary">Add to Cart</button>-->
                             </div>
-                        </a>
-                    </div>
+                    </a>
                 </div>
-                <!-- Example Product Card -->
-                <div class="col-md-15">
-                    <div class="product-card">
-                        <a class="product-card-link" href="product.php">
-                            <img src="https://via.placeholder.com/200x200" alt="Product Image" />
-                            <div class="product-card-body">
-                                <h3 class="product-card-title">Example Product 3</h3>
-                                <p class="product-card-price">₱39.99</p>
-                                <!--     <button class="btn btn-primary">Add to Cart</button>-->
-                            </div>
-                        </a>
-                    </div>
-                </div>
+            </div>
+    <?php
+            }
+        } else {
+            echo "No products available.";
+        }
+    } catch (Exception $e) {
+        echo "Error: " . $e->getMessage();
+    }
+    $conn->close();
+    ?>
+
+
         </div>
     </div>
     </div>
@@ -359,9 +184,7 @@
             <div class="row">
                 <div class="col-md-12 text-center">
                     <h3>Our Mission</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec dictum nunc. Nullam vitae
-                        ligula sed nisi sagittis facilisis vitae nec velit. Integer scelerisque magna sit amet dui
-                        suscipit, sed aliquam nunc scelerisque.</p>
+                    <p>Empowering health through easy access to medications. Your trusted online platform for quality pharmaceuticals.</p>
                 </div>
             </div>
         </div>

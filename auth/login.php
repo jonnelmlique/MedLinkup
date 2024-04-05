@@ -31,6 +31,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     $_SESSION['userid'] = $row['userid'];
                     $_SESSION['usertype'] = $row['usertype'];
+                    $_SESSION['email'] = $row['email'];
+                    $_SESSION['username'] = $row['username'];
 
 
                     if ($row['usertype'] == 'admin') {
@@ -67,6 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 </head>
 
+
 <body>
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
@@ -94,7 +97,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </li>
                 </ul>
                 <div class="navbar-icons d-flex align-items-center">
-                    <a href="../auth/login.php" class="nav-link"><i class="fas fa-user"></i> Login </a>
+                <a href="../public/auth/login.html" class="nav-link"><i class="fas fa-user"></i> Login </a>
                     <a href="../cart.php" class="nav-link"><i class="fas fa-shopping-cart"></i> Cart </a>
                 </div>
             </div>

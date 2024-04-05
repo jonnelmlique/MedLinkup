@@ -31,7 +31,8 @@
                     </a>
                     <ul class="submenu">
                         <li><a href="../customer/myprofile.php">My Profile</a></li>
-                        <li><a href="../customer/delivery.php">Delivery Address</a></li>
+<li><a href="../customer/delivery.php">Delivery Address</a></li>
+
 
                     </ul>
                 </li>
@@ -43,10 +44,10 @@
                     </a>
                 </li>
                 <li>
-                    <a href="../customer/pendingorder.php">
-                        <i class='fas fa-cart-arrow-down' ></i>
-                        <span class="text"> Pending Order</spvan>
-                    </a>
+                                    <a href="../customer/order.php">
+                    <i class="fas fa-cart-arrow-down"></i>
+                    <span class="text">Order</span>
+                </a>
                 </li>
                 <li>
                     <a href="history.php">
@@ -66,7 +67,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#" class="logout">
+                <a href="../logout.php" class="logout">
                         <i class='fas fa-user' ></i>
                         <span class="text"> Logout</span>
                     </a>

@@ -1,46 +1,22 @@
+
 <?php
-include '../src/config/config.php';
+    include '../src/config/config.php';
 
-session_start();
+    session_start(); 
 
-$message = "";
-
-try {
-    if ($conn->connect_error) {
-        throw new Exception("Connection failed: " . $conn->connect_error);
+    if (!isset($_SESSION['userid'])) {
+    header("Location: ../auth/login.php");
+    exit; 
     }
+    $userID = $_SESSION['userid']; 
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $userid = $_SESSION['userid'];
-        $firstname = htmlspecialchars($_POST["firstname"]);
-        $lastname = htmlspecialchars($_POST["lastname"]);
-        $email = htmlspecialchars($_POST["email"]);
-        $contact = htmlspecialchars($_POST["contact"]);
-        $country = htmlspecialchars($_POST["country"]);
-        $region = htmlspecialchars($_POST["region"]);
-        $province = htmlspecialchars($_POST["province"]);
-        $city = htmlspecialchars($_POST["city"]);
-        $barangay = htmlspecialchars($_POST["barangay"]);
-        $zipcode = htmlspecialchars($_POST["zipcode"]);
-        $addressline1 = htmlspecialchars($_POST["address"]);
-        $addressline2 = htmlspecialchars($_POST["address2"]);
+    $sql = "SELECT * FROM shippingaddresses WHERE userid = $userID";
+    $result = mysqli_query($conn, $sql);
 
-        $stmt = $conn->prepare("INSERT INTO shippingaddresses (userid, firstname, lastname, email, contact, country, region, province, city, barangay, zipcode, addressline1, addressline2) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("issssssssssss", $userid, $firstname, $lastname, $email, $contact, $country, $region, $province, $city, $barangay, $zipcode, $addressline1, $addressline2);
-
-        if ($stmt->execute()) {
-            $message = "success";
-        } else {
-            throw new Exception("Error: " . $stmt->error);
-        }
-
-        $stmt->close();
+    if (mysqli_num_rows($result) > 0) {
+        $shippingAddress = mysqli_fetch_assoc($result);
     }
-} catch (Exception $e) {
-    $message = $e->getMessage();
-}
-?>
-
+    ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -76,7 +52,8 @@ try {
                 </a>
                 <ul class="submenu">
                     <li><a href="../customer/myprofile.php">My Profile</a></li>
-                    <li class="active"><a href="../admin/categories.php">Delivery Address</a></li>
+                                        <li><a href="../customer/delivery.php">Delivery Address</a></li>
+
                 </ul>
             </li>
             <li>
@@ -86,9 +63,9 @@ try {
                 </a>
             </li>
             <li>
-                <a href="../customer/pendingorder.php">
+            <a href="../customer/order.php">
                     <i class="fas fa-cart-arrow-down"></i>
-                    <span class="text"> Pending Order</span>
+                    <span class="text">Order</span>
                 </a>
             </li>
             <li >
@@ -109,7 +86,7 @@ try {
                 </ul>
             </li>
             <li>
-                <a href="#" class="logout">
+             <a href="../logout.php" class="logout">
                     <i class="fas fa-user"></i>
                     <span class="text"> Logout</span>
                 </a>
@@ -126,12 +103,20 @@ try {
         </nav>
     </section>
     <main>
+        
         <div class="box-section">
+        <div class="add-button">
+                    <a href="../customer/adddelivery.php" class="btn-link"> 
+                        <button>Add</button>
+                    </a>
+                    </div>
         <div class="head-title">
             <div class="left">
+                
                 <h1>Delivery Address</h1>
             </div>
         </div>
+        
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-8">
@@ -143,100 +128,80 @@ try {
                                <div class="mb-3">
                                     <label for="country">First Name:</label>
                                     <input type="text" class="form-control" id="firstname" name="firstname"
-                                     placeholder="First Name" required>
+                                    value="<?php echo isset($shippingAddress['firstname']) ? $shippingAddress['firstname'] : ''; ?>"
+                                     placeholder="First Name" required disabled>
                                 </div>
                                 <div class="mb-3">
                                     <label for="country">Last Name:</label>
                                     <input type="text" class="form-control" id="lastname" name="lastname"
-                                     placeholder="Last Name" required>
+                                    value="<?php echo isset($shippingAddress['lastname']) ? $shippingAddress['lastname'] : ''; ?>"
+                                    placeholder="Last Name" required disabled>
                                 </div>
                                 <div class="mb-3">
                                     <label for="country">Email:</label>
                                     <input type="email" class="form-control" id="email" name="email"
-                                     placeholder="Email" required>
+                                    value="<?php echo isset($shippingAddress['email']) ? $shippingAddress['email'] : ''; ?>"
+                                    placeholder="Email" required disabled>
                                 </div>
                               
                                 <div class="mb-3">
                                     <label for="country">Contact:</label>
                                     <input type="number" class="form-control" id="contact" name="contact"
-                                     placeholder="Contact" required>
+                                    value="<?php echo isset($shippingAddress['contact']) ? $shippingAddress['contact'] : ''; ?>"
+                                    placeholder="Contact" required disabled>
                                 </div>
                                 <div class="mb-3">
-    <label for="country">Country:</label>
-    <select class="form-control" id="country" name="country" onchange="fetchRegions(this.value)" required>
-        <option value="" disabled selected>Select Country</option>
-        <?php
-        // Fetch countries from the database and populate the dropdown options
-        include 'config.php'; // Include database configuration file
-
-        $sql = "SELECT DISTINCT country FROM availablelocations";
-        $result = $conn->query($sql);
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                echo '<option value="' . $row['country'] . '">' . $row['country'] . '</option>';
-            }
-        }
-        $conn->close();
-        ?>
-    </select>
-</div>
-
-<div class="mb-3">
-    <label for="region">Region:</label>
-    <select class="form-control" id="region" name="region" disabled onchange="fetchProvinces(this.value)" required>
-        <option value="" disabled selected>Select Region</option>
-    </select>
-</div>
-
-<div class="mb-3">
-    <label for="province">Province:</label>
-    <select class="form-control" id="province" name="province" disabled onchange="fetchCities(this.value)" required>
-        <option value="" disabled selected>Select Province</option>
-    </select>
-</div>
-
-<div class="mb-3">
-    <label for="city">City:</label>
-    <select class="form-control" id="city" name="city" disabled onchange="fetchBarangays(this.value)" required>
-        <option value="" disabled selected>Select City</option>
-    </select>
-</div>
-
-<div class="mb-3">
-    <label for="barangay">Barangay:</label>
-    <select class="form-control" id="barangay" name="barangay" disabled required>
-        <option value="" disabled selected>Select Barangay</option>
-    </select>
-</div>
-
+                                <label for="country">Country:</label>
+                                    <input type="text" class="form-control" id="country" name="country"
+                                    value="<?php echo isset($shippingAddress['country']) ? $shippingAddress['country'] : ''; ?>"
+                                    placeholder="Country" required disabled>
+                                    </div>
+                                    <div class="mb-3">
+                                <label for="country">Region:</label>
+                                    <input type="text" class="form-control" id="region" name="region"
+                                    value="<?php echo isset($shippingAddress['region']) ? $shippingAddress['region'] : ''; ?>"
+                                    placeholder="Region" required disabled>
+                                    </div>
+                                    <div class="mb-3">
+                                <label for="country">Province:</label>
+                                    <input type="text" class="form-control" id="province" name="province"
+                                    value="<?php echo isset($shippingAddress['province']) ? $shippingAddress['province'] : ''; ?>"
+                                    placeholder="Province" required disabled>
+                                    </div>
+                                    <div class="mb-3">
+                                <label for="country">City:</label>
+                                    <input type="text" class="form-control" id="city" name="city"
+                                    value="<?php echo isset($shippingAddress['city']) ? $shippingAddress['city'] : ''; ?>"
+                                    placeholder="City" required disabled>
+                                    </div>
+                                    <div class="mb-3">
+                                <label for="country">Barangay:</label>
+                                    <input type="text" class="form-control" id="barangay" name="barangay"
+                                    value="<?php echo isset($shippingAddress['barangay']) ? $shippingAddress['barangay'] : ''; ?>"
+                                    placeholder="Barangay" required disabled>
+                                    </div>
                                 <div class="mb-3">
                                     <label for="country">Zip Code:</label>
                                     <input type="number" class="form-control" id="zipcode" name="zipcode"
-                                     placeholder="Zip Code" required>
+                                    value="<?php echo isset($shippingAddress['zipcode']) ? $shippingAddress['zipcode'] : ''; ?>"
+                                    placeholder="Zip Code" required disabled>
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="country">Address:</label>
                                     <input type="text" class="form-control" id="address" name="address"
-                                     placeholder="Address" required>
+                                    value="<?php echo isset($shippingAddress['addressline1']) ? $shippingAddress['addressline1'] : ''; ?>"
+                                    placeholder="Address" required disabled>
                                 </div>
 
                                  <div class="mb-3">
                                     <label for="country">Address 2:</label>
                                     <input type="text" class="form-control" id="address2" name="address2"
-                                     placeholder="Address 2" required>
+                                    value="<?php echo isset($shippingAddress['addressline2']) ? $shippingAddress['addressline2'] : ''; ?>"
+                                    placeholder="Address 2" required disabled>
                                 </div>
                                
-                               
-            
-                                <button type="submit" class="btn btn-submit">Add</button>
-                                <a href="./location.php" class="cancel-btn" 
-                                        style="display: inline-block; padding: 13px 16px; 
-                                        background-color: #f44336; color: #fff; text-decoration: 
-                                        none; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;"
-                                        onmouseover="this.style.backgroundColor='#d32f2f';"
-                                         onmouseout="this.style.backgroundColor='#f44336';">Cancel</a>
-                                         </div>
+                
 
                                         </form>
                         </div>
@@ -253,85 +218,6 @@ try {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <?php
-    if (!empty($message)) {
-        if ($message === "success") {
-            echo "<script>
-                Swal.fire({
-                    title: 'Address added successfully.',
-                    text: 'You have successfully added the deliver address.',
-                    icon: 'success',
-                    confirmButtonText: 'OK',                
-                });
-            </script>";
-        } else {
-            echo "<script>
-                Swal.fire({
-                    title: 'Error',
-                    text: '" . $message . "',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
-            </script>";
-        }
-    }
-    ?>
-<script>
-function fetchRegions(country) {
-    $.ajax({
-        url: 'fetch_regions.php',
-        type: 'POST',
-        data: {country: country},
-        success: function(response) {
-            $('#region').html(response);
-            $('#region').prop('disabled', false);
-            $('#province').prop('disabled', true).val('');
-            $('#city').prop('disabled', true).val('');
-            $('#barangay').prop('disabled', true).val('');
-        }
-    });
-}
-
-function fetchProvinces(region) {
-    $.ajax({
-        url: 'fetch_provinces.php',
-        type: 'POST',
-        data: {region: region},
-        success: function(response) {
-            $('#province').html(response);
-            $('#province').prop('disabled', false);
-            $('#city').prop('disabled', true).val('');
-            $('#barangay').prop('disabled', true).val('');
-        }
-    });
-}
-
-function fetchCities(province) {
-    $.ajax({
-        url: 'fetch_cities.php',
-        type: 'POST',
-        data: {province: province},
-        success: function(response) {
-            $('#city').html(response);
-            $('#city').prop('disabled', false);
-            $('#barangay').prop('disabled', true).val('');
-        }
-    });
-}
-
-function fetchBarangays(city) {
-    $.ajax({
-        url: 'fetch_barangays.php',
-        type: 'POST',
-        data: {city: city},
-        success: function(response) {
-            $('#barangay').html(response);
-            $('#barangay').prop('disabled', false);
-        }
-    });
-}
-</script>
 
     
 </body>
