@@ -1,182 +1,174 @@
 main {
-    margin-left: 280px;
-    padding: 20px;
+  margin-left: 280px;
+  padding: 20px;
 }
 
 #history-list {
-    padding: 20px;
+  padding: 20px;
 }
 
 #history-list h2 {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
-.orderapprove{
-    text-decoration: none;
-    margin-left: 85%;
-    padding: 0.575rem 0.75rem;
-    font-size: 1rem;
-    line-height: 1.5;
-    border: 1px solid transparent;
-    border-radius: 0.25rem;
-    transition: all 0.15s ease-in-out;
-    background-color: #28a745;
-    color: white;
-    font-weight: bold;
+.orderapprove {
+  text-decoration: none;
+  margin-left: 85%;
+  padding: 0.575rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  transition: all 0.15s ease-in-out;
+  background-color: #28a745;
+  color: white;
+  font-weight: bold;
 }
 .orderapprove:hover {
-    background-color: #1c9601;
-    border-color: #1c9601;
+  background-color: #1c9601;
+  border-color: #1c9601;
 }
-.buttonabc{
-    margin-bottom: 19px;
-    margin-left: 40px;
-    margin-top: 19px;
+.buttonabc {
+  margin-bottom: 19px;
+  margin-left: 40px;
+  margin-top: 19px;
 }
-.buttona{
-    text-decoration: none;
-    padding: 0.675rem 0.75rem;
-    font-size: 1rem;
-    line-height: 1.5;
-    border: 1px solid transparent;
-    border-radius: 0.25rem;
-    transition: all 0.15s ease-in-out;
-    background-color: #28a745;
-    color: white; 
-    font-weight: bold;
+.buttona {
+  text-decoration: none;
+  padding: 0.675rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  transition: all 0.15s ease-in-out;
+  background-color: #28a745;
+  color: white;
+  font-weight: bold;
 }
-.buttonb{
-    text-decoration: none;
-    padding: 0.675rem 0.75rem;
-    font-size: 1rem;
-    line-height: 1.5;
-    border: 1px solid transparent;
-    border-radius: 0.25rem;
-    transition: all 0.15s ease-in-out;
-    background-color: #28a745;
-    color: white; 
-    font-weight: bold;
-
-}
-
-.buttonc{
-    text-decoration: none;
-    padding: 0.675rem 0.75rem;
-    font-size: 1rem;
-    line-height: 1.5;
-    border: 1px solid transparent;
-    border-radius: 0.25rem;
-    transition: all 0.15s ease-in-out;
-    background-color: #7acb68;
-    color: white; 
-    font-weight: bold;
+.buttonb {
+  text-decoration: none;
+  padding: 0.675rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  transition: all 0.15s ease-in-out;
+  background-color: #28a745;
+  color: white;
+  font-weight: bold;
 }
 
-.buttond{
-    text-decoration: none;
-    padding: 0.675rem 0.75rem;
-    font-size: 1rem;
-    line-height: 1.5;
-    border: 1px solid transparent;
-    border-radius: 0.25rem;
-    transition: all 0.15s ease-in-out;
-    background-color: #28a745;
-    color: white; 
-    font-weight: bold;
+.buttonc {
+  text-decoration: none;
+  padding: 0.675rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  transition: all 0.15s ease-in-out;
+  background-color: #7acb68;
+  color: white;
+  font-weight: bold;
+}
+
+.buttond {
+  text-decoration: none;
+  padding: 0.675rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  transition: all 0.15s ease-in-out;
+  background-color: #28a745;
+  color: white;
+  font-weight: bold;
 }
 .buttona:hover {
-    background-color: #1c9601;
-    border-color: #1c9601;
+  background-color: #1c9601;
+  border-color: #1c9601;
 }
 .buttonb:hover {
-    background-color: #1c9601;
-    border-color: #1c9601;
+  background-color: #1c9601;
+  border-color: #1c9601;
 }
 .buttonc:hover {
-    background-color: #1c9601;
-    border-color: #1c9601;
+  background-color: #1c9601;
+  border-color: #1c9601;
 }
 .buttond:hover {
-    background-color: #1c9601;
-    border-color: #1c9601;
+  background-color: #1c9601;
+  border-color: #1c9601;
 }
 .product-box {
-    background-color: #f0f3f2;
-    border-radius: 20px;
-    margin-bottom: 20px;
-    padding: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s;
-    width: 90%;
-    margin-left: 40px;
+  background-color: #f0f3f2;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s;
+  width: 90%;
+  margin-left: 40px;
 }
 .product-box:hover {
-    box-shadow: 0 8px 12px rgba(28, 150, 1, 0.2);
-
+  box-shadow: 0 8px 12px rgba(28, 150, 1, 0.2);
 }
 .product-details {
-    display: flex;
-    align-items: center;
-    
+  display: flex;
+  align-items: center;
 }
 
 .product-image {
-    width: 130px;
-    height: auto;
-    margin-right: 20px;
-    border: 2px solid #1c9601;
-
+  width: 130px;
+  height: auto;
+  margin-right: 20px;
+  border: 2px solid #1c9601;
 }
 
 .product-info {
-    flex: 1;
+  flex: 1;
 }
 
 .product-name {
-    font-weight: bold;
-    font-size: 21px;
-    margin-bottom: 10px;
+  font-weight: bold;
+  font-size: 21px;
+  margin-bottom: 10px;
 }
 
 .product-price {
-    color: #007bff;
-    margin-left: 92%;
-    margin-bottom: 10px;
-    
+  color: #007bff;
+  margin-left: 92%;
+  margin-bottom: 10px;
 }
 
 .product-status {
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-weight: bold;
-
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
 }
 
-
-
 .pending-section .lefth {
-    font-size: 24px;
-    margin-left: 10px;
-    margin-bottom: 20px;
+  font-size: 24px;
+  margin-left: 10px;
+  margin-bottom: 20px;
 }
 
 .pending-section {
-    margin-top: 20px;
-    margin-right: 6px;
-    padding: 5px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);    
+  margin-top: 20px;
+  margin-right: 6px;
+  padding: 5px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
 .pending-section h1 {
-    margin-bottom: 20px;
-    color: #333;
-}    
-.margin{
-    margin-bottom: 100px;
+  margin-bottom: 20px;
+  color: #333;
 }
-.orderdisplay{
-    font-weight: bold;
-    margin-left: 40%;
-    margin-top: 60px;
+.margin {
+  margin-bottom: 100px;
+}
+.orderdisplay {
+  font-weight: bold;
+  margin-left: 40%;
+  margin-top: 60px;
 }

@@ -1,15 +1,13 @@
 <?php
 include '../src/config/config.php';
 
-
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
-    $token = $_GET['token']; 
+    $token = $_GET['token'];
 
     if ($password !== $confirm_password) {
         $message = "Passwords do not match.";
@@ -46,7 +44,7 @@ $conn->close();
     <link rel="stylesheet" href="../public/css/index/nav.css">
     <link rel="stylesheet" href="../public/css/auth/resetpassword.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-   
+
 </head>
 
 <body>
@@ -81,7 +79,7 @@ $conn->close();
                 </div>
             </div>
         </div>
-        </nav>
+    </nav>
     <main>
         <section class="reset-section">
             <div class="container">
@@ -97,25 +95,27 @@ $conn->close();
 
                         <form action="#" method="POST" class="needs-validation">
                             <div class="row">
-                                
+
                             </div>
-                     
+
                             <div class="mb-3">
-                                <input type="password" class="form-control" id="password" name="password" placeholder="New Password" required>
+                                <input type="password" class="form-control" id="password" name="password"
+                                    placeholder="New Password" required>
                                 <div class="invalid-feedback">Please your New Password.</div>
                             </div>
                             <div class="mb-3">
-                                <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required>
+                                <input type="password" class="form-control" id="confirm_password"
+                                    name="confirm_password" placeholder="Confirm Password" required>
                                 <div class="invalid-feedback">Please Confirm your Password.</div>
                             </div>
-                   
+
                             <button type="submit" class="btn btn-primary btn-block">Submit</button>
                         </form>
-    
+
                         <div class="signup-link text-center">
                             Remember you're password? <a href="../auth/login.php">Login</a>
                         </div>
-                       
+
                     </div>
                 </div>
             </div>
@@ -138,17 +138,13 @@ $conn->close();
             <p>
                 &copy; 2024 MedLinkup. All rights reserved. |
                 <a href="../privacypolicy.php">Privacy Policy</a> | <a href="../termsofservice.php">Terms of Service</a>
-                </p>
+            </p>
         </div>
-    </footer>   
+    </footer>
 
-
-
-    <!-- node -->
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
     <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

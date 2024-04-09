@@ -2,7 +2,7 @@
 include '../src/config/config.php';
 
 // Fetch provinces based on selected region
-if(isset($_POST['region']) && !empty($_POST['region'])){
+if (isset($_POST['region']) && !empty($_POST['region'])) {
     $region = $_POST['region'];
 
     $sql = "SELECT DISTINCT province FROM availablelocations WHERE region = ?";

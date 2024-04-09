@@ -24,7 +24,7 @@ if (!isset($_SESSION['userid'])) {
 <body>
 
     <section id="sidebar">
-        <a href="../supplier/dashboard.php" class="brand">
+        <a href="../admin/dashboard.php" class="brand">
             <img src="../public/img/logo.png" alt="MedLinkup Logo" class="logo">
             <span class="text"> MedLinkup</span>
         </a>
@@ -113,7 +113,7 @@ if (!isset($_SESSION['userid'])) {
             <div class="row justify-content-center">
                 <div class="col-md-6">
                     <div class="pending-section">
-                        <h1 class="lefth">Order - Processing</h1>
+                        <h1 class="lefth">Order - Shipped</h1>
                         <hr>
                         <div class="buttonabc">
                             <a class="buttona" href="../admin/order.php">Pending</a>

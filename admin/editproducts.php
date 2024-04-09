@@ -118,7 +118,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
 
     <section id="sidebar">
-        <a href="../supplier/dashboard.php" class="brand">
+        <a href="../admin/dashboard.php" class="brand">
             <img src="../public/img/logo.png" alt="MedLinkup Logo" class="logo">
             <span class="text"> MedLinkup</span>
         </a>

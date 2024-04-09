@@ -12,13 +12,15 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-function generateToken() {
+function generateToken()
+{
     return bin2hex(random_bytes(32));
 }
 
 date_default_timezone_set('Asia/Manila');
 
-function generateExpiration() {
+function generateExpiration()
+{
     return date('Y-m-d H:i:s', strtotime('+1 hour'));
 }
 
@@ -32,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $token = generateToken();
         $expiration = generateExpiration();
-        
+
         $sql = "UPDATE users SET reset_token='$token', reset_token_expiration='$expiration' WHERE email='$email'";
         if ($conn->query($sql) === TRUE) {
 
@@ -45,16 +47,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $mail->Password = 'suxcgpyfagvcluxi';
                 $mail->SMTPSecure = 'tls';
                 $mail->Port = 587;
-                
+
                 $mail->setFrom('medlinkupcontact@gmail.com', 'MedLinkup   ');
                 $mail->addAddress($email);
                 $mail->isHTML(true);
-                
+
                 $mail->Subject = 'Password Reset Link';
-                $mail->Body = 'Click <a href="http://localhost/MedLinkup/auth/reset.php?token='.$token.'">here</a> to reset your password. This link is valid for 1 hour.';
-                
+                $mail->Body = 'Click <a href="http://localhost/MedLinkup/auth/reset.php?token=' . $token . '">here</a> to reset your password. This link is valid for 1 hour.';
+
                 $mail->send();
-                
+
                 $message = "success";
             } catch (Exception $e) {
                 $message = "Error sending email: " . $mail->ErrorInfo;
@@ -184,19 +186,15 @@ $conn->close();
         </div>
     </footer>
 
-
-
-    <!-- node -->
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
     <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <?php
-if (!empty($message)) {
-    if ($message === "success") {
-        echo "<script>
+    if (!empty($message)) {
+        if ($message === "success") {
+            echo "<script>
             Swal.fire({
                 title: 'Reset Link Sent Successfully',
                 text: 'You have successfully sent the reset link to your email.',
@@ -205,8 +203,8 @@ if (!empty($message)) {
                
             });
         </script>";
-    } else {
-        echo "<script>
+        } else {
+            echo "<script>
             Swal.fire({
                 title: 'Error',
                 text: '" . $message . "',
@@ -214,9 +212,9 @@ if (!empty($message)) {
                 confirmButtonText: 'OK'
             });
         </script>";
+        }
     }
-}
-?>
+    ?>
 
 </body>
 

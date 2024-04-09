@@ -1,148 +1,139 @@
 main {
-    margin-left: 280px;
-    padding: 20px;
+  margin-left: 280px;
+  padding: 20px;
 }
 
 .box-section {
-    margin-top: 50px;
-    padding: 30px;
-    border-radius: 10px;
-    margin-right: 450px;
+  margin-top: 50px;
+  padding: 30px;
+  border-radius: 10px;
+  margin-right: 450px;
 }
 
 .box-section form {
-    max-width: 500px;
-    margin-left: 10px;
-
+  max-width: 500px;
+  margin-left: 10px;
 }
 
 .box-section form input[type="text"],
 .box-section form input[type="number"],
 .box-section form textarea,
 .box-section form select {
-    margin-bottom: 20px;
-    border-radius: 5px;
-    padding: 10px;
-    width: 300px;
-    border: 2px solid #1c9601;
-    padding: 13px;
-    font-size:14px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  padding: 10px;
+  width: 300px;
+  border: 2px solid #1c9601;
+  padding: 13px;
+  font-size: 14px;
 }
 
-
-.box-section form input[type="file"]
-{
-    margin-bottom: 20px;
-    border-radius: 5px;
-    padding: 10px;
-    width: 300px;
-    border: 2px solid #1c9601;
-    padding: 13px;
+.box-section form input[type="file"] {
+  margin-bottom: 20px;
+  border-radius: 5px;
+  padding: 10px;
+  width: 300px;
+  border: 2px solid #1c9601;
+  padding: 13px;
 }
 .add-category-section {
-    margin-top: 50px;
-    padding: 30px;
-    border-radius: 10px;
-    margin-bottom: 45%;
+  margin-top: 50px;
+  padding: 30px;
+  border-radius: 10px;
+  margin-bottom: 45%;
 }
 
-
 .image-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    padding: 20px;
-    border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 20px;
+  border-radius: 5px;
 }
 
 #form-container {
-    float: left;
-    width: 45%;
-    flex: 0 0 45%;
+  float: left;
+  width: 45%;
+  flex: 0 0 45%;
 }
 
 .preview-image {
-    margin-bottom: 20px;
-    margin-top: -50px;
-    text-align: center;
-    max-width: 360px;
-    border: 2px solid #1c9601;
-    border-radius: 10px;
-    background-color: #fff;
-    padding: 30px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s;
+  margin-bottom: 20px;
+  margin-top: -50px;
+  text-align: center;
+  max-width: 360px;
+  border: 2px solid #1c9601;
+  border-radius: 10px;
+  background-color: #fff;
+  padding: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s;
 }
 
 .preview-image:hover {
-    box-shadow: 0 8px 12px rgba(28, 150, 1, 0.2);
+  box-shadow: 0 8px 12px rgba(28, 150, 1, 0.2);
 }
 
 #preview-image img {
-    max-width: 100%;
-    height: auto;
+  max-width: 100%;
+  height: auto;
 }
 
 #image {
-    border: 2px solid #1c9601;
-    border-radius: 10px;
-    padding: 10px;
-    width: 61%;
-    background-color: #fff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s;
+  border: 2px solid #1c9601;
+  border-radius: 10px;
+  padding: 10px;
+  width: 61%;
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s;
 }
 
 #image:hover {
-    box-shadow: 0 8px 12px rgba(28, 150, 1, 0.2);
+  box-shadow: 0 8px 12px rgba(28, 150, 1, 0.2);
 }
 
-
-
 .btn-submit {
-    background-color: #4caf50;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 15px 40px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    width: 130px;
-    font-size: 14px;
-    font-weight: bold;
-    
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 15px 40px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 130px;
+  font-size: 14px;
+  font-weight: bold;
 }
 
 .btn-submit:hover {
-    background-color: #1c9601;
+  background-color: #1c9601;
 }
 
 label {
-    font-weight: bold;
-    font-size: 12px;
-    color: #333;
-    margin-bottom: 10px;
-    display: block;
+  font-weight: bold;
+  font-size: 12px;
+  color: #333;
+  margin-bottom: 10px;
+  display: block;
 }
 
 .box-section .lefth {
-    font-size: 24px;
-    margin-left: 10px;
-    margin-bottom: 50px;
+  font-size: 24px;
+  margin-left: 10px;
+  margin-bottom: 50px;
 }
 
 .box-section {
-    margin-top: 20px;
-    margin-right: 6px;
-    padding: 5px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-
+  margin-top: 20px;
+  margin-right: 6px;
+  padding: 5px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
 .box-section h1 {
-    margin-bottom: 20px;
-    color: #333;
+  margin-bottom: 20px;
+  color: #333;
 }
-

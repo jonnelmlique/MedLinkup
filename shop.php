@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,13 +21,14 @@ $message = '';
 $loginLinkText = '<i class="fas fa-user"></i> Login';
 $loginLinkURL = './auth/login.php';
 
-if(isset($_SESSION['userid']) && isset($_SESSION['username'])) {
-    $loggedInUsername = $_SESSION['username']; 
-    $loginLinkText = '<i class="fas fa-user"></i> ' . $loggedInUsername; 
+if (isset($_SESSION['userid']) && isset($_SESSION['username'])) {
+    $loggedInUsername = $_SESSION['username'];
+    $loginLinkText = '<i class="fas fa-user"></i> ' . $loggedInUsername;
     $loginLinkURL = './customer/dashboard.php';
 }
 
 ?>
+
 <body>
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
@@ -56,7 +56,9 @@ if(isset($_SESSION['userid']) && isset($_SESSION['username'])) {
                     </li>
                 </ul>
                 <div class="navbar-icons d-flex align-items-center">
-                <a href="<?php echo $loginLinkURL; ?>" class="nav-link"><?php echo $loginLinkText; ?></a>
+                    <a href="<?php echo $loginLinkURL; ?>" class="nav-link">
+                        <?php echo $loginLinkText; ?>
+                    </a>
                     <a href="./cart.php" class="nav-link"><i class="fas fa-shopping-cart"></i> Cart </a>
                 </div>
             </div>
@@ -126,43 +128,44 @@ if(isset($_SESSION['userid']) && isset($_SESSION['username'])) {
                     </div> -->
                     <?php
 
-try {
-    $sql = "SELECT productid, productname, price, image FROM products";
-    $result = $conn->query($sql);
+                    try {
+                        $sql = "SELECT productid, productname, price, image FROM products";
+                        $result = $conn->query($sql);
 
-    if ($result->num_rows > 0) {
+                        if ($result->num_rows > 0) {
 
-        while ($row = $result->fetch_assoc()) {
-            $productName = strlen($row["productname"]) > 35 ? substr($row["productname"], 0, 35) . '...' : $row["productname"];
+                            while ($row = $result->fetch_assoc()) {
+                                $productName = strlen($row["productname"]) > 35 ? substr($row["productname"], 0, 35) . '...' : $row["productname"];
 
-            ?>
-                    <!-- Product Card HTML -->
+                                ?>
                     <div class="col-md-15">
                         <a href="./product.php?id=<?php echo $row["productid"]; ?>" class="product-card-link">
 
                             <div class="product-card">
-                                <!-- <a class="product-card-link" href="product.php"> -->
                                 <img src="./productimg/<?php echo $row["image"]; ?>" alt="Product Image" />
                                 <div class="product-card-body">
-                                    <h3 class="product-card-title"><?php echo $productName; ?></h3>
+                                    <h3 class="product-card-title">
+                                        <?php echo $productName; ?>
+                                    </h3>
 
-                                    <p class="product-card-price">₱<?php echo $row["price"]; ?></p>
-                                    <!--<button class="btn btn-primary">Add to Cart</button>-->
+                                    <p class="product-card-price">₱
+                                        <?php echo $row["price"]; ?>
+                                    </p>
                                 </div>
                         </a>
                     </div>
                 </div>
                 <?php
-        }
-    } else {
-        echo "No products available.";
-    }
-} catch (Exception $e) {
-    echo "Error: " . $e->getMessage();
-}
+                            }
+                        } else {
+                            echo "No products available.";
+                        }
+                    } catch (Exception $e) {
+                        echo "Error: " . $e->getMessage();
+                    }
 
-$conn->close();
-?>
+                    $conn->close();
+                    ?>
 
 
             </div>
@@ -174,7 +177,8 @@ $conn->close();
             <div class="row">
                 <div class="col-md-12 text-center">
                     <h3>Our Mission</h3>
-                    <p>Empowering health through easy access to medications. Your trusted online platform for quality pharmaceuticals.</p>
+                    <p>Empowering health through easy access to medications. Your trusted online platform for quality
+                        pharmaceuticals.</p>
                 </div>
             </div>
         </div>

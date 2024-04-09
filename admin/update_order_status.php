@@ -2,7 +2,7 @@
 include '../src/config/config.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if(isset($_POST['transactionid']) && isset($_POST['status'])) {
+    if (isset($_POST['transactionid']) && isset($_POST['status'])) {
         $transactionid = mysqli_real_escape_string($conn, $_POST['transactionid']);
         $status = mysqli_real_escape_string($conn, $_POST['status']);
         $query = "UPDATE orderprocess SET status = '$status' WHERE transactionid = '$transactionid'";
