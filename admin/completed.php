@@ -38,30 +38,26 @@
                 </ul>
             </li>
             <li>
-                <a href="#">
+                <a href="../admin/order.php">
                     <i class='fas fa-shopping-bag'></i>
                     <span class="text"> Orders</span>
                 </a>
-                <ul class="submenu">
-                    <li><a href="../admin/pending.php">Pending</a></li>
-                    <li class="active"><a href="../admin/completed.php">Completed</a></li>
-                </ul>
             </li>
             <li>
                 <a href="../admin/sales.php">
-                    <i class='fas fa-chart-bar' ></i>
+                    <i class='fas fa-chart-bar'></i>
                     <span class="text"> Sales</span>
                 </a>
             </li>
             <li>
                 <a href="../admin/customer.php">
-                    <i class='fas fa-portrait' ></i>
+                    <i class='fas fa-portrait'></i>
                     <span class="text"> Customers</span>
                 </a>
             </li>
             <li>
-             <a href="#">
-                    <i class='fas fa-clone' ></i>
+                <a href="#">
+                    <i class='fas fa-clone'></i>
                     <span class="text"> Supplier</span>
                 </a>
                 <ul class="submenu">
@@ -72,25 +68,25 @@
                 </ul>
             </li>
 
-        <ul class="side-menu">
-            <li>
-                <a href="#">
-                    <i class='fa fa-cogs'></i>
-                    <span class="text"> Settings</span>
-                </a>
-                <ul class="submenu">
+            <ul class="side-menu">
+                <li>
+                    <a href="#">
+                        <i class='fa fa-cogs'></i>
+                        <span class="text"> Settings</span>
+                    </a>
+                    <ul class="submenu">
                         <li><a href="../admin/location.php">Location</a></li>
                         <li><a href="../admin/shippingfee.php">Shipping Fee</a></li>
 
                     </ul>
-            </li>
-            <li>
-                <a href="../logout.php" class="logout">
-                    <i class='fas fa-user'></i>
-                    <span class="text"> Logout</span>
-                </a>
-            </li>
-        </ul>
+                </li>
+                <li>
+                    <a href="../logout.php" class="logout">
+                        <i class='fas fa-user'></i>
+                        <span class="text"> Logout</span>
+                    </a>
+                </li>
+            </ul>
     </section>
 
     <section id="content">
@@ -169,20 +165,20 @@
     <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        function previewImage(event) {
-            var preview = document.getElementById('preview-image');
-            var file = event.target.files[0];
-            var reader = new FileReader();
+    function previewImage(event) {
+        var preview = document.getElementById('preview-image');
+        var file = event.target.files[0];
+        var reader = new FileReader();
 
-            reader.onloadend = function () {
-                preview.style.display = 'block';
-                preview.querySelector('img').src = reader.result;
-            }
-
-            if (file) {
-                reader.readAsDataURL(file);
-            }
+        reader.onloadend = function() {
+            preview.style.display = 'block';
+            preview.querySelector('img').src = reader.result;
         }
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    }
     </script>
 </body>
 

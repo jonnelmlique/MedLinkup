@@ -23,7 +23,7 @@
         <ul class="side-menu top">
             <li>
                 <a href="../admin/dashboard.php">
-                    <i class='fas fa-clone' ></i>
+                    <i class='fas fa-clone'></i>
                     <span class="text"> Dashboard</span>
                 </a>
             </li>
@@ -40,30 +40,26 @@
                 </ul>
             </li>
             <li>
-                <a href="#">
-                    <i class='fas fa-shopping-bag' ></i>
+                <a href="../admin/order.php">
+                    <i class='fas fa-shopping-bag'></i>
                     <span class="text"> Orders</span>
                 </a>
-                <ul class="submenu">
-                    <li><a href="../admin/pending.php">Pending</a></li>
-                    <li><a href="../admin/completed.php">Completed</a></li>
-                </ul>
             </li>
             <li>
                 <a href="../admin/sales.php">
-                    <i class='fas fa-chart-bar' ></i>
+                    <i class='fas fa-chart-bar'></i>
                     <span class="text"> Sales</span>
                 </a>
             </li>
             <li>
                 <a href="../admin/customer.php">
-                    <i class='fas fa-portrait' ></i>
+                    <i class='fas fa-portrait'></i>
                     <span class="text"> Customers</span>
                 </a>
             </li>
             <li>
-             <a href="#">
-                    <i class='fas fa-clone' ></i>
+                <a href="#">
+                    <i class='fas fa-clone'></i>
                     <span class="text"> Supplier</span>
                 </a>
                 <ul class="submenu">
@@ -74,70 +70,70 @@
                 </ul>
             </li>
 
-        <ul class="side-menu">
-            <li>
-                <a href="#">
-                    <i class='fa fa-cogs' ></i>
-                    <span class="text"> Settings</span>
-                </a>
-                <ul class="submenu">
+            <ul class="side-menu">
+                <li>
+                    <a href="#">
+                        <i class='fa fa-cogs'></i>
+                        <span class="text"> Settings</span>
+                    </a>
+                    <ul class="submenu">
                         <li><a href="../admin/location.php">Location</a></li>
                         <li><a href="../admin/shippingfee.php">Shipping Fee</a></li>
 
                     </ul>
-            </li>
-            <li>
-                <a href="../logout.php" class="logout">
-                    <i class='fas fa-user' ></i>
-                    <span class="text"> Logout</span>
-                </a>
-            </li>
-        </ul>
+                </li>
+                <li>
+                    <a href="../logout.php" class="logout">
+                        <i class='fas fa-user'></i>
+                        <span class="text"> Logout</span>
+                    </a>
+                </li>
+            </ul>
     </section>
 
     <section id="content">
-    <nav>
-        <i class='fa-pills' ></i>
-        <a href="#" class="profile">
-            <img src="https://i.pinimg.com/originals/f1/0f/f7/f10ff70a7155e5ab666bcdd1b45b726d.jpg">
-        </a>
-    </nav>
+        <nav>
+            <i class='fa-pills'></i>
+            <a href="#" class="profile">
+                <img src="https://i.pinimg.com/originals/f1/0f/f7/f10ff70a7155e5ab666bcdd1b45b726d.jpg">
+            </a>
+        </nav>
     </section>
 
- 
+
     <main>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="box-section">
-                    
-            <div class="search-bar">
-                <div class="print-button">
-                  
-                <button id="print-button">Print</button>
-                    </a>
-                </div>
-                
-                <input type="text" placeholder="Search...">
-                <button><i class="fas fa-search"></i></button>
-            </div>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="box-section">
+
+                        <div class="search-bar">
+                            <div class="print-button">
+
+                                <button id="print-button">Print</button>
+                                </a>
+                            </div>
+
+                            <input type="text" placeholder="Search...">
+                            <button><i class="fas fa-search"></i></button>
+                        </div>
 
 
-            <h1 class="lefth">Low Stock Medicine List</h1>
-            <table class="table" id="medicine-table">
-                <thead>
-                    <tr>
-                        <th>Image</th>
-                        <th>Name</th>
-                        <th>Price</th>
-                        <th>Details</th>
-                        <th>Category</th>
-                        <th>Stock</th>
-                        <th>Action</th> 
-                    </tr>
-                </thead>
-                <tbody>
-                <?php
+                        <h1 class="lefth">Low Stock Medicine List</h1>
+                        <table class="table" id="medicine-table">
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Name</th>
+                                    <th>Price</th>
+                                    <th>Details</th>
+                                    <th>Category</th>
+                                    <th>Stock</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
 
 include '../src/config/config.php';
 
@@ -172,15 +168,15 @@ include '../src/config/config.php';
     }
 ?>
 
- 
-               
-</tbody>
-            </table>
+
+
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-        </main>
+    </main>
     </section>
     <?php
 
@@ -207,38 +203,39 @@ $conn->close();
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
     <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Link Toastr JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-<script>
+    <!-- Link Toastr JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script>
     $(document).ready(function() {
         var lowStockProducts = <?php echo isset($low_stock_products_json) ? $low_stock_products_json : '[]'; ?>;
 
         lowStockProducts.forEach(function(product) {
-            toastr.options.positionClass = 'toast-bottom-right'; 
-            toastr.options.progressBar = true; 
-            toastr.options.closeButton = true; 
-            toastr.warning('<div class="toast-title">Low stock for:</div><div class="toast-message">' + product.productname + ' (' + product.stock + ' remaining)</div>');
+            toastr.options.positionClass = 'toast-bottom-right';
+            toastr.options.progressBar = true;
+            toastr.options.closeButton = true;
+            toastr.warning('<div class="toast-title">Low stock for:</div><div class="toast-message">' +
+                product.productname + ' (' + product.stock + ' remaining)</div>');
         });
     });
-</script>
-    <script>
-        function previewImage(event) {
-            var preview = document.getElementById('preview-image');
-            var file = event.target.files[0];
-            var reader = new FileReader();
-
-            reader.onloadend = function () {
-                preview.style.display = 'block';
-                preview.querySelector('img').src = reader.result;
-            }
-
-            if (file) {
-                reader.readAsDataURL(file);
-            }
-        }
     </script>
- <script>
+    <script>
+    function previewImage(event) {
+        var preview = document.getElementById('preview-image');
+        var file = event.target.files[0];
+        var reader = new FileReader();
+
+        reader.onloadend = function() {
+            preview.style.display = 'block';
+            preview.querySelector('img').src = reader.result;
+        }
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    }
+    </script>
+    <script>
     document.getElementById('print-button').addEventListener('click', function() {
         var table = document.getElementById('medicine-table');
         if (table) {
@@ -249,7 +246,8 @@ $conn->close();
 
                 printWindow.document.write('<style>');
                 printWindow.document.write('table { width: 100%; border-collapse: collapse; }');
-                printWindow.document.write('th, td { border: 1px solid #dddddd; text-align: left; padding: 8px; }');
+                printWindow.document.write(
+                    'th, td { border: 1px solid #dddddd; text-align: left; padding: 8px; }');
                 printWindow.document.write('th { background-color: #f2f2f2; }');
                 printWindow.document.write('</style>');
                 printWindow.document.write('</head><body>');
@@ -274,8 +272,8 @@ $conn->close();
                         printWindow.document.write(tbody.rows[i].cells[j].outerHTML);
                     }
 
-                    printWindow.document.write(tbody.rows[i].cells[4].outerHTML); 
-                    printWindow.document.write(tbody.rows[i].cells[5].outerHTML); 
+                    printWindow.document.write(tbody.rows[i].cells[4].outerHTML);
+                    printWindow.document.write(tbody.rows[i].cells[5].outerHTML);
                     printWindow.document.write('</tr>');
                 }
                 printWindow.document.write('</tbody>');
@@ -290,7 +288,7 @@ $conn->close();
             alert('Table not found.');
         }
     });
-</script>
+    </script>
 
 
 

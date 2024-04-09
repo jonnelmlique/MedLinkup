@@ -2,7 +2,7 @@
 include '../src/config/config.php';
 
 try {
-  
+
     if ($conn->connect_error) {
         throw new Exception("Connection failed: " . $conn->connect_error);
     }
@@ -37,7 +37,6 @@ try {
         }
     }
 } catch (Exception $e) {
-    // echo "Error: " . $e->getMessage();
     $message = $e->getMessage();
 
 }
@@ -56,14 +55,10 @@ if (isset($conn)) {
     <title>Add Categories</title>
     <link rel="stylesheet" href="../public/css/admin/sidebar.css">
     <link rel="stylesheet" href="../public/css/admin/addcategories.css">
-    
-    <!-- <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-
 </head>
 
 <body>
-
     <section id="sidebar">
         <a href="../supplier/dashboard.php" class="brand">
             <img src="../public/img/logo.png" alt="MedLinkup Logo" class="logo">
@@ -88,14 +83,10 @@ if (isset($conn)) {
                 </ul>
             </li>
             <li>
-                <a href="#">
+                <a href="../admin/order.php">
                     <i class='fas fa-shopping-bag'></i>
                     <span class="text"> Orders</span>
                 </a>
-                <ul class="submenu">
-                    <li><a href="../admin/pending.php">Pending</a></li>
-                    <li><a href="../admin/completed.php">Completed</a></li>
-                </ul>
             </li>
             <li>
                 <a href="../admin/sales.php">
@@ -153,56 +144,53 @@ if (isset($conn)) {
         </nav>
     </section>
     <main>
-    <div class="box-section">
-        <div class="head-title">
-            <div class="left">
-                <h1 class="lefth">Add Category</h1>
+        <div class="box-section">
+            <div class="head-title">
+                <div class="left">
+                    <h1 class="lefth">Add Category</h1>
+                </div>
             </div>
-        </div>
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <div class="add-category-section">
-                        <div class="image-container">
-                            <div class="preview-image" id="preview-image">
-                                <img src="https://via.placeholder.com/350x350" alt="Preview Image">
-                            </div>
-                            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
-                                <input type="file" class="form-control" id="image" name="image" accept="image/*" onchange="previewImage(event)" required>
-                                <div id="form-container">
-                                    <div class="mb-3">
-                                        <label for="categoryname">Category Name</label>
-                                        <input type="text" class="form-control" id="categoryname" name="categoryname" placeholder="Category Name" required>
-                                    </div>
-                                    <button type="submit" class="btn btn-submit">Submit</button>
-                                    <a href="./categories.php" class="cancel-btn" 
-                                        style="display: inline-block; padding: 13px 16px; 
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="add-category-section">
+                            <div class="image-container">
+                                <div class="preview-image" id="preview-image">
+                                    <img src="https://via.placeholder.com/350x350" alt="Preview Image">
+                                </div>
+                                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST"
+                                    enctype="multipart/form-data" class="needs-validation" novalidate>
+                                    <input type="file" class="form-control" id="image" name="image" accept="image/*"
+                                        onchange="previewImage(event)" required>
+                                    <div id="form-container">
+                                        <div class="mb-3">
+                                            <label for="categoryname">Category Name</label>
+                                            <input type="text" class="form-control" id="categoryname"
+                                                name="categoryname" placeholder="Category Name" required>
+                                        </div>
+                                        <button type="submit" class="btn btn-submit">Submit</button>
+                                        <a href="./categories.php" class="cancel-btn" style="display: inline-block; padding: 13px 16px; 
                                         background-color: #f44336; color: #fff; text-decoration: 
                                         none; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;"
-                                        onmouseover="this.style.backgroundColor='#d32f2f';"
-                                         onmouseout="this.style.backgroundColor='#f44336';">Cancel</a>
-
-
-                                </div>
-                            </form>
+                                            onmouseover="this.style.backgroundColor='#d32f2f';"
+                                            onmouseout="this.style.backgroundColor='#f44336';">Cancel</a>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</main>
-
-
-    <!-- node -->
+    </main>
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
     <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<?php
-if (!empty($message)) {
-    if ($message === "success") {
-        echo "<script>
+    <?php
+    if (!empty($message)) {
+        if ($message === "success") {
+            echo "<script>
             Swal.fire({
                 title: 'Category Added Successfully!',
                 text: 'You have successfully added the category.',
@@ -218,8 +206,8 @@ if (!empty($message)) {
                 }
             });
         </script>";
-    } else {
-        echo "<script>
+        } else {
+            echo "<script>
             Swal.fire({
                 title: 'Error',
                 text: '" . $message . "',
@@ -227,25 +215,25 @@ if (!empty($message)) {
                 confirmButtonText: 'OK'
             });
         </script>";
+        }
     }
-}
-?>
+    ?>
 
     <script>
-        function previewImage(event) {
-            var preview = document.getElementById('preview-image');
-            var file = event.target.files[0];
-            var reader = new FileReader();
+    function previewImage(event) {
+        var preview = document.getElementById('preview-image');
+        var file = event.target.files[0];
+        var reader = new FileReader();
 
-            reader.onloadend = function () {
-                preview.style.display = 'block';
-                preview.querySelector('img').src = reader.result;
-            }
-
-            if (file) {
-                reader.readAsDataURL(file);
-            }
+        reader.onloadend = function() {
+            preview.style.display = 'block';
+            preview.querySelector('img').src = reader.result;
         }
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    }
     </script>
 </body>
 

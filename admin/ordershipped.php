@@ -1,9 +1,11 @@
 <?php
 include '../src/config/config.php';
+session_start();
 
-$sql = "SELECT * FROM categories";
-$result = $conn->query($sql);
-
+if (!isset($_SESSION['userid'])) {
+    header("Location: ../auth/login.php");
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -12,14 +14,15 @@ $result = $conn->query($sql);
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Categories</title>
+    <title>Order - Shipped</title>
     <link rel="stylesheet" href="../public/css/admin/sidebar.css">
-    <link rel="stylesheet" href="../public/css/admin/categories.css">
-    <!-- <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="../public/css/admin/ordershipped.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+
 </head>
 
 <body>
+
     <section id="sidebar">
         <a href="../supplier/dashboard.php" class="brand">
             <img src="../public/img/logo.png" alt="MedLinkup Logo" class="logo">
@@ -40,11 +43,11 @@ $result = $conn->query($sql);
                 <ul class="submenu">
                     <li><a href="../admin/products.php">Products</a></li>
                     <li><a href="../admin/lowstock.php">Low Stock</a></li>
-                    <li class="active"><a href="../admin/categories.php">Categories</a></li>
+                    <li><a href="../admin/categories.php">Categories</a></li>
 
                 </ul>
             </li>
-            <li>
+            <li class="active">
                 <a href="../admin/order.php">
                     <i class='fas fa-shopping-bag'></i>
                     <span class="text"> Orders</span>
@@ -104,72 +107,104 @@ $result = $conn->query($sql);
             </a>
         </nav>
     </section>
-
     <main>
+
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-6">
-                    <div class="box-section">
-
-                        <div class="search-bar">
-                            <div class="add-button">
-                                <a href="../admin/addcategories.php" class="btn-link">
-                                    <button>Add Category</button>
-                                </a>
-                            </div>
-
-                            <input type="text" placeholder="Search...">
-                            <button><i class="fas fa-search"></i></button>
+                    <div class="pending-section">
+                        <h1 class="lefth">Order - Processing</h1>
+                        <hr>
+                        <div class="buttonabc">
+                            <a class="buttona" href="../admin/order.php">Pending</a>
+                            <a class="buttonb" href="../admin/orderprocessing.php">Processing</a>
+                            <a class="buttonc" href="../admin/ordershipped.php">Shipped</a>
+                            <a class="buttond" href="../admin/ordercompleted.php">Completed</a>
                         </div>
+                        <?php
 
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Category ID</th>
-                                    <th>Category Name</th>
-                                    <th>Image</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                
-                                if ($result->num_rows > 0) {
-                                    while ($row = $result->fetch_assoc()) {
-                                        echo "<tr>";
-                                        echo "<td>" . $row["categoryid"] . "</td>";
-                                        echo "<td>" . $row["categoryname"] . "</td>";
-                                        echo "<td><img src='" . $row["imagepath"] . "' alt='Category Image' style='width: 100px; height: auto;'></td>";
-                                        echo "<td class='actions'>";
-                                        echo "<a href='../admin/editcategories.php?id=" . $row["categoryid"] . "' class='button-like btn btn-sm btn-primary'>";
-                                        echo "<i class='fas fa-edit'></i>";
-                                        echo "</a>";
-                                        echo "<a href='#' class='button-like btn btn-sm btn-primary'>";
-                                        echo "<i class='fas fa-trash-alt'></i>";
-                                        echo "</a>";
-                                        echo "</td>";
-                                        echo "</tr>";
-                                    }
-                                } else {
-                                    echo "<tr><td colspan='4'>No categories found</td></tr>";
-                                }
+
+                        $userid = $_SESSION['userid'];
+                        $query = "SELECT 
+            o.transactionid,
+            MIN(o.orderid) AS orderid,
+            u.username, 
+            p.productname, 
+            p.price, 
+            p.image,
+            o.quantity, 
+            o.totalprice, 
+            MIN(o.orderdate) AS orderdate, 
+            o.status, 
+            o.paymentmethod,
+            CONCAT(s.firstname, ' ', s.lastname) AS flname,
+            CONCAT(s.addressline1, ', ', s.addressline2, ', ', s.city, ', ', s.province, ', ', s.country) AS address 
+        FROM 
+            orderprocess o
+        JOIN 
+            users u ON o.userid = u.userid
+        JOIN 
+            products p ON o.productid = p.productid
+        JOIN 
+            shippingaddresses s ON o.addressid = s.addressid
+        WHERE 
+            o.status = 'Shipped' 
+        GROUP BY 
+            o.transactionid
+        ORDER BY 
+            orderdate DESC";
+
+                        $result = mysqli_query($conn, $query);
+
+                        if (mysqli_num_rows($result) > 0) {
+                            ?>
+                        <?php
+                            while ($row = mysqli_fetch_assoc($result)) {
                                 ?>
-                            </tbody>
-                        </table>
 
+
+                        <a href="orderdetails.php?transactionid=<?php echo $row['transactionid']; ?>"
+                            style="text-decoration: none; color: inherit;">
+                            <div class="product-box">
+                                <div class="product-details">
+                                    <img src="../productimg/<?php echo $row['image']; ?>"
+                                        alt="<?php echo $row['productname']; ?>" class="product-image">
+                                    <div class="product-info">
+                                        <div class="product-name">
+                                            <?php echo $row['productname']; ?>
+                                        </div>
+                                        <p><strong>Order by:</strong>
+                                            <?php echo $row['flname']; ?>
+                                        </p>
+                                        <div class="product-status"><span
+                                                class="s <?php echo strtolower($row['status']); ?>">
+                                                <?php echo $row['status']; ?>
+                                            </span>
+                                        </div>
+                                        <div class="product-price price">₱
+                                            <?php echo $row['totalprice']; ?>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </a>
+                        <?php
+                            }
+                        } else {
+                            echo '<p class="orderdisplay">No orders</p>';
+                        }
+                        ?>
+                        <p class="margin"></p>
                     </div>
                 </div>
             </div>
         </div>
-
     </main>
-    </section>
-
-    <!-- node -->
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
     <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Font Awesome -->
+    <script src="../node_modules/bootstrap/js/src/sidebar.js"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 </body>
 

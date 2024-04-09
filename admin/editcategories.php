@@ -140,14 +140,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </ul>
             </li>
             <li>
-                <a href="#">
+                <a href="../admin/order.php">
                     <i class='fas fa-shopping-bag'></i>
                     <span class="text"> Orders</span>
                 </a>
-                <ul class="submenu">
-                    <li><a href="../admin/pending.php">Pending</a></li>
-                    <li><a href="../admin/completed.php">Completed</a></li>
-                </ul>
             </li>
             <li>
                 <a href="../admin/sales.php">
@@ -234,12 +230,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         </div>
                                         <button type="submit" class="btn btn-submit">Update</button>
 
-                                        <a href="./categories.php" class="cancel-btn" 
-                                        style="display: inline-block; padding: 13px 16px; 
+                                        <a href="./categories.php" class="cancel-btn" style="display: inline-block; padding: 13px 16px; 
                                         background-color: #f44336; color: #fff; text-decoration: 
                                         none; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;"
-                                        onmouseover="this.style.backgroundColor='#d32f2f';"
-                                         onmouseout="this.style.backgroundColor='#f44336';">Cancel</a>
+                                            onmouseover="this.style.backgroundColor='#d32f2f';"
+                                            onmouseout="this.style.backgroundColor='#f44336';">Cancel</a>
 
                                     </div>
                                 </form>

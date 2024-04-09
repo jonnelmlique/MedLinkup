@@ -1,17 +1,28 @@
+<?php
+include '../src/config/config.php';
+session_start(); 
+
+if (!isset($_SESSION['userid'])) {
+    header("Location: ../auth/login.php");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Customer</title>
-    <!-- <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+    <title>Order - Completed</title>
     <link rel="stylesheet" href="../public/css/admin/sidebar.css">
-    <link rel="stylesheet" href="../public/css/admin/sales.css">
+    <link rel="stylesheet" href="../public/css/admin/ordercompleted.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+
 </head>
 
 <body>
+
     <section id="sidebar">
         <a href="../supplier/dashboard.php" class="brand">
             <img src="../public/img/logo.png" alt="MedLinkup Logo" class="logo">
@@ -36,13 +47,13 @@
 
                 </ul>
             </li>
-            <li>
+            <li class="active">
                 <a href="../admin/order.php">
                     <i class='fas fa-shopping-bag'></i>
                     <span class="text"> Orders</span>
                 </a>
             </li>
-            <li class="active">
+            <li>
                 <a href="../admin/sales.php">
                     <i class='fas fa-chart-bar'></i>
                     <span class="text"> Sales</span>
@@ -96,97 +107,107 @@
             </a>
         </nav>
     </section>
-
     <main>
-        <div class="head-title">
-            <div class="left">
-                <h1>Sales</h1>
-            </div>
-        </div>
 
-        <ul class="box-info">
-            <li>
-                <a href="#">
-                    <i class='fas fa-chart-line'></i>
-                    <span class="text">
-                        <h3>&#8369;1,000</h3>
-                        <p>Daily Sales</p>
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class='fas fa-chart-area'></i>
-                    <span class="text">
-                        <h3>&#8369;11,234</h3>
-                        <p>Monthly Sales</p>
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class='fas fa-chart-bar'></i>
-                    <span class="text">
-                        <h3>&#8369;12,234</h3>
-                        <p>Total Sales</p>
-                    </span>
-                </a>
-            </li>
-        </ul>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="pending-section">
+                        <h1 class="lefth">Order - Completed</h1>
+                        <hr>
+                        <div class="buttonabc">
+                            <a class="buttona" href="../admin/order.php">Pending</a>
+                            <a class="buttonb" href="../admin/orderprocessing.php">Processing</a>
+                            <a class="buttonc" href="../admin/ordershipped.php">Shipped</a>
+                            <a class="buttond" href="../admin/ordercompleted.php">Completed</a>
+                        </div>
 
 
-        <div class="table-data">
-            <div class="sales">
-                <div class="head">
-                    <h3>Sales History</h3>
+
+
+
+
+
+                        <?php
+
+
+$userid = $_SESSION['userid'];
+$query = "SELECT 
+            o.transactionid,
+            MIN(o.orderid) AS orderid,
+            u.username, 
+            p.productname, 
+            p.price, 
+            p.image,
+            o.quantity, 
+            o.totalprice, 
+            MIN(o.orderdate) AS orderdate, 
+            o.status, 
+            o.paymentmethod,
+            CONCAT(s.firstname, ' ', s.lastname) AS flname,
+            CONCAT(s.addressline1, ', ', s.addressline2, ', ', s.city, ', ', s.province, ', ', s.country) AS address 
+        FROM 
+            orderprocess o
+        JOIN 
+            users u ON o.userid = u.userid
+        JOIN 
+            products p ON o.productid = p.productid
+        JOIN 
+            shippingaddresses s ON o.addressid = s.addressid
+        WHERE 
+            o.status = 'Completed' 
+        GROUP BY 
+            o.transactionid
+        ORDER BY 
+            orderdate DESC"; 
+
+$result = mysqli_query($conn, $query);
+
+if (mysqli_num_rows($result) > 0) {
+    ?>
+                        <?php
+    while ($row = mysqli_fetch_assoc($result)) {
+    ?>
+
+
+                        <a href="orderdetails.php?transactionid=<?php echo $row['transactionid']; ?>"
+                            style="text-decoration: none; color: inherit;">
+                            <div class="product-box">
+                                <div class="product-details">
+                                    <img src="../productimg/<?php echo $row['image']; ?>"
+                                        alt="<?php echo $row['productname']; ?>" class="product-image">
+                                    <div class="product-info">
+                                        <div class="product-name"><?php echo $row['productname']; ?></div>
+                                        <p><strong>Order by:</strong> <?php echo $row['flname']; ?></p>
+                                        <div class="product-status"><span
+                                                class="s <?php echo strtolower($row['status']); ?>"><?php echo $row['status']; ?></span>
+                                        </div>
+                                        <div class="product-price price">₱<?php echo $row['totalprice']; ?></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </a>
+                        <?php
+    }
+} else {
+    echo '<p class="orderdisplay">No orders</p>';
+}
+?>
+                        <p class="margin"></p>
+                    </div>
                 </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>User</th>
-                            <th>Product</th>
-                            <th>Quantity</th>
-                            <th>Date Order</th>
-                            <th>Total</th>
-                            <th>Status</th>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <p>MedLinkup</p>
-                            </td>
-                            <td>Test</td>
-                            <td>10</td>
-                            <td>01-10-2021</td>
-                            <td>&#8369;1,000</td>
-                            <td><span class="status completed">Completed</span></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <p>MedLinkup</p>
-                            </td>
-                            <td>Test</td>
-                            <td>100</td>
-                            <td>01-10-2021</td>
-                            <td>&#8369;11,234</td>
-                            <td><span class="status completed">Completed</span></td>
-                        </tr>
-
-                    </tbody>
-                </table>
             </div>
         </div>
     </main>
 
 
-    <!-- node -->
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
     <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Font Awesome -->
+    <script src="../node_modules/bootstrap/js/src/sidebar.js"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
 
 </body>
 

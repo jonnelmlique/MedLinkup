@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Order</title>
+    <title>Order - To Received</title>
     <link rel="stylesheet" href="../public/css/customer/sidebar.css">
-    <link rel="stylesheet" href="../public/css/customer/pendingorder.css">
+    <link rel="stylesheet" href="../public/css/customer/toreceived.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 
 </head>
@@ -88,8 +88,9 @@
             <div class="row justify-content-center">
                 <div class="col-md-6">
                     <div class="pending-section">
-                        <h1 class="lefth">Order - To Ship</h1>
+                        <h1 class="lefth">Order - To Received</h1>
                         <hr>
+
                         <div class="buttonabc">
                             <a class="buttona" href="../customer/order.php">To Ship</a>
                             <a class="buttonb" href="../customer/toreceived.php">To Received</a>
@@ -128,19 +129,19 @@ $query = "SELECT
         JOIN 
             shippingaddresses s ON o.addressid = s.addressid
         WHERE 
-            o.userid = $userid AND 
-            o.status = 'Processing' OR o.status = 'Pending'
+            o.userid = $userid
         GROUP BY 
             o.transactionid
         ORDER BY 
             orderdate DESC"; 
 
 $result = mysqli_query($conn, $query);
-if (mysqli_num_rows($result) > 0) {
-    ?>
-                        <?php
-    while ($row = mysqli_fetch_assoc($result)) {
-    ?>
+
+$ordersToReceiveExist = false;
+while ($row = mysqli_fetch_assoc($result)) {
+    if ($row['status'] == 'Shipped') {
+        $ordersToReceiveExist = true;
+        ?>
                         <a href="orderdetails.php?transactionid=<?php echo $row['transactionid']; ?>"
                             style="text-decoration: none; color: inherit;">
                             <div class="product-box">
@@ -150,17 +151,23 @@ if (mysqli_num_rows($result) > 0) {
                                     <div class="product-info">
                                         <div class="product-name"><?php echo $row['productname']; ?></div>
                                         <div class="product-status"><span
-                                                class="s <?php echo strtolower($row['status']); ?>"><?php echo $row['status']; ?></span>
+                                                class="status <?php echo strtolower($row['status']); ?>"><?php echo $row['status']; ?></span>
                                         </div>
                                         <div class="product-price price">₱<?php echo $row['totalprice']; ?></div>
                                     </div>
                                 </div>
+                                <a class="orderreceived" href="#"
+                                    data-transactionid="<?php echo $row['transactionid']; ?>">Order Received</a>
                             </div>
                         </a>
                         <?php
     }
-} else {
-    echo '<p class="orderdisplay">No orders</p>';
+}
+
+if (!$ordersToReceiveExist) {
+    ?>
+                        <p class="toceived">No orders are currently ready to be received.</p>
+                        <?php
 }
 ?>
                         <p class="margin"></p>
@@ -170,11 +177,51 @@ if (mysqli_num_rows($result) > 0) {
         </div>
     </main>
 
+    <!-- node -->
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
     <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../node_modules/bootstrap/js/src/sidebar.js"></script>
+    <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+    $(document).ready(function() {
+        $(".orderreceived").click(function(e) {
+            e.preventDefault();
+            var transactionid = $(this).data("transactionid");
+            $.ajax({
+                url: "order_received.php",
+                method: "POST",
+                data: {
+                    transactionid: transactionid
+                },
+                success: function(response) {
+                    console.log(response);
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Order status updated',
+                        text: 'The order status has been successfully updated to Completed.',
+                        confirmButtonText: 'OK'
+                    }).then(function() {
+                        location.reload();
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'There was an error updating the order status. Please try again later.',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            });
+        });
+    });
+    </script>
+
 
 </body>
 

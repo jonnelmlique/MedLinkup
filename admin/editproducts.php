@@ -112,7 +112,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="../public/css/admin/addproducts.css">
     <!-- <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-   
+
 </head>
 
 <body>
@@ -125,7 +125,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <ul class="side-menu top">
             <li>
                 <a href="../admin/dashboard.php">
-                    <i class='fas fa-clone' ></i>
+                    <i class='fas fa-clone'></i>
                     <span class="text"> Dashboard</span>
                 </a>
             </li>
@@ -142,30 +142,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </ul>
             </li>
             <li>
-                <a href="#">
-                    <i class='fas fa-shopping-bag' ></i>
+                <a href="../admin/order.php">
+                    <i class='fas fa-shopping-bag'></i>
                     <span class="text"> Orders</span>
                 </a>
-                <ul class="submenu">
-                    <li><a href="../admin/pending.php">Pending</a></li>
-                    <li><a href="../admin/completed.php">Completed</a></li>
-                </ul>
             </li>
             <li>
                 <a href="../admin/sales.php">
-                    <i class='fas fa-chart-bar' ></i>
+                    <i class='fas fa-chart-bar'></i>
                     <span class="text"> Sales</span>
                 </a>
             </li>
             <li>
                 <a href="../admin/customer.php">
-                    <i class='fas fa-portrait' ></i>
+                    <i class='fas fa-portrait'></i>
                     <span class="text"> Customers</span>
                 </a>
             </li>
             <li>
-             <a href="#">
-                    <i class='fas fa-clone' ></i>
+                <a href="#">
+                    <i class='fas fa-clone'></i>
                     <span class="text"> Supplier</span>
                 </a>
                 <ul class="submenu">
@@ -176,71 +172,82 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </ul>
             </li>
 
-        <ul class="side-menu">
-            <li>
-                <a href="#">
-                    <i class='fa fa-cogs' ></i>
-                    <span class="text"> Settings</span>
-                </a>
-                <ul class="submenu">
+            <ul class="side-menu">
+                <li>
+                    <a href="#">
+                        <i class='fa fa-cogs'></i>
+                        <span class="text"> Settings</span>
+                    </a>
+                    <ul class="submenu">
                         <li><a href="../admin/location.php">Location</a></li>
                         <li><a href="../admin/shippingfee.php">Shipping Fee</a></li>
 
                     </ul>
-            </li>
-            <li>
-                <a href="../logout.php" class="logout">
-                    <i class='fas fa-user' ></i>
-                    <span class="text"> Logout</span>
-                </a>
-            </li>
-        </ul>
+                </li>
+                <li>
+                    <a href="../logout.php" class="logout">
+                        <i class='fas fa-user'></i>
+                        <span class="text"> Logout</span>
+                    </a>
+                </li>
+            </ul>
     </section>
 
     <section id="content">
-    <nav>
-        <i class='fa-pills' ></i>
-        <a href="#" class="profile">
-            <img src="https://i.pinimg.com/originals/f1/0f/f7/f10ff70a7155e5ab666bcdd1b45b726d.jpg">
-        </a>
-    </nav>
+        <nav>
+            <i class='fa-pills'></i>
+            <a href="#" class="profile">
+                <img src="https://i.pinimg.com/originals/f1/0f/f7/f10ff70a7155e5ab666bcdd1b45b726d.jpg">
+            </a>
+        </nav>
     </section>
 
 
- 
+
 
     <main>
         <div class="box-section">
-        <div class="head-title">
-            <div class="left">
-                <h1>Add Product</h1>
+            <div class="head-title">
+                <div class="left">
+                    <h1>Add Product</h1>
+                </div>
             </div>
-        </div>
-        <div class="container">
+            <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
                         <div class="add-product-section">
                             <div id="image-container">
                                 <div id="preview-image">
-                                    <img src="../productimg/<?php echo $product_data['image'] ?? ''; ?>" alt="Product Image">
+                                    <img src="../productimg/<?php echo $product_data['image'] ?? ''; ?>"
+                                        alt="Product Image">
                                 </div>
                             </div>
                             <div id="form-container">
-                                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" enctype="multipart/form-data">
-                                    <input type="hidden" name="productid" value="<?php echo $product_data['productid']; ?> ">
+                                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST"
+                                    enctype="multipart/form-data">
+                                    <input type="hidden" name="productid"
+                                        value="<?php echo $product_data['productid']; ?> ">
 
-                                    <input type="file" class="form-control" id="image" name="image" accept="image/*" onchange="previewImage(event)">
+                                    <input type="file" class="form-control" id="image" name="image" accept="image/*"
+                                        onchange="previewImage(event)">
                                     <div class="mb-3">
                                         <label for="productName">Product Name</label>
-                                        <input type="text" class="form-control" id="productName" name="productName" placeholder="Product Name" value="<?php echo htmlspecialchars($product_data['productname']); ?>" required>
+                                        <input type="text" class="form-control" id="productName" name="productName"
+                                            placeholder="Product Name"
+                                            value="<?php echo htmlspecialchars($product_data['productname']); ?>"
+                                            required>
                                     </div>
                                     <div class="mb-3">
                                         <label for="price">Price</label>
-                                        <input type="number" class="form-control" id="price" name="price" placeholder="Price" min="0" step="0.01" value="<?php echo htmlspecialchars($product_data['price']); ?>" required>
+                                        <input type="number" class="form-control" id="price" name="price"
+                                            placeholder="Price" min="0" step="0.01"
+                                            value="<?php echo htmlspecialchars($product_data['price']); ?>" required>
                                     </div>
                                     <div class="mb-3">
                                         <label for="details">Product Details</label>
-                                        <textarea class="form-control" id="details" name="details" rows="4" placeholder="Product Details" required><?php echo htmlspecialchars($product_data['productdetails']); ?></textarea>
+                                        <textarea class="form-control" id="details" name="details" rows="4"
+                                            placeholder="Product Details"
+                                            required><?php echo htmlspecialchars($product_data['productdetails']); ?></textarea>
                                     </div>
                                     <div class="mb-3">
                                         <label for="category">Select Category</label>
@@ -260,11 +267,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     </div>
                                     <div class="mb-3">
                                         <label for="stock">Stock</label>
-                                        <input type="number" class="form-control" id="stock" name="stock" placeholder="Stock" value="<?php echo htmlspecialchars($product_data['stock']); ?>" required>
+                                        <input type="number" class="form-control" id="stock" name="stock"
+                                            placeholder="Stock"
+                                            value="<?php echo htmlspecialchars($product_data['stock']); ?>" required>
                                     </div>
 
                                     <button type="submit" class="btn btn-submit">Update Product</button>
-                                    <a href="./products.php" class="cancel-btn" style="display: inline-block; padding: 13px 16px; background-color: #f44336; color: #fff; text-decoration: none; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;" onmouseover="this.style.backgroundColor='#d32f2f';" onmouseout="this.style.backgroundColor='#f44336';">Cancel</a>
+                                    <a href="./products.php" class="cancel-btn"
+                                        style="display: inline-block; padding: 13px 16px; background-color: #f44336; color: #fff; text-decoration: none; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;"
+                                        onmouseover="this.style.backgroundColor='#d32f2f';"
+                                        onmouseout="this.style.backgroundColor='#f44336';">Cancel</a>
                                 </form>
                             </div>
                         </div>
@@ -306,7 +318,7 @@ if (!empty($message)) {
     }
 }
 ?>
-      <script>
+    <script>
     function previewImage(event) {
         var preview = document.getElementById('preview-image');
         var file = event.target.files[0];

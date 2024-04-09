@@ -1,19 +1,26 @@
 <?php
 include './src/config/config.php';
+date_default_timezone_set('Asia/Manila');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $userID = $_POST['userID'];
     $productID = $_POST['productID'];
     $quantity = $_POST['quantity'];
+    $totalProductPrice = $_POST['totalProductPrice']; 
+    $shippingFee = $_POST['shippingFee']; 
     $totalPrice = $_POST['totalPrice'];
     $status = $_POST['status'];
     $paymentMethod = $_POST['paymentMethod'];
     $addressID = $_POST['addressID'];
     $transactionID = $_POST['transactionID'];
 
-    $sql = "INSERT INTO orderprocess (userid, productid, quantity, totalprice, status, paymentmethod, addressid, transactionid) 
-            VALUES ('$userID', '$productID', '$quantity', '$totalPrice', '$status', '$paymentMethod', '$addressID', '$transactionID')";
+    $orderDate = date("Y-m-d H:i:s");
+
+
+    $sql = "INSERT INTO orderprocess (userid, productid, quantity, totalproductprice, shippingfee, totalprice, orderdate, status, paymentmethod, addressid, transactionid) 
+    VALUES ('$userID', '$productID', '$quantity', '$totalProductPrice', '$shippingFee', '$totalPrice', '$orderDate', '$status', '$paymentMethod', '$addressID', '$transactionID')";
+
 
     if (mysqli_query($conn, $sql)) {
 

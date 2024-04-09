@@ -12,8 +12,8 @@ main {
 }
 .orderreceived{
     text-decoration: none;
-    margin-left: 87%;
-    padding: 0.375rem 0.75rem;
+    margin-left: 86%;
+    padding: 0.575rem 0.75rem;
     font-size: 1rem;
     line-height: 1.5;
     border: 1px solid transparent;
@@ -21,11 +21,11 @@ main {
     transition: all 0.15s ease-in-out;
     background-color: #28a745;
     color: white;
+    font-weight: bold;
 }
 .orderreceived:hover {
     background-color: #1c9601;
     border-color: #1c9601;
-    color: #70d284;
 }
 .buttonabc{
     margin-bottom: 19px;
@@ -40,7 +40,7 @@ main {
     border: 1px solid transparent;
     border-radius: 0.25rem;
     transition: all 0.15s ease-in-out;
-    background-color: #7acb68;
+    background-color: #28a745;
     color: white; 
     font-weight: bold;
 }
@@ -66,7 +66,7 @@ main {
     border: 1px solid transparent;
     border-radius: 0.25rem;
     transition: all 0.15s ease-in-out;
-    background-color: #28a745;
+    background-color: #7acb68;
     color: white; 
     font-weight: bold;
 }
@@ -161,6 +161,7 @@ main {
 .margin{
     margin-bottom: 100px;
 }
+
 .orderdisplay{
     font-weight: bold;
     margin-left: 40%;

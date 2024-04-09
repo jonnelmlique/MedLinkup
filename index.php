@@ -56,30 +56,30 @@ if(isset($_SESSION['userid']) && isset($_SESSION['username'])) {
                     </li>
                 </ul>
                 <div class="navbar-icons d-flex align-items-center">
-                <a href="<?php echo $loginLinkURL; ?>" class="nav-link"><?php echo $loginLinkText; ?></a>
+                    <a href="<?php echo $loginLinkURL; ?>" class="nav-link"><?php echo $loginLinkText; ?></a>
                     <a href="./cart.php" class="nav-link"><i class="fas fa-shopping-cart"></i> Cart </a>
                 </div>
             </div>
         </div>
-        </nav>
+    </nav>
 
-        <a href="./shop.php" class="hero-section">
-            <div class="container">
-                <span class="btn btn-success btn-lg" style="font-size: 24px;">Shop Now</span>
-            </div>
-        </a>
-        
-<!-- Category Section Start-->
-<section class="category-section">
-    <div class="container">
-        <div class="row">
-            <div class="col-12 mb-6">
-                <h3 class="mb-0">Featured Categories</h3>
-            </div>
+    <a href="./shop.php" class="hero-section">
+        <div class="container">
+            <span class="btn btn-success btn-lg" style="font-size: 24px;">Shop Now</span>
         </div>
-        <div id="categoryCarousel" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-                <?php
+    </a>
+
+    <!-- Category Section Start-->
+    <section class="category-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 mb-6">
+                    <h3 class="mb-0">Featured Categories</h3>
+                </div>
+            </div>
+            <div id="categoryCarousel" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    <?php
                 $query = "SELECT * FROM categories";
                 $result = mysqli_query($conn, $query);
                 
@@ -117,28 +117,28 @@ if(isset($_SESSION['userid']) && isset($_SESSION['username'])) {
                     echo "No categories found";
                 }
                 ?>
+                </div>
+                <a class="carousel-control-prev" href="#categoryCarousel" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#categoryCarousel" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
             </div>
-            <a class="carousel-control-prev" href="#categoryCarousel" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#categoryCarousel" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
         </div>
-    </div>
-</section>
-<!-- Category Section End-->
+    </section>
+    <!-- Category Section End-->
 
 
     <div class="product-section">
         <div class="container">
-        <h3 class="mb-4">Recent Products <a href="./shop.php" class="btn btn-primary">View All Products</a></h3>
-        
+            <h3 class="mb-4">Recent Products <a href="./shop.php" class="btn btn-primary">View All Products</a></h3>
 
-<div class="row">
-    <?php
+
+            <div class="row">
+                <?php
     try {
         $sql = "SELECT productid, productname, price, image FROM products LIMIT 10"; // Limit to 10 products
         $result = $conn->query($sql);
@@ -164,7 +164,7 @@ if(isset($_SESSION['userid']) && isset($_SESSION['username'])) {
                     </a>
                 </div>
             </div>
-    <?php
+            <?php
             }
         } else {
             echo "No products available.";
@@ -184,7 +184,8 @@ if(isset($_SESSION['userid']) && isset($_SESSION['username'])) {
             <div class="row">
                 <div class="col-md-12 text-center">
                     <h3>Our Mission</h3>
-                    <p>Empowering health through easy access to medications. Your trusted online platform for quality pharmaceuticals.</p>
+                    <p>Empowering health through easy access to medications. Your trusted online platform for quality
+                        pharmaceuticals.</p>
                 </div>
             </div>
         </div>
@@ -196,7 +197,7 @@ if(isset($_SESSION['userid']) && isset($_SESSION['username'])) {
                 <a href="./privacypolicy.php">Privacy Policy</a> | <a href="./termsofservice.php">Terms of Service</a>
             </p>
         </div>
-    </footer> 
+    </footer>
     <!-- node -->
     <script src="./node_modules/jquery/dist/jquery.min.js"></script>
     <script src="./node_modules/popper.js/dist/umd/popper.min.js"></script>

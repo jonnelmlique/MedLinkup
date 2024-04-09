@@ -70,14 +70,10 @@ try {
                 </ul>
             </li>
             <li>
-                <a href="#">
+                <a href="../admin/order.php">
                     <i class='fas fa-shopping-bag'></i>
                     <span class="text"> Orders</span>
                 </a>
-                <ul class="submenu">
-                    <li><a href="../admin/pending.php">Pending</a></li>
-                    <li><a href="../admin/completed.php">Completed</a></li>
-                </ul>
             </li>
             <li>
                 <a href="../admin/sales.php">
@@ -140,16 +136,16 @@ try {
                     <div class="head">
                         <h3>Customers</h3>
                     </div>
-              <table>
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Username</th>
-            <th>Email</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
         try {
             while ($row = mysqli_fetch_assoc($result)) {
                 echo "<tr>";
@@ -162,10 +158,10 @@ try {
             echo "<tr><td colspan='3'>No customers found</td></tr>";
         }
         ?>
-    </tbody>
-</table>
+                        </tbody>
+                    </table>
 
-                   
+
                 </div>
             </div>
         </main>
@@ -176,7 +172,7 @@ try {
     <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-<?php
+    <?php
     }
     mysqli_free_result($result);
 } catch (Exception $e) {

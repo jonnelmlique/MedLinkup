@@ -10,7 +10,7 @@
 
     <!-- <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-  
+
 </head>
 
 <body>
@@ -22,7 +22,7 @@
         <ul class="side-menu top">
             <li>
                 <a href="../admin/dashboard.php">
-                    <i class='fas fa-clone' ></i>
+                    <i class='fas fa-clone'></i>
                     <span class="text"> Dashboard</span>
                 </a>
             </li>
@@ -39,30 +39,26 @@
                 </ul>
             </li>
             <li>
-                <a href="#">
-                    <i class='fas fa-shopping-bag' ></i>
+                <a href="../admin/order.php">
+                    <i class='fas fa-shopping-bag'></i>
                     <span class="text"> Orders</span>
                 </a>
-                <ul class="submenu">
-                    <li><a href="../admin/pending.php">Pending</a></li>
-                    <li><a href="../admin/completed.php">Completed</a></li>
-                </ul>
             </li>
             <li>
                 <a href="../admin/sales.php">
-                    <i class='fas fa-chart-bar' ></i>
+                    <i class='fas fa-chart-bar'></i>
                     <span class="text"> Sales</span>
                 </a>
             </li>
             <li>
                 <a href="../admin/customer.php">
-                    <i class='fas fa-portrait' ></i>
+                    <i class='fas fa-portrait'></i>
                     <span class="text"> Customers</span>
                 </a>
             </li>
             <li>
-             <a href="#">
-                    <i class='fas fa-clone' ></i>
+                <a href="#">
+                    <i class='fas fa-clone'></i>
                     <span class="text"> Supplier</span>
                 </a>
                 <ul class="submenu">
@@ -73,73 +69,73 @@
                 </ul>
             </li>
 
-        <ul class="side-menu">
-            <li>
-                <a href="#">
-                    <i class='fa fa-cogs' ></i>
-                    <span class="text"> Settings</span>
-                </a>
-                <ul class="submenu">
+            <ul class="side-menu">
+                <li>
+                    <a href="#">
+                        <i class='fa fa-cogs'></i>
+                        <span class="text"> Settings</span>
+                    </a>
+                    <ul class="submenu">
                         <li><a href="../admin/location.php">Location</a></li>
                         <li><a href="../admin/shippingfee.php">Shipping Fee</a></li>
 
                     </ul>
-            </li>
-            <li>
-                <a href="../logout.php" class="logout">
-                    <i class='fas fa-user' ></i>
-                    <span class="text"> Logout</span>
-                </a>
-            </li>
-        </ul>
+                </li>
+                <li>
+                    <a href="../logout.php" class="logout">
+                        <i class='fas fa-user'></i>
+                        <span class="text"> Logout</span>
+                    </a>
+                </li>
+            </ul>
     </section>
 
     <section id="content">
-    <nav>
-        <i class='fa-pills' ></i>
-        <a href="#" class="profile">
-            <img src="https://i.pinimg.com/originals/f1/0f/f7/f10ff70a7155e5ab666bcdd1b45b726d.jpg">
-        </a>
-    </nav>
+        <nav>
+            <i class='fa-pills'></i>
+            <a href="#" class="profile">
+                <img src="https://i.pinimg.com/originals/f1/0f/f7/f10ff70a7155e5ab666bcdd1b45b726d.jpg">
+            </a>
+        </nav>
     </section>
 
-   
-<main>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="box-section">
-                    
-            <div class="search-bar">
-                <div class="add-button">
-                    <a href="../admin/addproducts.php" class="btn-link"> 
-                        <button>Add</button>
-                    </a>
-                    </div>
-                    <div class="print">
-                    <button>Print   </button>
-                    </div>
-               
-                
-                <input type="text" placeholder="Search...">
-                <button><i class="fas fa-search"></i></button>
-            </div>
 
-            <h1 class="lefth">Medicine List</h1>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Image</th>
-                        <th>Name</th>
-                        <th>Price</th>
-                        <th>Details</th>
-                        <th>Category</th>
-                        <th>Stock</th>
-                        <th>Action</th> 
-                    </tr>
-                </thead>
-                <tbody>
-                <?php
+    <main>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="box-section">
+
+                        <div class="search-bar">
+                            <div class="add-button">
+                                <a href="../admin/addproducts.php" class="btn-link">
+                                    <button>Add</button>
+                                </a>
+                            </div>
+                            <div class="print">
+                                <button>Print </button>
+                            </div>
+
+
+                            <input type="text" placeholder="Search...">
+                            <button><i class="fas fa-search"></i></button>
+                        </div>
+
+                        <h1 class="lefth">Medicine List</h1>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Name</th>
+                                    <th>Price</th>
+                                    <th>Details</th>
+                                    <th>Category</th>
+                                    <th>Stock</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
     include '../src/config/config.php';
 
     try {
@@ -173,15 +169,15 @@
     }
 ?>
 
-               
-                </tbody>
-            </table>
+
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-        </main>
+    </main>
     </section>
 
     <!-- node -->

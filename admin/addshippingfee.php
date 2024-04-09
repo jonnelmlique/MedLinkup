@@ -94,14 +94,10 @@ try {
                 </ul>
             </li>
             <li>
-                <a href="#">
+                <a href="../admin/order.php">
                     <i class='fas fa-shopping-bag'></i>
                     <span class="text"> Orders</span>
                 </a>
-                <ul class="submenu">
-                    <li><a href="../admin/pending.php">Pending</a></li>
-                    <li><a href="../admin/completed.php">Completed</a></li>
-                </ul>
             </li>
             <li>
                 <a href="../admin/sales.php">
@@ -135,7 +131,7 @@ try {
                         <span class="text"> Settings</span>
                     </a>
                     <ul class="submenu">
-                        <li ><a href="../admin/location.php">Location</a></li>
+                        <li><a href="../admin/location.php">Location</a></li>
                         <li class="active"><a href="../admin/shippingfee.php">shipping Fee</a></li>
 
                     </ul>
@@ -207,12 +203,11 @@ try {
                                             required>
                                     </div>
                                     <button type="submit" class="btn btn-submit">Add</button>
-                                    <a href="./shippingfee.php" class="cancel-btn" 
-                                        style="display: inline-block; padding: 13px 16px; 
+                                    <a href="./shippingfee.php" class="cancel-btn" style="display: inline-block; padding: 13px 16px; 
                                         background-color: #f44336; color: #fff; text-decoration: 
                                         none; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;"
                                         onmouseover="this.style.backgroundColor='#d32f2f';"
-                                         onmouseout="this.style.backgroundColor='#f44336';">Cancel</a>
+                                        onmouseout="this.style.backgroundColor='#f44336';">Cancel</a>
                                 </form>
                             </div>
                         </div>
