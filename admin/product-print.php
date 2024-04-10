@@ -15,7 +15,7 @@
     <div id="printSection" class="receipt">
         <img src="../public/img/medlinkuplandscape.png" alt="MedLinkup Logo" class="logo">
 
-        <h1>Products Stocks</h1>
+        <h1>Product Stocks</h1>
         <div class="details">
 
             <table class="table" id="medicine-table">
