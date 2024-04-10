@@ -1,21 +1,21 @@
 <?php
-    include '../src/config/config.php';
+include '../src/config/config.php';
 
-    session_start(); 
+session_start();
 
-    if (!isset($_SESSION['userid'])) {
+if (!isset($_SESSION['userid'])) {
     header("Location: ../auth/login.php");
-    exit; 
-    }
-    $userID = $_SESSION['userid']; 
+    exit;
+}
+$userID = $_SESSION['userid'];
 
-    $sql = "SELECT * FROM shippingaddresses WHERE userid = $userID";
-    $result = mysqli_query($conn, $sql);
+$sql = "SELECT * FROM shippingaddresses WHERE userid = $userID";
+$result = mysqli_query($conn, $sql);
 
-    if (mysqli_num_rows($result) > 0) {
-        $shippingAddress = mysqli_fetch_assoc($result);
-    }
-    ?>
+if (mysqli_num_rows($result) > 0) {
+    $shippingAddress = mysqli_fetch_assoc($result);
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,7 +23,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Delivery Address</title>
-    <!-- <link href="./node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="../public/css/customer/sidebar.css">
     <link rel="stylesheet" href="../public/css/customer/delivery.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -107,18 +106,24 @@
     <main>
 
         <div class="box-section">
-            <div class="add-button">
-                <a href="../customer/adddelivery.php" class="btn-link">
-                    <button>Add</button>
-                </a>
-            </div>
+
             <div class="head-title">
                 <div class="left">
 
                     <h1>Delivery Address</h1>
-                </div>
-            </div>
 
+                </div>
+
+            </div>
+            <hr>
+            <div class="add-button">
+                <a href="../customer/adddelivery.php" class="btn-link">
+                    <button>Add</button>
+                    <a href="../customer/updatedelivery.php" class="btn-link">
+                        <button>Update</button>
+                    </a>
+
+            </div>
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-8">

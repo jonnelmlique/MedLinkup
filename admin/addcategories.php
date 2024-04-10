@@ -159,7 +159,7 @@ if (isset($conn)) {
                                     <img src="https://via.placeholder.com/350x350" alt="Preview Image">
                                 </div>
                                 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST"
-                                    enctype="multipart/form-data" class="needs-validation" novalidate>
+                                    enctype="multipart/form-data" class="needs-validation">
                                     <input type="file" class="form-control" id="image" name="image" accept="image/*"
                                         onchange="previewImage(event)" required>
                                     <div id="form-container">
@@ -200,7 +200,6 @@ if (isset($conn)) {
                 cancelButtonText: 'View Categories'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Do something if user clicks OK
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
                     window.location.href = '../admin/categories.php';
                 }

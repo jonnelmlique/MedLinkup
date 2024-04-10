@@ -9,48 +9,86 @@ try {
     if ($conn->connect_error) {
         throw new Exception("Connection failed: " . $conn->connect_error);
     }
-    
+
+    $new_firstname = "";
+    $new_lastname = "";
+    $new_email = "";
+    $new_contact = "";
+    $new_country = "";
+    $new_region = "";
+    $new_province = "";
+    $new_city = "";
+    $new_barangay = "";
+    $new_zipcode = "";
+    $new_addressline1 = "";
+    $new_addressline2 = "";
+
     $userid = $_SESSION['userid'];
-    $stmt = $conn->prepare("SELECT * FROM shippingaddresses WHERE userid = ?");
-    $stmt->bind_param("i", $userid);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
+    $sql = "SELECT * FROM shippingaddresses WHERE userid = $userid";
+    $result = $conn->query($sql);
     if ($result->num_rows > 0) {
-        $message = "You already have a delivery address.";
-    } else {
-    
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $userid = $_SESSION['userid'];
-        $firstname = htmlspecialchars($_POST["firstname"]);
-        $lastname = htmlspecialchars($_POST["lastname"]);
-        $email = htmlspecialchars($_POST["email"]);
-        $contact = htmlspecialchars($_POST["contact"]);
-        $country = htmlspecialchars($_POST["country"]);
-        $region = htmlspecialchars($_POST["region"]);
-        $province = htmlspecialchars($_POST["province"]);
-        $city = htmlspecialchars($_POST["city"]);
-        $barangay = htmlspecialchars($_POST["barangay"]);
-        $zipcode = htmlspecialchars($_POST["zipcode"]);
-        $addressline1 = htmlspecialchars($_POST["address"]);
-        $addressline2 = htmlspecialchars($_POST["address2"]);
+        $row = $result->fetch_assoc();
 
-        $stmt = $conn->prepare("INSERT INTO shippingaddresses (userid, firstname, lastname, email, contact, country, region, province, city, barangay, zipcode, addressline1, addressline2) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("issssssssssss", $userid, $firstname, $lastname, $email, $contact, $country, $region, $province, $city, $barangay, $zipcode, $addressline1, $addressline2);
-
-        if ($stmt->execute()) {
-            $message = "success";
-        } else {
-            throw new Exception("Error: " . $stmt->error);
-        }
-
-        $stmt->close();
+        $firstname = $row["firstname"];
+        $lastname = $row["lastname"];
+        $email = $row["email"];
+        $contact = $row["contact"];
+        $country = $row["country"];
+        $region = $row["region"];
+        $province = $row["province"];
+        $city = $row["city"];
+        $barangay = $row["barangay"];
+        $zipcode = $row["zipcode"];
+        $addressline1 = $row["addressline1"];
+        $addressline2 = $row["addressline2"];
     }
-}
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Assigning new values from the form
+        $new_firstname = htmlspecialchars($_POST["firstname"]);
+        $new_lastname = htmlspecialchars($_POST["lastname"]);
+        $new_email = htmlspecialchars($_POST["email"]);
+        $new_contact = htmlspecialchars($_POST["contact"]);
+        $new_country = htmlspecialchars($_POST["country"]);
+        $new_region = htmlspecialchars($_POST["region"]);
+        $new_province = htmlspecialchars($_POST["province"]);
+        $new_city = htmlspecialchars($_POST["city"]);
+        $new_barangay = htmlspecialchars($_POST["barangay"]);
+        $new_zipcode = htmlspecialchars($_POST["zipcode"]);
+        $new_addressline1 = htmlspecialchars($_POST["address"]);
+        $new_addressline2 = htmlspecialchars($_POST["address2"]);
+
+        if (
+            $new_firstname == $firstname &&
+            $new_lastname == $lastname &&
+            $new_email == $email &&
+            $new_contact == $contact &&
+            $new_country == $country &&
+            $new_region == $region &&
+            $new_province == $province &&
+            $new_city == $city &&
+            $new_barangay == $barangay &&
+            $new_zipcode == $zipcode &&
+            $new_addressline1 == $addressline1 &&
+            $new_addressline2 == $addressline2
+        ) {
+            $message = "No changes have been made.";
+        } else {
+            $stmt = $conn->prepare("UPDATE shippingaddresses SET firstname=?, lastname=?, email=?, contact=?, country=?, region=?, province=?, city=?, barangay=?, zipcode=?, addressline1=?, addressline2=? WHERE userid=?");
+            $stmt->bind_param("ssssssssssssi", $new_firstname, $new_lastname, $new_email, $new_contact, $new_country, $new_region, $new_province, $new_city, $new_barangay, $new_zipcode, $new_addressline1, $new_addressline2, $userid);
+
+            if ($stmt->execute()) {
+                $message = "success";
+            } else {
+                throw new Exception("Error: " . $stmt->error);
+            }
+
+            $stmt->close();
+        }
+    }
 } catch (Exception $e) {
     $message = $e->getMessage();
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -59,8 +97,7 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Delivery Address</title>
-    <!-- <link href="./node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+    <title>Update Delivery Address</title>
     <link rel="stylesheet" href="../public/css/customer/sidebar.css">
     <link rel="stylesheet" href="../public/css/customer/delivery.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -72,7 +109,7 @@ try {
 
 <body>
     <section id="sidebar">
-        <a href="../customer/dashboard.php" class="brand">
+        <a href="../supplier/dashboard.php" class="brand">
             <img src="../public/img/logo.png" alt="MedLinkup Logo" class="logo">
             <span class="text"> MedLinkup</span>
         </a>
@@ -91,7 +128,6 @@ try {
                 <ul class="submenu">
                     <li><a href="../customer/myprofile.php">My Profile</a></li>
                     <li class="active"><a href="../customer/delivery.php">Delivery Address</a></li>
-
                 </ul>
             </li>
             <li>
@@ -124,7 +160,7 @@ try {
                 </ul>
             </li>
             <li>
-                <a href="../logout.php" class="logout">
+                <a href="#" class="logout">
                     <i class="fas fa-user"></i>
                     <span class="text"> Logout</span>
                 </a>
@@ -145,7 +181,7 @@ try {
         <div class="box-section">
             <div class="head-title">
                 <div class="left">
-                    <h1>Add Delivery Address</h1>
+                    <h1>Update Delivery Address</h1>
                 </div>
             </div>
             <div class="container">
@@ -160,97 +196,149 @@ try {
                                     <div class="mb-3">
                                         <label for="country">First Name:</label>
                                         <input type="text" class="form-control" id="firstname" name="firstname"
-                                            placeholder="First Name" required>
+                                            placeholder="First Name"
+                                            value="<?php echo isset($firstname) ? $firstname : ''; ?>" required>
                                     </div>
                                     <div class="mb-3">
                                         <label for="country">Last Name:</label>
                                         <input type="text" class="form-control" id="lastname" name="lastname"
-                                            placeholder="Last Name" required>
+                                            placeholder="Last Name"
+                                            value="<?php echo isset($lastname) ? $lastname : ''; ?>" required>
                                     </div>
                                     <div class="mb-3">
                                         <label for="country">Email:</label>
                                         <input type="email" class="form-control" id="email" name="email"
-                                            placeholder="Email" required>
+                                            placeholder="Email" value="<?php echo isset($email) ? $email : ''; ?>"
+                                            required>
+
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="country">Contact:</label>
                                         <input type="number" class="form-control" id="contact" name="contact"
-                                            placeholder="Contact" required>
+                                            placeholder="Contact" value="<?php echo isset($contact) ? $contact : ''; ?>"
+                                            required>
+
                                     </div>
                                     <div class="mb-3">
                                         <label for="country">Country:</label>
                                         <select class="form-control" id="country" name="country"
                                             onchange="fetchRegions(this.value)" required>
-                                            <option value="" disabled selected>Select Country</option>
+                                            <option value="" disabled>Select Country</option>
                                             <?php
-                                            // Fetch countries from the database and populate the dropdown options
-                                            include 'config.php'; // Include database configuration file
-                                            
                                             $sql = "SELECT DISTINCT country FROM availablelocations";
                                             $result = $conn->query($sql);
                                             if ($result->num_rows > 0) {
                                                 while ($row = $result->fetch_assoc()) {
-                                                    echo '<option value="' . $row['country'] . '">' . $row['country'] . '</option>';
+                                                    $selected = ($country == $row['country']) ? 'selected' : '';
+                                                    echo '<option value="' . $row['country'] . '" ' . $selected . '>' . $row['country'] . '</option>';
                                                 }
                                             }
-                                            $conn->close();
                                             ?>
                                         </select>
+
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="region">Region:</label>
-                                        <select class="form-control" id="region" name="region" disabled
-                                            onchange="fetchProvinces(this.value)" required>
-                                            <option value="" disabled selected>Select Region</option>
+                                        <select class="form-control" id="region" name="region"
+                                            onchange="fetchRegions(this.value)" required>
+                                            <option value="" disabled>Select Region</option>
+                                            <?php
+                                            $sql = "SELECT DISTINCT region FROM availablelocations";
+                                            $result = $conn->query($sql);
+                                            if ($result->num_rows > 0) {
+                                                while ($row = $result->fetch_assoc()) {
+                                                    $selected = ($region == $row['region']) ? 'selected' : '';
+                                                    echo '<option value="' . $row['region'] . '" ' . $selected . '>' . $row['region'] . '</option>';
+                                                }
+                                            }
+                                            ?>
                                         </select>
+
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="province">Province:</label>
-                                        <select class="form-control" id="province" name="province" disabled
-                                            onchange="fetchCities(this.value)" required>
-                                            <option value="" disabled selected>Select Province</option>
+                                        <select class="form-control" id="province" name="province"
+                                            onchange="fetchRegions(this.value)" required>
+                                            <option value="" disabled>Select Province</option>
+                                            <?php
+                                            $sql = "SELECT DISTINCT province FROM availablelocations";
+                                            $result = $conn->query($sql);
+                                            if ($result->num_rows > 0) {
+                                                while ($row = $result->fetch_assoc()) {
+                                                    $selected = ($province == $row['province']) ? 'selected' : '';
+                                                    echo '<option value="' . $row['province'] . '" ' . $selected . '>' . $row['province'] . '</option>';
+                                                }
+                                            }
+                                            ?>
                                         </select>
+
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="city">City:</label>
-                                        <select class="form-control" id="city" name="city" disabled
-                                            onchange="fetchBarangays(this.value)" required>
-                                            <option value="" disabled selected>Select City</option>
+                                        <select class="form-control" id="city" name="city"
+                                            onchange="fetchRegions(this.value)" required>
+                                            <option value="" disabled>Select City</option>
+                                            <?php
+                                            $sql = "SELECT DISTINCT city FROM availablelocations";
+                                            $result = $conn->query($sql);
+                                            if ($result->num_rows > 0) {
+                                                while ($row = $result->fetch_assoc()) {
+                                                    $selected = ($city == $row['city']) ? 'selected' : '';
+                                                    echo '<option value="' . $row['city'] . '" ' . $selected . '>' . $row['city'] . '</option>';
+                                                }
+                                            }
+                                            ?>
                                         </select>
+
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="barangay">Barangay:</label>
-                                        <select class="form-control" id="barangay" name="barangay" disabled required>
-                                            <option value="" disabled selected>Select Barangay</option>
+                                        <select class="form-control" id="barangay" name="barangay"
+                                            onchange="fetchRegions(this.value)" required>
+                                            <option value="" disabled>Select Barangay</option>
+                                            <?php
+                                            $sql = "SELECT DISTINCT barangay FROM availablelocations";
+                                            $result = $conn->query($sql);
+                                            if ($result->num_rows > 0) {
+                                                while ($row = $result->fetch_assoc()) {
+                                                    $selected = ($city == $row['barangay']) ? 'selected' : '';
+                                                    echo '<option value="' . $row['barangay'] . '" ' . $selected . '>' . $row['barangay'] . '</option>';
+                                                }
+                                            }
+                                            ?>
                                         </select>
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="country">Zip Code:</label>
                                         <input type="number" class="form-control" id="zipcode" name="zipcode"
-                                            placeholder="Zip Code" required>
+                                            placeholder="Zip Code"
+                                            value="<?php echo isset($zipcode) ? $zipcode : ''; ?>" required>
+
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="country">Address:</label>
                                         <input type="text" class="form-control" id="address" name="address"
-                                            placeholder="Address" required>
+                                            placeholder="Address"
+                                            value="<?php echo isset($addressline1) ? $addressline1 : ''; ?>" required>
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="country">Address 2:</label>
                                         <input type="text" class="form-control" id="address2" name="address2"
-                                            placeholder="Address 2" required>
+                                            placeholder="Address 2"
+                                            value="<?php echo isset($addressline2) ? $addressline2 : ''; ?>" required>
                                     </div>
 
 
 
-                                    <button type="submit" class="btn btn-submit">Add</button>
+                                    <button type="submit" class="btn btn-submit">Update</button>
                                     <a href="./delivery.php" class="cancel-btn" style="display: inline-block; padding: 13px 16px; 
                                         background-color: #f44336; color: #fff; text-decoration: 
                                         none; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;"
@@ -279,8 +367,8 @@ try {
         if ($message === "success") {
             echo "<script>
                 Swal.fire({
-                    title: 'Address added successfully.',
-                    text: 'You have successfully added the deliver address.',
+                    title: 'Address updated successfully.',
+                    text: 'You have successfully updated the deliver address.',
                     icon: 'success',
                     confirmButtonText: 'OK',                
                 }).then((result) => {
@@ -288,7 +376,7 @@ try {
                         window.location.href = '../customer/delivery.php';
                     } 
                 });
-                 </script>";
+            </script>";
         } else {
             echo "<script>
                 Swal.fire({
@@ -296,10 +384,6 @@ try {
                     text: '" . $message . "',
                     icon: 'error',
                     confirmButtonText: 'OK'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = '../customer/delivery.php';
-                    } 
                 });
             </script>";
         }

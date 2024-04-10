@@ -204,6 +204,7 @@ if (!$ordersToReceiveExist) {
                         title: 'Order status updated',
                         text: 'The order status has been successfully updated to Completed.',
                         confirmButtonText: 'OK'
+                        a
                     }).then(function() {
                         location.reload();
                     });

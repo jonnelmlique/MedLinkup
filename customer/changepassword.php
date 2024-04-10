@@ -1,3 +1,50 @@
+<?php
+include '../src/config/config.php';
+session_start();
+
+if (!isset($_SESSION['userid'])) {
+    header("Location: ../auth/login.php");
+    exit();
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $oldPassword = $_POST['oldpassword'];
+    $newPassword = $_POST['newpassword'];
+    $confirmPassword = $_POST['confirmpassword'];
+
+    if ($newPassword !== $confirmPassword) {
+        $message = "Password and Confirm Password do not match.";
+    } else {
+
+        $userId = $_SESSION['userid'];
+        $sql = "SELECT password FROM users WHERE userid = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $userId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows == 1) {
+            $row = $result->fetch_assoc();
+            if (password_verify($oldPassword, $row['password'])) {
+
+                $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+
+                $updateSql = "UPDATE users SET password = ? WHERE userid = ?";
+                $updateStmt = $conn->prepare($updateSql);
+                $updateStmt->bind_param("si", $hashedPassword, $userId);
+                $updateStmt->execute();
+
+                $message = "success";
+            } else {
+                $message = "Old password is incorrect.";
+            }
+        } else {
+            $message = "User not found.";
+        }
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -92,9 +139,7 @@
 
                         <h1 class="lefth">Change Password</h1>
 
-
-
-                        <form action="#" method="POST" class="needs-validation" novalidate>
+                        <form action="#" method="POST" class="needs-validation">
                             <div class="mb-3">
                                 <input type="password" class="form-control" id="oldpassword" name="oldpassword"
                                     placeholder="Old Password" required>
@@ -126,7 +171,31 @@
     <script src="./node_modules/popper.js/dist/umd/popper.min.js"></script>
     <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <?php
+    if (!empty($message)) {
+        if ($message === "success") {
+            echo "<script>
+            Swal.fire({
+                title: 'Password Updated Successfully!',
+                text: 'You have successfully updated your password.',
+                icon: 'success',
+                showCancelButton: false,
+                confirmButtonText: 'OK'
+            });
+        </script>";
+        } else {
+            echo "<script>
+            Swal.fire({
+                title: 'Error',
+                text: '" . $message . "',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        </script>";
+        }
+    }
+    ?>
 </body>
 
 </html>

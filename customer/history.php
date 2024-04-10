@@ -1,3 +1,33 @@
+<?php
+include '../src/config/config.php';
+session_start();
+
+if (!isset($_SESSION['userid'])) {
+    header("Location: ../auth/login.php");
+    exit();
+}
+
+$userid = $_SESSION['userid'];
+
+try {
+   
+
+    $sql_completed = "SELECT COUNT(DISTINCT(transactionid)) AS num_completed_orders FROM orderprocess WHERE userid = ? AND status = 'Completed'";
+    $stmt_completed = $conn->prepare($sql_completed);
+    $stmt_completed->bind_param("i", $userid);
+    $stmt_completed->execute();
+    $result_completed = $stmt_completed->get_result();
+    $row_completed = $result_completed->fetch_assoc();
+    $num_completed_orders = $row_completed['num_completed_orders'];
+
+    $num_completed_orders = $num_completed_orders ? $num_completed_orders : 0;
+} catch (Exception $e) {
+
+    echo "Error: " . $e->getMessage();
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -90,50 +120,54 @@
                 <div class="col-md-6">
                     <div class="history-section">
 
-                        <h1 class="lefth">History</h1>
+                        <h1 class="lefth">History (<?php echo $num_completed_orders; ?>)</h1>
+                        <?php
+                       
+                        try {
+                            $sql_completed_orders = "SELECT p.productname, op.totalprice, op.ordercompleted, op.status, op.transactionid
+                            FROM orderprocess op
+                            JOIN products p ON op.productid = p.productid
+                            WHERE op.status = 'Completed'
+                            GROUP BY op.transactionid";
+
+                            $stmt_completed_orders = $conn->prepare($sql_completed_orders);
+                            $stmt_completed_orders->execute();
+                            $result_completed_orders = $stmt_completed_orders->get_result();
+                        } catch (Exception $e) {
+                            echo "Error: " . $e->getMessage();
+                        }
+                        ?>
+
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>Image</th>
-                                    <th>Name</th>
-                                    <th>Price</th>
+                                    <th>Product</th>
+                                    <th>Total Price</th>
+                                    <th>Date Completed</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td><img src="https://via.placeholder.com/100x100" alt="pending Image"></td>
-                                    <td>Antibiotics</td>
-                                    <td class="price">$7.49</td>
-                                    <td><span class="status completed">Completed</span></td>
-                                </tr>
-                                <tr>
-                                    <td><img src="https://via.placeholder.com/100x100" alt="pending Image"></td>
-                                    <td>Antibiotics</td>
-                                    <td class="price">$7.49</td>
-                                    <td><span class="status completed">Completed</span></td>
-                                </tr>
-                                <tr>
-                                    <td><img src="https://via.placeholder.com/100x100" alt="pending Image"></td>
-                                    <td>Antibiotics</td>
-                                    <td class="price">$7.49</td>
-                                    <td><span class="status completed">Completed</span></td>
-                                </tr>
-                                <tr>
-                                    <td><img src="https://via.placeholder.com/100x100" alt="pending Image"></td>
-                                    <td>Antibiotics</td>
-                                    <td class="price">$7.49</td>
-                                    <td><span class="status completed">Completed</span></td>
-                                </tr>
-                                <tr>
-                                    <td><img src="https://via.placeholder.com/100x100" alt="pending Image"></td>
-                                    <td>Antibiotics</td>
-                                    <td class="price">$7.49</td>
-                                    <td><span class="status completed">Completed</span></td>
-                                    </a>
-                                </tr>
+                                <?php
+                                try {
+                                    while ($row = $result_completed_orders->fetch_assoc()) {
+                                        echo "<tr onclick=\"window.location='orderdetails.php?transactionid=" . $row['transactionid'] . "';\" style=\"cursor: pointer;\">";
+                                        echo "<td>" . $row['productname'] . "</td>";
+                                        $formatted_price = number_format($row['totalprice'], 2);
+                                        echo "<td class='totalprice'>₱" . $formatted_price . "</td>";
+                                        echo "<td>" . date("d-m-Y", strtotime($row['ordercompleted'])) . "</td>";
+                                        echo "<td><span class='status completed'>" . $row['status'] . "</span></td>";
+                                        echo "</tr>";
+                                    }
+                                } catch (Exception $e) {
+                                    echo "Error: " . $e->getMessage();
+                                }
+                                ?>
                             </tbody>
+
                         </table>
+
+
                     </div>
                 </div>
             </div>
@@ -141,11 +175,9 @@
 
     </main>
 
-    <!-- node -->
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
     <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 
 </body>
