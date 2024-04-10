@@ -118,11 +118,11 @@ $result = $conn->query($sql);
                                 </a>
                             </div>
 
-                            <input type="text" placeholder="Search...">
-                            <button><i class="fas fa-search"></i></button>
+                            <input type="text" id="searchInput" placeholder="Search...">
+                            <button disabled><i class="fas fa-search"></i></button>
                         </div>
 
-                        <table class="table">
+                        <table class="table" id="categories-table">
                             <thead>
                                 <tr>
                                     <th>Category ID</th>
@@ -165,12 +165,32 @@ $result = $conn->query($sql);
     </main>
     </section>
 
-    <!-- node -->
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
     <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+
+    <script>
+    $(document).ready(function() {
+        $('#searchInput').on('keyup', function() {
+            var searchText = $(this).val().trim();
+            if (searchText !== '') {
+                $.ajax({
+                    url: 'catagoriessearch.php',
+                    type: 'post',
+                    data: {
+                        search: searchText
+                    },
+                    success: function(response) {
+                        $('#categories-table tbody').html(response);
+                    }
+                });
+            }
+        });
+    });
+    </script>
 </body>
 
 </html>

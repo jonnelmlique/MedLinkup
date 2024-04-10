@@ -113,16 +113,17 @@
                                 </a>
                             </div>
                             <div class="print">
-                                <button>Print </button>
+                                <button class="printLowStock">Print
+                                </button>
                             </div>
 
+                            <input type="text" id="searchInput" placeholder="Search...">
+                            <button disabled><i class="fas fa-search"></i></button>
 
-                            <input type="text" placeholder="Search...">
-                            <button><i class="fas fa-search"></i></button>
                         </div>
 
                         <h1 class="lefth">Medicine List</h1>
-                        <table class="table">
+                        <table class="table" id="productTable">
                             <thead>
                                 <tr>
                                     <th>Image</th>
@@ -136,40 +137,38 @@
                             </thead>
                             <tbody>
                                 <?php
-    include '../src/config/config.php';
+                                include '../src/config/config.php';
 
-    try {
-        $sql = "SELECT * FROM products";
-        $result = $conn->query($sql);
+                                try {
+                                    $sql = "SELECT * FROM products";
+                                    $result = $conn->query($sql);
 
-        if ($result !== false && $result->num_rows > 0) {
-            while($row = $result->fetch_assoc()) {
-                echo "<tr>";
-                echo "<td><img src='../productimg/{$row['image']}' alt='{$row['productname']}' style='width: 100px; height: auto;'></td>";
-                echo "<td>{$row['productname']}</td>";
-                echo "<td class='price'>₱{$row['price']}</td>";
-                echo "<td>{$row['productdetails']}</td>";
-                echo "<td>{$row['productcategory']}</td>";
-                echo "<td>{$row['stock']}</td>";
-                echo "<td class='actions'>";
-                echo "<a href='../admin/editproducts.php?id=" . $row["productid"] . "' class='button-like btn btn-sm btn-primary'>";
-                echo "<i class='fas fa-edit'></i>";
-                echo "</a>";
-                echo "<a href='#' class='button-like btn btn-sm btn-primary'>";
-                echo "<i class='fas fa-trash-alt'></i>";
-                echo "</a>";
-                echo "</td>";
-                echo "</tr>";
-            }
-        } else {
-            echo "<tr><td colspan='7'>No products found</td></tr>";
-        }
-    } catch (Exception $e) {
-        echo "<tr><td colspan='7'>Error fetching products: " . $e->getMessage() . "</td></tr>";
-    }
-?>
-
-
+                                    if ($result !== false && $result->num_rows > 0) {
+                                        while ($row = $result->fetch_assoc()) {
+                                            echo "<tr>";
+                                            echo "<td><img src='../productimg/{$row['image']}' alt='{$row['productname']}' style='width: 100px; height: auto;'></td>";
+                                            echo "<td>{$row['productname']}</td>";
+                                            echo "<td class='price'>₱{$row['price']}</td>";
+                                            echo "<td>{$row['productdetails']}</td>";
+                                            echo "<td>{$row['productcategory']}</td>";
+                                            echo "<td>{$row['stock']}</td>";
+                                            echo "<td class='actions'>";
+                                            echo "<a href='../admin/editproducts.php?id=" . $row["productid"] . "' class='button-like btn btn-sm btn-primary'>";
+                                            echo "<i class='fas fa-edit'></i>";
+                                            echo "</a>";
+                                            echo "<a href='#' class='button-like btn btn-sm btn-primary'>";
+                                            echo "<i class='fas fa-trash-alt'></i>";
+                                            echo "</a>";
+                                            echo "</td>";
+                                            echo "</tr>";
+                                        }
+                                    } else {
+                                        echo "<tr><td colspan='7'>No products found</td></tr>";
+                                    }
+                                } catch (Exception $e) {
+                                    echo "<tr><td colspan='7'>Error fetching products: " . $e->getMessage() . "</td></tr>";
+                                }
+                                ?>
                             </tbody>
                         </table>
                     </div>
@@ -180,12 +179,40 @@
     </main>
     </section>
 
-    <!-- node -->
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
     <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script>
+    $(document).ready(function() {
+        $('#searchInput').on('keyup', function() {
+            var searchText = $(this).val().trim();
+            if (searchText !== '') {
+                $.ajax({
+                    url: 'search.php',
+                    type: 'post',
+                    data: {
+                        search: searchText
+                    },
+                    success: function(response) {
+                        $('#productTable tbody').html(response);
+                    }
+                });
+            }
+        });
+    });
+    </script>
+    <script>
+    $(document).ready(function() {
+        $(".printLowStock").click(function(e) {
+            e.preventDefault();
+            window.open('product-print.php', '_blank', 'width=800,height=600');
+        });
+    });
+    </script>
+
 </body>
 
 </html>

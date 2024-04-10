@@ -25,7 +25,8 @@ try {
     $row_completed = $result_completed->fetch_assoc();
     $num_completed_orders = $row_completed['num_completed_orders'];
 
-    $sql_total_spend = "SELECT IFNULL(SUM(totalprice), 0) AS total_spend FROM (SELECT DISTINCT(transactionid), totalprice FROM orderprocess WHERE userid = ? AND status = 'Completed') AS completed_orders";
+    $sql_total_spend = "SELECT IFNULL(SUM(totalprice), 0) AS total_spend FROM (SELECT DISTINCT(transactionid), totalprice FROM orderprocess WHERE userid = ? AND ((status = 'Completed' != 'PayPal') OR (status = 'Processing' AND paymentmethod = 'PayPal'))) AS total_orders";
+    // $sql_total_spend = "SELECT IFNULL(SUM(totalprice), 0) AS total_spend FROM (SELECT DISTINCT(transactionid), totalprice FROM orderprocess WHERE userid = ? AND status = 'Completed') AS completed_orders";
     $stmt_total_spend = $conn->prepare($sql_total_spend);
     $stmt_total_spend->bind_param("i", $userid);
     $stmt_total_spend->execute();
@@ -110,6 +111,12 @@ try {
                 <ul class="submenu">
                     <li><a href="../customer/changepassword.php">Change Password</a></li>
                 </ul>
+            </li>
+            <li>
+                <a href="../index.php">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="text"> Continue Shopping</span>
+                </a>
             </li>
             <li>
                 <a href="../logout.php" class="logout">

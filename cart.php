@@ -7,14 +7,15 @@ $message = '';
 $loginLinkText = '<i class="fas fa-user"></i> Login';
 $loginLinkURL = './auth/login.php';
 
-if(isset($_SESSION['userid']) && isset($_SESSION['username'])) {
-    $loggedInUsername = $_SESSION['username']; 
-    $loginLinkText = '<i class="fas fa-user"></i> ' . $loggedInUsername; 
+if (isset($_SESSION['userid']) && isset($_SESSION['username'])) {
+    $loggedInUsername = $_SESSION['username'];
+    $loginLinkText = '<i class="fas fa-user"></i> ' . $loggedInUsername;
     $loginLinkURL = './customer/dashboard.php';
 }
 
 
-function fetch_cart_items($userId, $conn, &$totalAmount) {
+function fetch_cart_items($userId, $conn, &$totalAmount)
+{
     $cartItemsHtml = '';
     $totalAmount = 0;
 
@@ -61,7 +62,7 @@ function fetch_cart_items($userId, $conn, &$totalAmount) {
 
 if (!isset($_SESSION['userid'])) {
     header("Location: ./auth/login.php");
-    exit; 
+    exit;
 }
 
 $userId = $_SESSION['userid'];
@@ -84,7 +85,7 @@ $cartItemsHtml = fetch_cart_items($userId, $conn, $totalAmount);
     <link rel="stylesheet" href="./public/css/index/cart.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-    
+
 </head>
 
 <body>
@@ -114,60 +115,64 @@ $cartItemsHtml = fetch_cart_items($userId, $conn, $totalAmount);
                     </li>
                 </ul>
                 <div class="navbar-icons d-flex align-items-center">
-                    <a href="<?php echo $loginLinkURL; ?>" class="nav-link"><?php echo $loginLinkText; ?></a>                    <a href="#" class="nav-link"><i class="fas fa-shopping-cart"></i> Cart </a>
+                    <a href="<?php echo $loginLinkURL; ?>" class="nav-link"><?php echo $loginLinkText; ?></a> <a
+                        href="#" class="nav-link"><i class="fas fa-shopping-cart"></i> Cart </a>
                 </div>
             </div>
         </div>
-        </nav>
+    </nav>
 
-        <div class="main-container">
-    <div class="container">
-        <h2 class="mt-5 mb-4">Cart</h2>
-        <div id="cart-items">
-            <?php echo $cartItemsHtml; ?>
-        </div>
-        <div id="total-price" class="text-right mt-4">
-            Total: <span id="total-amount">₱<?php echo number_format($totalAmount, 2); ?></span>
-            <a href="./checkout.php" class="btn btn-success btn-lg ml-2">Check Out</a>
+    <div class="main-container">
+        <div class="container">
+            <h2 class="mt-5 mb-4">Cart</h2>
+            <div id="cart-items">
+                <?php echo $cartItemsHtml; ?>
+            </div>
+            <div id="total-price" class="text-right mt-4">
+                Total: <span id="total-amount">₱<?php echo number_format($totalAmount, 2); ?></span>
+                <?php if ($totalAmount > 0): ?>
+                <a href="./checkout.php" class="btn btn-success btn-lg ml-2">Check Out</a>
+                <?php else: ?>
+                <button class="btn btn-success btn btn-lg ml-2" disabled>Check Out</button>
+                <?php endif; ?>
+            </div>
+
         </div>
     </div>
-</div>
 
 
-        <section class="design-element">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12 text-center">
-                        <h3>Our Mission</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec dictum nunc. Nullam vitae
-                            ligula sed nisi sagittis facilisis vitae nec velit. Integer scelerisque magna sit amet dui
-                            suscipit, sed aliquam nunc scelerisque.</p>
-                    </div>
+    <section class="design-element">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h3>Our Mission</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec dictum nunc. Nullam vitae
+                        ligula sed nisi sagittis facilisis vitae nec velit. Integer scelerisque magna sit amet dui
+                        suscipit, sed aliquam nunc scelerisque.</p>
                 </div>
             </div>
-        </section>
-        <footer>
-            <div class="container">
-                <p>
-                    &copy; 2024 MedLinkup. All rights reserved. |
-                    <a href="./privacypolicy.php">Privacy Policy</a> | <a href="./termsofservice.php">Terms of Service</a>
-                </p>
-            </div>
-        </footer> 
-    
-    <!-- node -->
+        </div>
+    </section>
+    <footer>
+        <div class="container">
+            <p>
+                &copy; 2024 MedLinkup. All rights reserved. |
+                <a href="./privacypolicy.php">Privacy Policy</a> | <a href="./termsofservice.php">Terms of Service</a>
+            </p>
+        </div>
+    </footer>
+
     <script src="./node_modules/jquery/dist/jquery.min.js"></script>
     <script src="./node_modules/popper.js/dist/umd/popper.min.js"></script>
     <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-   
-    <script>
-        document.querySelectorAll('.delete-item').forEach(button => {
-            button.addEventListener('click', function() {
-                const cartId = this.getAttribute('data-cartid');
 
-                fetch('./deletea_item.php', {
+    <script>
+    document.querySelectorAll('.delete-item').forEach(button => {
+        button.addEventListener('click', function() {
+            const cartId = this.getAttribute('data-cartid');
+
+            fetch('./deletea_item.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -180,17 +185,15 @@ $cartItemsHtml = fetch_cart_items($userId, $conn, $totalAmount);
                     if (response.ok) {
                         this.closest('.cart-item').remove();
                     } else {
-                            console.error('Failed to delete item from cart');
+                        console.error('Failed to delete item from cart');
                     }
                 })
                 .catch(error => {
                     console.error('Error:', error);
                 });
-            });
         });
+    });
     </script>
 </body>
 
 </html>
-
-

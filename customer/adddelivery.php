@@ -60,7 +60,6 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Delivery Address</title>
-    <!-- <link href="./node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="../public/css/customer/sidebar.css">
     <link rel="stylesheet" href="../public/css/customer/delivery.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -122,6 +121,12 @@ try {
                 <ul class="submenu">
                     <li><a href="../customer/changepassword.php">Change Password</a></li>
                 </ul>
+            </li>
+            <li>
+                <a href="../index.php">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="text"> Continue Shopping</span>
+                </a>
             </li>
             <li>
                 <a href="../logout.php" class="logout">
@@ -266,7 +271,6 @@ try {
         </div>
         </div>
     </main>
-    <!-- JavaScript -->
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
     <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

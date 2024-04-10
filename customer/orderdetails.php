@@ -65,6 +65,12 @@
                 </ul>
             </li>
             <li>
+                <a href="../index.php">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="text"> Continue Shopping</span>
+                </a>
+            </li>
+            <li>
                 <a href="../logout.php" class="logout">
                     <i class='fas fa-user'></i>
                     <span class="text"> Logout</span>

@@ -68,36 +68,24 @@ if (isset($_SESSION['userid']) && isset($_SESSION['username'])) {
         <div class="col-md-3">
             <div class="filter-section">
                 <h4>Filters</h4>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="category1">
-                    <label class="form-check-label" for="category1">
-                        Category 1
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="category2">
-                    <label class="form-check-label" for="category2">
-                        Category 2
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="category1">
-                    <label class="form-check-label" for="category1">
-                        Category 3
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="category1">
-                    <label class="form-check-label" for="category1">
-                        Category 4
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="category1">
-                    <label class="form-check-label" for="category1">
-                        Category 5
-                    </label>
-                </div>
+                <?php
+                $query = "SELECT * FROM categories";
+                $result = mysqli_query($conn, $query);
+
+                if (mysqli_num_rows($result) > 0) {
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        echo '<div class="form-check">';
+                        echo '<input class="form-check-input category-checkbox" type="checkbox" value="' . $row['categoryid'] . '" id="category' . $row['categoryid'] . '">';
+                        echo '<label class="form-check-label" for="category' . $row['categoryid'] . '">';
+                        echo $row['categoryname'];
+                        echo '</label>';
+                        echo '</div>';
+                    }
+                } else {
+                    echo "No categories found.";
+                }
+                ?>
+
 
             </div>
         </div>
@@ -106,26 +94,15 @@ if (isset($_SESSION['userid']) && isset($_SESSION['username'])) {
             <div class="container">
 
                 <div class="search-bar">
-                    <input type="text" class="form-control" placeholder="Search Products" aria-label="Search Products"
-                        aria-describedby="button-addon2">
+                    <input type="text" class="form-control" id="searchInput" placeholder="Search Products"
+                        aria-label="Search Products" aria-describedby="button-addon2">
                     <button class="btn btn-outline-secondary" type="button" id="button-addon2"><i
                             class="fas fa-search"></i></button>
                 </div>
                 <h4 class="mb-4">Products</h4>
 
-                <div class="row">
-                    <!-- <div class="col-md-15">
-                        <div class="product-card">
-                            <a class="product-card-link" href="product.php">
-                                <img src="https://via.placeholder.com/200x200" alt="Product Image" />
-                                <div class="product-card-body">
-                                    <h3 class="product-card-title">Example Product 1</h3>
-                                    <p class="product-card-price">₱19.99</p>
-                                    <button class="btn btn-primary">Add to Cart</button>
-                                </div>
-                            </a>
-                        </div>
-                    </div> -->
+                <div id="productContainer" class="row">
+
                     <?php
 
                     try {
@@ -191,13 +168,55 @@ if (isset($_SESSION['userid']) && isset($_SESSION['username'])) {
             </p>
         </div>
     </footer>
-    <!-- node -->
     <script src="./node_modules/jquery/dist/jquery.min.js"></script>
     <script src="./node_modules/popper.js/dist/umd/popper.min.js"></script>
     <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
+    <script>
+    document.getElementById('searchInput').addEventListener('input', function() {
+        var searchText = this.value.trim();
+
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var response = xhr.responseText;
+                document.getElementById('productContainer').innerHTML = response;
+            }
+        };
+        xhr.open('POST', 'shopsearch.php', true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.send('search=' + searchText);
+    });
+    </script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Function to handle category filter change
+        function handleCategoryFilter() {
+            var selectedCategories = document.querySelectorAll('.category-checkbox:checked');
+            var categoryIds = Array.from(selectedCategories).map(function(checkbox) {
+                return checkbox.value;
+            }).join(',');
+
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    document.getElementById('productContainer').innerHTML = xhr.responseText;
+                }
+            };
+            xhr.open('POST', 'filter_products.php', true);
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xhr.send('categoryIds=' + categoryIds);
+        }
+
+        // Add event listener to category checkboxes
+        var categoryCheckboxes = document.querySelectorAll('.category-checkbox');
+        categoryCheckboxes.forEach(function(checkbox) {
+            checkbox.addEventListener('change', handleCategoryFilter);
+        });
+    });
+    </script>
 </body>
 
 </html>

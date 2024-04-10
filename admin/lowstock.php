@@ -108,14 +108,15 @@
                     <div class="box-section">
 
                         <div class="search-bar">
-                            <div class="print-button">
 
-                                <button id="print-button">Print</button>
+                            <div class="print-button">
+                                <button class="printLowStock">Print
+                                </button>
                                 </a>
                             </div>
 
-                            <input type="text" placeholder="Search...">
-                            <button><i class="fas fa-search"></i></button>
+                            <input type="text" id="searchInput" placeholder="Search...">
+                            <button disabled><i class="fas fa-search"></i></button>
                         </div>
 
 
@@ -135,38 +136,38 @@
                             <tbody>
                                 <?php
 
-include '../src/config/config.php';
+                                include '../src/config/config.php';
 
-    try {
-        $sql = "SELECT * FROM products WHERE stock BETWEEN 0 AND 20";
-        $result = $conn->query($sql);
+                                try {
+                                    $sql = "SELECT * FROM products WHERE stock BETWEEN 0 AND 20";
+                                    $result = $conn->query($sql);
 
-        if ($result !== false && $result->num_rows > 0) {
-            while($row = $result->fetch_assoc()) {
-                echo "<tr>";
-                echo "<td><img src='../productimg/{$row['image']}' alt='{$row['productname']}' style='width: 100px; height: auto;'></td>";
-                echo "<td>{$row['productname']}</td>";
-                echo "<td class='price'>₱{$row['price']}</td>";
-                echo "<td>{$row['productdetails']}</td>";
-                echo "<td>{$row['productcategory']}</td>";
-                echo "<td>{$row['stock']}</td>";
-                echo "<td class='actions'>";
-                echo "<a href='../admin/editproducts.php?id=" . $row["productid"] . "' class='button-like btn btn-sm btn-primary'>";
-                echo "<i class='fas fa-edit'></i>";
-                echo "</a>";
-                echo "<a href='#' class='button-like btn btn-sm btn-primary'>";
-                echo "<i class='fas fa-trash-alt'></i>";
-                echo "</a>";
-                echo "</td>";
-                echo "</tr>";
-            }
-        } else {
-            echo "<tr><td colspan='7'>No products found</td></tr>";
-        }
-    } catch (Exception $e) {
-        echo "<tr><td colspan='7'>Error fetching products: " . $e->getMessage() . "</td></tr>";
-    }
-?>
+                                    if ($result !== false && $result->num_rows > 0) {
+                                        while ($row = $result->fetch_assoc()) {
+                                            echo "<tr>";
+                                            echo "<td><img src='../productimg/{$row['image']}' alt='{$row['productname']}' style='width: 100px; height: auto;'></td>";
+                                            echo "<td>{$row['productname']}</td>";
+                                            echo "<td class='price'>₱{$row['price']}</td>";
+                                            echo "<td>{$row['productdetails']}</td>";
+                                            echo "<td>{$row['productcategory']}</td>";
+                                            echo "<td>{$row['stock']}</td>";
+                                            echo "<td class='actions'>";
+                                            echo "<a href='../admin/editproducts.php?id=" . $row["productid"] . "' class='button-like btn btn-sm btn-primary'>";
+                                            echo "<i class='fas fa-edit'></i>";
+                                            echo "</a>";
+                                            echo "<a href='#' class='button-like btn btn-sm btn-primary'>";
+                                            echo "<i class='fas fa-trash-alt'></i>";
+                                            echo "</a>";
+                                            echo "</td>";
+                                            echo "</tr>";
+                                        }
+                                    } else {
+                                        echo "<tr><td colspan='7'>No products found</td></tr>";
+                                    }
+                                } catch (Exception $e) {
+                                    echo "<tr><td colspan='7'>Error fetching products: " . $e->getMessage() . "</td></tr>";
+                                }
+                                ?>
 
 
 
@@ -180,24 +181,24 @@ include '../src/config/config.php';
     </section>
     <?php
 
-try {
+    try {
 
-    $sql = "SELECT * FROM products WHERE stock <= 20"; 
-    $result = $conn->query($sql);
-    $low_stock_products = [];
-    if ($result !== false && $result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $low_stock_products[] = $row;
+        $sql = "SELECT * FROM products WHERE stock <= 20";
+        $result = $conn->query($sql);
+        $low_stock_products = [];
+        if ($result !== false && $result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $low_stock_products[] = $row;
+            }
         }
+
+        $low_stock_products_json = json_encode($low_stock_products);
+    } catch (Exception $e) {
+        $error_message = "Error fetching low stock products: " . $e->getMessage();
     }
 
-    $low_stock_products_json = json_encode($low_stock_products);
-} catch (Exception $e) {
-    $error_message = "Error fetching low stock products: " . $e->getMessage();
-}
-
-$conn->close();
-?>
+    $conn->close();
+    ?>
 
     <!-- node -->
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
@@ -235,7 +236,7 @@ $conn->close();
         }
     }
     </script>
-    <script>
+    <!-- <script>
     document.getElementById('print-button').addEventListener('click', function() {
         var table = document.getElementById('medicine-table');
         if (table) {
@@ -288,8 +289,35 @@ $conn->close();
             alert('Table not found.');
         }
     });
-    </script>
+    </script> -->
 
+    <script>
+    $(document).ready(function() {
+        $('#searchInput').on('keyup', function() {
+            var searchText = $(this).val().trim();
+            if (searchText !== '') {
+                $.ajax({
+                    url: 'lowstocksearch.php',
+                    type: 'post',
+                    data: {
+                        search: searchText
+                    },
+                    success: function(response) {
+                        $('#medicine-table tbody').html(response);
+                    }
+                });
+            }
+        });
+    });
+    </script>
+    <script>
+    $(document).ready(function() {
+        $(".printLowStock").click(function(e) {
+            e.preventDefault();
+            window.open('lowstock-print.php', '_blank', 'width=800,height=600');
+        });
+    });
+    </script>
 
 
 
