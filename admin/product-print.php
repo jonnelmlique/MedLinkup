@@ -5,13 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Receipt</title>
-
     <link rel="stylesheet" href="../public/css/admin/lowstockprint.css">
 
 </head>
 
 <body>
-
     <div id="printSection" class="receipt">
         <img src="../public/img/medlinkuplandscape.png" alt="MedLinkup Logo" class="logo">
 
