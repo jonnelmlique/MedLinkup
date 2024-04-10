@@ -1,5 +1,5 @@
 .hero-section {
-  position: relative; 
+  position: relative;
   height: 40vh;
   width: 155vh;
   display: flex;
@@ -22,17 +22,26 @@
   height: 100%;
   background-size: cover;
   background-position: center;
-  opacity: 0.6; 
-  z-index: -1; 
+  opacity: 0.6;
+  z-index: -1;
   animation: changeBackground 59s infinite;
-
 }
 @keyframes changeBackground {
-  0% { background-image: url("https://source.unsplash.com/1600x900/?medical"); }
-  25% { background-image: url("https://source.unsplash.com/1600x900/?doctor"); }
-  50% { background-image: url("https://source.unsplash.com/1600x900/?hospital"); }
-  75% { background-image: url("https://source.unsplash.com/1600x900/?healthcare"); }
-  100% { background-image: url("https://source.unsplash.com/1600x900/?medicine"); }
+  0% {
+    background-image: url("https://source.unsplash.com/1600x900/?medical");
+  }
+  25% {
+    background-image: url("https://source.unsplash.com/1600x900/?doctor");
+  }
+  50% {
+    background-image: url("https://source.unsplash.com/1600x900/?hospital");
+  }
+  75% {
+    background-image: url("https://source.unsplash.com/1600x900/?healthcare");
+  }
+  100% {
+    background-image: url("https://source.unsplash.com/1600x900/?medicine");
+  }
 }
 
 .hero-section h1 {
@@ -86,7 +95,7 @@
 }
 
 .product-card-price {
-  color: #5AB347;
+  color: #5ab347;
   font-weight: bold;
   margin-bottom: 5px;
 }
@@ -120,5 +129,5 @@
 }
 
 .text-truncate {
-  color: #5AB347;
+  color: #5ab347;
 }

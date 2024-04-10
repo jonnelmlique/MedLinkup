@@ -1,35 +1,35 @@
 <?php
-    include './src/config/config.php';
+include './src/config/config.php';
 
-    session_start(); 
+session_start();
 
-    if (!isset($_SESSION['userid'])) {
+if (!isset($_SESSION['userid'])) {
     header("Location: ./auth/login.php");
-    exit; 
-    }
-    
-    $message = '';
+    exit;
+}
 
-    $loginLinkText = '<i class="fas fa-user"></i> Login';
-    $loginLinkURL = './auth/login.php';
-    
-    if(isset($_SESSION['userid']) && isset($_SESSION['username'])) {
-        $loggedInUsername = $_SESSION['username']; 
-        $loginLinkText = '<i class="fas fa-user"></i> ' . $loggedInUsername; 
-        $loginLinkURL = './customer/dashboard.php';
-    }
-    
-    
+$message = '';
 
-    $userID = $_SESSION['userid']; 
+$loginLinkText = '<i class="fas fa-user"></i> Login';
+$loginLinkURL = './auth/login.php';
 
-    $sql = "SELECT * FROM shippingaddresses WHERE userid = $userID";
-    $result = mysqli_query($conn, $sql);
+if (isset($_SESSION['userid']) && isset($_SESSION['username'])) {
+    $loggedInUsername = $_SESSION['username'];
+    $loginLinkText = '<i class="fas fa-user"></i> ' . $loggedInUsername;
+    $loginLinkURL = './customer/dashboard.php';
+}
 
-    if (mysqli_num_rows($result) > 0) {
-        $shippingAddress = mysqli_fetch_assoc($result);
-    }
-    ?>
+
+
+$userID = $_SESSION['userid'];
+
+$sql = "SELECT * FROM shippingaddresses WHERE userid = $userID";
+$result = mysqli_query($conn, $sql);
+
+if (mysqli_num_rows($result) > 0) {
+    $shippingAddress = mysqli_fetch_assoc($result);
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -84,33 +84,33 @@
             <h2>Checkout form</h2>
         </div>
         <?php
-    $userID = $_SESSION['userid']; 
+        $userID = $_SESSION['userid'];
 
-    $sqlShippingAddress = "SELECT * FROM shippingaddresses WHERE userid = $userID";
-    $resultShippingAddress = mysqli_query($conn, $sqlShippingAddress);
+        $sqlShippingAddress = "SELECT * FROM shippingaddresses WHERE userid = $userID";
+        $resultShippingAddress = mysqli_query($conn, $sqlShippingAddress);
 
-    if (mysqli_num_rows($resultShippingAddress) > 0) {
-        $shippingAddress = mysqli_fetch_assoc($resultShippingAddress);
-        $region = $shippingAddress['region'];
+        if (mysqli_num_rows($resultShippingAddress) > 0) {
+            $shippingAddress = mysqli_fetch_assoc($resultShippingAddress);
+            $region = $shippingAddress['region'];
 
-        $sqlShippingFee = "SELECT fee FROM shippingfees WHERE region = '$region'";
-        $resultShippingFee = mysqli_query($conn, $sqlShippingFee);
+            $sqlShippingFee = "SELECT fee FROM shippingfees WHERE region = '$region'";
+            $resultShippingFee = mysqli_query($conn, $sqlShippingFee);
 
-        if (mysqli_num_rows($resultShippingFee) > 0) {
-            $shippingFeeRow = mysqli_fetch_assoc($resultShippingFee);
-            $shippingFee = $shippingFeeRow['fee'];
+            if (mysqli_num_rows($resultShippingFee) > 0) {
+                $shippingFeeRow = mysqli_fetch_assoc($resultShippingFee);
+                $shippingFee = $shippingFeeRow['fee'];
+            } else {
+                $shippingFee = 0;
+            }
         } else {
             $shippingFee = 0;
         }
-    } else {
-        $shippingFee = 0;
-    }
 
 
-    $sql = "SELECT * FROM cart WHERE userid = $userID";
-    $result = mysqli_query($conn, $sql);
-    $totalPrice = 0;
-    ?>
+        $sql = "SELECT * FROM cart WHERE userid = $userID";
+        $result = mysqli_query($conn, $sql);
+        $totalPrice = 0;
+        ?>
         <div class="row">
             <div class="col-md-4 order-md-2 mb-4">
                 <h4 class="d-flex justify-content-between align-items-center mb-3">
@@ -120,13 +120,13 @@
 
                 <ul class="list-group mb-3">
                     <?php
-                while ($row = mysqli_fetch_assoc($result)) {
-                $totalPrice += $row['price'] * $row['quantity'];
-                $productID = $row['productid']; 
-                $quantity = $row['quantity']; 
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        $totalPrice += $row['price'] * $row['quantity'];
+                        $productID = $row['productid'];
+                        $quantity = $row['quantity'];
 
 
-                    ?>
+                        ?>
                     <li class="list-group-item d-flex justify-content-between lh-condensed">
                         <div>
                             <h6 class="my-0"><?php echo $row['productname']; ?></h6>
@@ -137,8 +137,9 @@
 
 
                     <?php
-                }
-                ?> <li class="list-group-item d-flex justify-content-between bg-light">
+                    }
+                    ?>
+                    <li class="list-group-item d-flex justify-content-between bg-light">
                         <div class="text-success">
                             <h6 class="my-0">Shipping Fee</h6>
                         </div>
@@ -338,11 +339,11 @@
                         var transactionID = details.id;
 
                         <?php
-                    $result = mysqli_query($conn, $sql);
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        $productID = $row['productid'];
-                        $quantity = $row['quantity'];
-                        ?>
+                            $result = mysqli_query($conn, $sql);
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                $productID = $row['productid'];
+                                $quantity = $row['quantity'];
+                                ?>
                         var xhr = new XMLHttpRequest();
                         xhr.open("POST", "./insert_order.php", true);
                         xhr.setRequestHeader("Content-Type",
@@ -357,13 +358,49 @@
                             transactionID;
                         xhr.send(data);
                         <?php
-                    }
-                    ?>
+                            }
+                            ?>
                         window.location.href = 'transactioncomplete.php';
 
                     });
                 }
             }).render('#paypal-button-container');
+        } else if (paymentMethod === "COD") {
+            var today = new Date();
+            var dd = String(today.getDate()).padStart(2, '0');
+            var mm = String(today.getMonth() + 1).padStart(2, '0');
+            var yyyy = today.getFullYear();
+            var hours = String(today.getHours()).padStart(2, '0');
+            var minutes = String(today.getMinutes()).padStart(2, '0');
+            var seconds = String(today.getSeconds()).padStart(2, '0');
+            var randomSuffix = Math.floor(Math.random() *
+                10000);
+            var transactionID = randomSuffix + mm + seconds + dd + hours + minutes + yyyy;
+
+
+            <?php
+                $result = mysqli_query($conn, $sql);
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $productID = $row['productid'];
+                    $quantity = $row['quantity'];
+                    ?>
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "./insert_order.php", true);
+            xhr.setRequestHeader("Content-Type",
+                "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    console.log(xhr.responseText);
+                }
+            };
+            var data =
+                "userID=<?php echo $userID; ?>&productID=<?php echo $productID; ?>&quantity=<?php echo $quantity; ?>&totalPrice=<?php echo $totalPrice + $shippingFee; ?>&totalProductPrice=<?php echo $totalPrice; ?>&shippingFee=<?php echo $shippingFee; ?>&status=Pending&paymentMethod=COD&addressID=<?php echo $shippingAddress['addressid']; ?>&transactionID=" +
+                transactionID;
+            xhr.send(data);
+            <?php
+                }
+                ?>
+            window.location.href = 'transactioncomplete.php';
         } else {
             alert("Proceeding with other payment method.");
         }
@@ -372,13 +409,13 @@
 
     <?php
 
-    $userID = $_SESSION['userid']; 
+    $userID = $_SESSION['userid'];
 
     $sql = "SELECT * FROM shippingaddresses WHERE userid = $userID";
     $result = mysqli_query($conn, $sql);
 
     if (mysqli_num_rows($result) == 0) {
-        $message = "Add shipping address"; 
+        $message = "Add shipping address";
 
         echo "<script>
                 Swal.fire({

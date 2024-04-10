@@ -69,7 +69,6 @@ if(isset($_SESSION['userid']) && isset($_SESSION['username'])) {
         </div>
     </a>
 
-    <!-- Category Section Start-->
     <section class="category-section">
         <div class="container">
             <div class="row">
@@ -83,53 +82,50 @@ if(isset($_SESSION['userid']) && isset($_SESSION['username'])) {
                 $query = "SELECT * FROM categories";
                 $result = mysqli_query($conn, $query);
                 
-                // Check if there are any categories
                 if (mysqli_num_rows($result) > 0) {
                     $count = 0;
                     $first = true;
-                    // Iterate through each category
                     while ($row = mysqli_fetch_assoc($result)) {
                         $categoryName = $row['categoryname'];
                         $imagePath = $row['imagepath'];
                         
-                        // Output HTML for each category
-                        if ($count % 6 == 0) { // Change 6 to the number of categories you want per slide
+                        if ($count % 6 == 0) { 
                             if (!$first) {
-                                echo '</div></div>'; // Close previous carousel-item and row
+                                echo '</div></div>'; 
                             }
                             echo '<div class="carousel-item' . ($first ? ' active' : '') . '"><div class="row">';
                             $first = false;
                         }
                         echo '<div class="col-sm-2">
-                                <a href="#" class="text-decoration-none text-inherit">
-                                    <div class="card card-product mb-lg-4">
-                                        <div class="card-body text-center py-4">
-                                            <img src="./productimg/' . $imagePath . '" alt="' . $categoryName . '" class="mb-2 img-fluid" />
-                                            <div class="text-truncate">' . $categoryName . '</div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>';
+                        <a href="./shop-categories.php?category=' . urlencode($categoryName) . '" class="text-decoration-none text-inherit">
+                            <div class="card card-product mb-lg-4">
+                                <div class="card-body text-center py-4">
+                                    <img src="./productimg/' . $imagePath . '" alt="' . $categoryName . '" class="mb-2 img-fluid" />
+                                    <div class="text-truncate">' . $categoryName . '</div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>';
+                
                         $count++;
                     }
-                    echo '</div></div>'; // Close last carousel-item and row
+                    echo '</div></div>'; 
                 } else {
                     echo "No categories found";
                 }
                 ?>
                 </div>
-                <a class="carousel-control-prev" href="#categoryCarousel" role="button" data-slide="prev">
+                <!-- <a class="carousel-control-prev" href="#categoryCarousel" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="sr-only">Previous</span>
                 </a>
                 <a class="carousel-control-next" href="#categoryCarousel" role="button" data-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="sr-only">Next</span>
-                </a>
+                </a> -->
             </div>
         </div>
     </section>
-    <!-- Category Section End-->
 
 
     <div class="product-section">
@@ -140,7 +136,7 @@ if(isset($_SESSION['userid']) && isset($_SESSION['username'])) {
             <div class="row">
                 <?php
     try {
-        $sql = "SELECT productid, productname, price, image FROM products LIMIT 10"; // Limit to 10 products
+        $sql = "SELECT productid, productname, price, image FROM products LIMIT 10"; 
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -148,18 +144,14 @@ if(isset($_SESSION['userid']) && isset($_SESSION['username'])) {
             while ($row = $result->fetch_assoc()) {
                 $productName = strlen($row["productname"]) > 35 ? substr($row["productname"], 0, 35) . '...' : $row["productname"];
     ?>
-                <!-- Product Card HTML -->
                 <div class="col-md-15">
                     <a href="./product.php?id=<?php echo $row["productid"]; ?>" class="product-card-link">
 
                         <div class="product-card">
-                            <!-- <a class="product-card-link" href="product.php"> -->
                             <img src="./productimg/<?php echo $row["image"]; ?>" alt="Product Image" />
                             <div class="product-card-body">
                                 <h3 class="product-card-title"><?php echo $productName; ?></h3>
-
                                 <p class="product-card-price">₱<?php echo $row["price"]; ?></p>
-                                <!--<button class="btn btn-primary">Add to Cart</button>-->
                             </div>
                     </a>
                 </div>
@@ -198,11 +190,9 @@ if(isset($_SESSION['userid']) && isset($_SESSION['username'])) {
             </p>
         </div>
     </footer>
-    <!-- node -->
     <script src="./node_modules/jquery/dist/jquery.min.js"></script>
     <script src="./node_modules/popper.js/dist/umd/popper.min.js"></script>
     <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 
 </body>

@@ -191,7 +191,7 @@ if (!$ordersToReceiveExist) {
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
     $(document).ready(function() {
         $(".orderreceived").click(function(e) {
@@ -205,18 +205,19 @@ if (!$ordersToReceiveExist) {
                 },
                 success: function(response) {
                     console.log(response);
+
                     Swal.fire({
                         icon: 'success',
                         title: 'Order status updated',
                         text: 'The order status has been successfully updated to Completed.',
                         confirmButtonText: 'OK'
-                        a
                     }).then(function() {
                         location.reload();
                     });
                 },
                 error: function(xhr, status, error) {
                     console.error(xhr.responseText);
+
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
@@ -228,6 +229,7 @@ if (!$ordersToReceiveExist) {
         });
     });
     </script>
+
 
 
 </body>
