@@ -7,7 +7,6 @@
     <title>Low Stock</title>
     <link rel="stylesheet" href="../public/css/admin/sidebar.css">
     <link rel="stylesheet" href="../public/css/admin/lowstock.css">
-    <!-- <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
 

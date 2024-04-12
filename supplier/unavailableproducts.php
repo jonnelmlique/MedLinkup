@@ -7,14 +7,13 @@
     <title>Products</title>
     <link rel="stylesheet" href="../public/css/supplier/sidebar.css">
     <link rel="stylesheet" href="../public/css/supplier/products.css">
-
-    <!-- <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 
 </head>
 
 <body>
     <section id="sidebar">
+
         <a href="../supplier/dashboard.php" class="brand">
             <img src="../public/img/logo.png" alt="MedLinkup Logo" class="logo">
             <span class="text"> MedLinkup</span>
@@ -32,14 +31,14 @@
                     <span class="text">Inventory</span>
                 </a>
                 <ul class="submenu">
-                    <li class="active"><a href="../supplier/products.php">Products</a></li>
+                    <li><a href="../supplier/products.php">Products</a></li>
                     <li><a href="../supplier/lowstock.php">Low Stock</a></li>
-                    <li><a href="../supplier/unavailableproducts.php">Unavailable Products</a></li>
+                    <li class="active"><a href="../supplier/unavailableproducts.php">Unavailable Products</a></li>
                 </ul>
             </li>
             <li>
                 <a href="#">
-                    <i class='fas fa-shopping-bag'></i>
+                    <i class=' fas fa-shopping-bag'></i>
                     <span class="text"> Orders</span>
                 </a>
                 <ul class="submenu">
@@ -101,15 +100,13 @@
 
                         </div>
 
-                        <h1 class="lefth">Medicine List</h1>
+                        <h1 class="lefth">Unavailable Products</h1>
                         <table class="table" id="productTable">
                             <thead>
                                 <tr>
                                     <th>Image</th>
                                     <th>Name</th>
-                                    <th>Supplier Price</th>
                                     <th>Category</th>
-                                    <th>Supplier Stock</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -118,7 +115,7 @@
                                 include '../src/config/config.php';
 
                                 try {
-                                    $sql = "SELECT * FROM products WHERE supplierprice IS NOT NULL AND supplierstock IS NOT NULL";
+                                    $sql = "SELECT * FROM products WHERE supplierprice IS NULL AND supplierstock IS NULL";
                                     $result = $conn->query($sql);
 
                                     if ($result !== false && $result->num_rows > 0) {
@@ -126,9 +123,7 @@
                                             echo "<tr>";
                                             echo "<td><img src='../productimg/{$row['image']}' alt='{$row['productname']}' style='width: 100px; height: auto;'></td>";
                                             echo "<td>{$row['productname']}</td>";
-                                            echo "<td class='supplierprice'>₱{$row['supplierprice']}</td>";
                                             echo "<td>{$row['productcategory']}</td>";
-                                            echo "<td>{$row['supplierstock']}</td>";
                                             echo "<td class='actions'>";
                                             echo "<a href='../supplier/editproducts.php?id=" . $row["productid"] . "' class='button-like btn btn-sm btn-primary'>";
                                             echo "<i class='fas fa-edit'></i>";
@@ -137,12 +132,13 @@
                                             echo "</tr>";
                                         }
                                     } else {
-                                        echo "<tr><td colspan='7'>No products found</td></tr>";
+                                        echo "<tr><td colspan='6'>No products found</td></tr>";
                                     }
                                 } catch (Exception $e) {
-                                    echo "<tr><td colspan='7'>Error fetching products: " . $e->getMessage() . "</td></tr>";
+                                    echo "<tr><td colspan='6'>Error fetching products: " . $e->getMessage() . "</td></tr>";
                                 }
                                 ?>
+
                             </tbody>
                         </table>
                     </div>

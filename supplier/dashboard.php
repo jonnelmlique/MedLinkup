@@ -5,14 +5,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard</title>
-    <!-- <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="../public/css/supplier/sidebar.css">
     <link rel="stylesheet" href="../public/css/supplier/dashboard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 </head>
 
 <body>
-    
+
     <section id="sidebar">
         <a href="../supplier/dashboard.php" class="brand">
             <img src="../public/img/logo.png" alt="MedLinkup Logo" class="logo">
@@ -166,6 +165,7 @@
     <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-    
+
 </body>
+
 </html>

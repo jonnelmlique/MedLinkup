@@ -44,8 +44,8 @@
     position: relative;
     display: flex;
     align-items: center;
-    background-color: #f8f9fa;
-    border: 1px solid #ced4da;
+    background-color: #ffffff00;
+    border: 1px solid #ced4da00;
     border-radius: 5px;
     overflow: hidden;
     box-shadow: 0 2px 4px rgba(28, 150, 1, 0.2);
@@ -121,4 +121,8 @@
     font-size: 16px;
     margin-left: 10px;
 }
+.search-bar {
+  width: 1100px !important;
+}
+
 

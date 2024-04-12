@@ -39,12 +39,10 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['id'])) {
         exit;
     }
 }
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
-
-
-        if (isset($_POST["productid"]) && isset($_FILES["image"])) {
-
+        if (isset($_POST["productid"])) {
             $product_id = $_POST["productid"];
             $sql = "SELECT p.*, u.email as supplier_email FROM products p
                     JOIN users u ON p.supplierid = u.userid
@@ -58,10 +56,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $product_data = $result->fetch_assoc();
 
                 $product_name = isset($_POST["productName"]) ? $_POST["productName"] : $product_data['productname'];
-                $price = isset($_POST["price"]) ? $_POST["price"] : $product_data['price'];
-                $product_details = isset($_POST["details"]) ? $_POST["details"] : $product_data['productdetails'];
-                $product_category = isset($_POST["category"]) ? $_POST["category"] : $product_data['productcategory'];
-                $stock = isset($_POST["stock"]) ? $_POST["stock"] : $product_data['stock'];
+                $supplier_price = isset($_POST["supplierprice"]) ? $_POST["supplierprice"] : $product_data['supplierprice'];
+                $supplier_stock = isset($_POST["supplierstock"]) ? $_POST["supplierstock"] : $product_data['supplierstock'];
                 $supplier_email = $product_data['supplier_email'];
 
                 if (!empty($_FILES["image"]["name"])) {
@@ -72,7 +68,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $allowedTypes = array('jpg', 'png', 'jpeg', 'gif');
 
                     if (in_array($fileType, $allowedTypes)) {
-
                         if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFilePath)) {
                             $image_changed = true;
                         } else {
@@ -87,14 +82,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
 
                 if (
-                    $product_name != $product_data['productname'] || $price != $product_data['price'] ||
-                    $product_details != $product_data['productdetails'] || $product_category != $product_data['productcategory'] ||
-                    $stock != $product_data['stock'] || $image_changed
+                    $product_name != $product_data['productname'] || $supplier_price != $product_data['supplierprice'] ||
+                    $supplier_stock != $product_data['supplierstock'] 
                 ) {
-
-                    $sql = "UPDATE products SET productname = ?, image = ?, price = ?, productdetails = ?, productcategory = ?, stock = ? WHERE productid = ?";
+                    $sql = "UPDATE products SET productname = ?, supplierprice = ?, supplierstock = ?, image = ? WHERE productid = ?";
                     $stmt = $conn->prepare($sql);
-                    $stmt->bind_param("ssdssii", $product_name, $fileName, $price, $product_details, $product_category, $stock, $product_id);
+                    $stmt->bind_param("sddsi", $product_name, $supplier_price, $supplier_stock, $fileName, $product_id);
                     if ($stmt->execute()) {
                         $message = "success";
                     } else {
@@ -105,7 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $message = "No changes detected.";
                 }
             } else {
-                echo "Product not found.";
+                throw new Exception("Product not found.");
             }
         } else {
             throw new Exception("Please provide all required fields.");
@@ -115,7 +108,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -238,73 +230,48 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </div>
                             </div>
                             <div id="form-container">
-                                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST"
-                                    enctype="multipart/form-data">
-                                    <input type="hidden" name="productid"
-                                        value="<?php echo $product_data['productid']; ?> ">
+                                <div id="form-container">
+                                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST"
+                                        enctype="multipart/form-data">
+                                        <input type="hidden" name="productid"
+                                            value="<?php echo $product_data['productid']; ?> ">
 
 
-                                    <input type="file" class="form-control" id="image" name="image" accept="image/*"
-                                        onchange="previewImage(event)">
-                                    <div class="mb-3">
-                                        <label for="productName">Product Name</label>
-                                        <input type="text" class="form-control" id="productName" name="productName"
-                                            placeholder="Product Name"
-                                            value="<?php echo htmlspecialchars($product_data['productname']); ?>"
-                                            required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="price">Price</label>
-                                        <input type="number" class="form-control" id="price" name="price"
-                                            placeholder="Price" min="0" step="0.01"
-                                            value="<?php echo htmlspecialchars($product_data['price']); ?>" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="details">Product Details</label>
-                                        <textarea class="form-control" id="details" name="details" rows="4"
-                                            placeholder="Product Details"
-                                            required><?php echo htmlspecialchars($product_data['productdetails']); ?></textarea>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="category">Select Category</label>
-                                        <select class="form-control" id="category" name="category" required>
-                                            <option value="" disabled>Select Category</option>
-                                            <?php
-                                            $sql = "SELECT categoryname FROM categories";
-                                            $result = $conn->query($sql);
-                                            if ($result->num_rows > 0) {
-                                                while ($row = $result->fetch_assoc()) {
-                                                    $selected = ($row['categoryname'] == $product_data['productcategory']) ? 'selected' : '';
-                                                    echo "<option value='" . htmlspecialchars($row['categoryname']) . "' $selected>" . htmlspecialchars($row['categoryname']) . "</option>";
-                                                }
-                                            }
-                                            ?>
-                                        </select>
-                                    </div>
-                                    <div class="mb-3">
-
-                                        <label for="supplier">Supplier</label>
-                                        <input type="text" class="form-control" id="supplier" name="supplier"
-                                            placeholder="Supplier Email"
-                                            value="<?php echo htmlspecialchars($product_data['supplier_email']); ?>"
-                                            required>
-
-                                    </div>
-
-
-                                    <div class="mb-3">
-                                        <label for="stock">Stock</label>
-                                        <input type="number" class="form-control" id="stock" name="stock"
-                                            placeholder="Stock"
-                                            value="<?php echo htmlspecialchars($product_data['stock']); ?>" required>
-                                    </div>
-
-                                    <button type="submit" class="btn btn-submit">Update Product</button>
-                                    <a href="./products.php" class="cancel-btn"
-                                        style="display: inline-block; padding: 13px 16px; background-color: #f44336; color: #fff; text-decoration: none; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;"
-                                        onmouseover="this.style.backgroundColor='#d32f2f';"
-                                        onmouseout="this.style.backgroundColor='#f44336';">Cancel</a>
-                                </form>
+                                        <div class="mb-3">
+                                            <label for="productName">Product Name</label>
+                                            <input type="text" class="form-control" id="productName" name="productName"
+                                                placeholder="Product Name"
+                                                value="<?php echo htmlspecialchars($product_data['productname']); ?>"
+                                                required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="price">Supplier Price</label>
+                                            <input type="number" class="form-control" id="supplierprice"
+                                                name="supplierprice" placeholder="Supplier Price" min="0" step="0.01"
+                                                value="<?php echo htmlspecialchars($product_data['supplierprice']); ?>"
+                                                required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="stock">Supplier Stock</label>
+                                            <input type="number" class="form-control" id="supplierstock"
+                                                name="supplierstock" placeholder="Supplier Stock"
+                                                value="<?php echo htmlspecialchars($product_data['supplierstock']); ?>"
+                                                required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="supplier">Supplier</label>
+                                            <input type="text" class="form-control" id="supplier" name="supplier"
+                                                placeholder="Supplier Email"
+                                                value="<?php echo $product_data['supplier_email']; ?>" required
+                                                disabled>
+                                        </div>
+                                        <button type="submit" class="btn btn-submit">Update Product</button>
+                                        <a href="./products.php" class="cancel-btn"
+                                            style="display: inline-block; padding: 13px 16px; background-color: #f44336; color: #fff; text-decoration: none; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;"
+                                            onmouseover="this.style.backgroundColor='#d32f2f';"
+                                            onmouseout="this.style.backgroundColor='#f44336';">Cancel</a>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -329,7 +296,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 confirmButtonText: 'OK',
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = '../admin/products.php';
+                    window.location.href = '../supplier/products.php';
                 } 
             });
         </script>";

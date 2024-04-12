@@ -6,25 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Shop</title>
 
-    <link href="./node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="./public/css/index/shop.css">
-    <link rel="stylesheet" href="./public/css/index/nav.css">
+    <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../public/css/index/shop.css">
+    <link rel="stylesheet" href="../public/css/index/nav.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 </head>
 <?php
-include './src/config/config.php';
+include '../src/config/config.php';
 
 session_start();
 
 $message = '';
 
 $loginLinkText = '<i class="fas fa-user"></i> Login';
-$loginLinkURL = './auth/login.php';
+$loginLinkURL = '../auth/login.php';
 
 if (isset($_SESSION['userid']) && isset($_SESSION['username'])) {
     $loggedInUsername = $_SESSION['username'];
     $loginLinkText = '<i class="fas fa-user"></i> ' . $loggedInUsername;
-    $loginLinkURL = './customer/dashboard.php';
+    $loginLinkURL = './dashboard.php';
 }
 
 ?>
@@ -33,7 +33,7 @@ if (isset($_SESSION['userid']) && isset($_SESSION['username'])) {
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
             <a class="navbar-brand" href="./index.php">
-                <img src="./public/img/logo.png" alt="MedLinkup Logo" class="logo"> MedLinkup
+                <img src="../public/img/logo.png" alt="MedLinkup Logo" class="logo"> MedLinkup
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,18 +42,7 @@ if (isset($_SESSION['userid']) && isset($_SESSION['username'])) {
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mx-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="./index.php">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./about.php">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./contact.php">Contact</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./shop.php">Shop</a>
-                    </li>
+
                 </ul>
                 <div class="navbar-icons d-flex align-items-center">
                     <a href="<?php echo $loginLinkURL; ?>" class="nav-link">
@@ -106,7 +95,7 @@ if (isset($_SESSION['userid']) && isset($_SESSION['username'])) {
                     <?php
 
                     try {
-                        $sql = "SELECT productid, productname, price, image FROM products";
+                        $sql = "SELECT productid, productname, supplierprice, image FROM products WHERE supplierstock IS NOT NULL AND supplierprice IS NOT NULL";
                         $result = $conn->query($sql);
 
                         if ($result->num_rows > 0) {
@@ -116,17 +105,17 @@ if (isset($_SESSION['userid']) && isset($_SESSION['username'])) {
 
                                 ?>
                     <div class="col-md-15">
-                        <a href="./product.php?id=<?php echo $row["productid"]; ?>" class="product-card-link">
+                        <a href="../product.php?id=<?php echo $row["productid"]; ?>" class="product-card-link">
 
                             <div class="product-card">
-                                <img src="./productimg/<?php echo $row["image"]; ?>" alt="Product Image" />
+                                <img src="../productimg/<?php echo $row["image"]; ?>" alt="Product Image" />
                                 <div class="product-card-body">
                                     <h3 class="product-card-title">
                                         <?php echo $productName; ?>
                                     </h3>
 
                                     <p class="product-card-price">₱
-                                        <?php echo $row["price"]; ?>
+                                        <?php echo $row["supplierprice"]; ?>
                                     </p>
                                 </div>
                         </a>
@@ -192,7 +181,6 @@ if (isset($_SESSION['userid']) && isset($_SESSION['username'])) {
     </script>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Function to handle category filter change
         function handleCategoryFilter() {
             var selectedCategories = document.querySelectorAll('.category-checkbox:checked');
             var categoryIds = Array.from(selectedCategories).map(function(checkbox) {
@@ -209,8 +197,6 @@ if (isset($_SESSION['userid']) && isset($_SESSION['username'])) {
             xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
             xhr.send('categoryIds=' + categoryIds);
         }
-
-        // Add event listener to category checkboxes
         var categoryCheckboxes = document.querySelectorAll('.category-checkbox');
         categoryCheckboxes.forEach(function(checkbox) {
             checkbox.addEventListener('change', handleCategoryFilter);

@@ -34,9 +34,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $_SESSION['email'] = $row['email'];
                     $_SESSION['username'] = $row['username'];
 
-
                     if ($row['usertype'] == 'admin') {
                         header("Location: ../admin/dashboard.php");
+                        exit();
+                    } elseif ($row['usertype'] == 'supplier') {
+                        header("Location: ../supplier/dashboard.php");
                         exit();
                     } else {
                         header("Location: ../index.php");
@@ -54,7 +56,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conn->close();
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 

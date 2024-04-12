@@ -12,7 +12,8 @@ try {
             $productName = strlen($row["productname"]) > 35 ? substr($row["productname"], 0, 35) . '...' : $row["productname"];
             ?>
 <div class="col-md-15">
-    <a href="./product.php?id=<?php echo $row["productid"]; ?>" class="product-card-link">
+    <a href="./product.php?id=<?php echo $row["productid"]; ?>" class="product-card-link"
+        style="text-decoration: none;">
         <div class="product-card">
             <img src="./productimg/<?php echo $row["image"]; ?>" alt="Product Image" />
             <div class="product-card-body">

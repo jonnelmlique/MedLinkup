@@ -13,7 +13,7 @@ main {
   margin-top: 50px;
   padding: 30px;
   border-radius: 10px;
-  margin-bottom: 90%;
+  margin-bottom: 55%;
 }
 
 .add-product-section h1 {
@@ -29,6 +29,8 @@ main {
 
 .add-product-section form input[type="text"],
 .add-product-section form input[type="number"],
+.add-product-section form input[type="email"],
+.add-product-section form input[type="password"],
 .add-product-section form textarea,
 .add-product-section form select {
   margin-bottom: 20px;
