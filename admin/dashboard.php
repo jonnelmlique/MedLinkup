@@ -76,16 +76,26 @@ try {
                     <span class="text"> Customers</span>
                 </a>
             </li>
+
+            <li>
+                <a href="#">
+                    <i class='fas fa-clone'></i>
+                    <span class="text">Shipping Settings</span>
+                </a>
+                <ul class="submenu">
+                    <li><a href="../admin/location.php">Location</a></li>
+                    <li><a href="../admin/shippingfee.php">Shipping Fee</a></li>
+                </ul>
+            </li>
             <li>
                 <a href="#">
                     <i class='fas fa-clone'></i>
                     <span class="text"> Supplier</span>
                 </a>
                 <ul class="submenu">
-                    <li><a href="../public/Shared/Layout/error.php">Order</a></li>
-                    <li><a href="../public/Shared/Layout/error.php">Pending Order</a></li>
-                    <li><a href="../public/Shared/Layout/error.php">Completed Order</a></li>
-                    <li><a href="../public/Shared/Layout/error.php">Add Supplier</a></li>
+                    <li><a href="../supplier/suppliershop.php">Order</a></li>
+                    <li><a href="../admin/orderstatus.php">Order Status</a></li>
+                    <li><a href="../admin/history.php">History</a></li>
                 </ul>
             </li>
 
@@ -96,8 +106,8 @@ try {
                         <span class="text"> Settings</span>
                     </a>
                     <ul class="submenu">
-                        <li><a href="../admin/location.php">Location</a></li>
-                        <li><a href="../admin/shippingfee.php">Shipping Fee</a></li>
+                        <li><a href="../admin/delivery.php">Delivery Address</a></li>
+
 
                     </ul>
                 </li>
@@ -216,7 +226,6 @@ try {
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
     <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../node_modules/bootstrap/js/src/sidebar.js"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 
 </body>

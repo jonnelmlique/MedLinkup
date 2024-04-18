@@ -45,8 +45,8 @@ function fetch_cart_items($userId, $conn, &$totalAmount)
                             <p class="cart-item-price">Price: ₱' . number_format($row["price"], 2) . '</p>
                         </div>
                         <button class="delete-item" data-cartid="' . $row["cartid"] . '"><i class="fas fa-times"></i></button>
-                    </div>
-                </div>';
+</div>
+</div>';
             }
         } else {
             $cartItemsHtml = '<p>There are no items in the cart.</p>';
@@ -162,38 +162,89 @@ $cartItemsHtml = fetch_cart_items($userId, $conn, $totalAmount);
         </div>
     </footer>
 
-    <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="./node_modules/jquery/dist/jquery.min.js">
+    </script>
     <script src="./node_modules/popper.js/dist/umd/popper.min.js"></script>
     <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-    document.querySelectorAll('.delete-item').forEach(button => {
-        button.addEventListener('click', function() {
-            const cartId = this.getAttribute('data-cartid');
+    $(document).ready(function() {
+        // Click event for deleting cart items
+        $(".delete-item").click(function(e) {
+            e.preventDefault();
 
-            fetch('./deletea_item.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        cartId: cartId
-                    })
-                })
-                .then(response => {
-                    if (response.ok) {
-                        this.closest('.cart-item').remove();
-                    } else {
-                        console.error('Failed to delete item from cart');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
+            // Get the cart ID
+            var cartId = $(this).data("cartid");
+
+            // Confirm deletion
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "This action cannot be undone.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then(function(result) {
+                if (result.isConfirmed) {
+                    // If confirmed, proceed with deletion
+                    deleteCartItem(cartId);
+                }
+            });
         });
+
+        // Function to delete cart item via AJAX
+        function deleteCartItem(cartId) {
+            $.ajax({
+                url: "delete_item.php",
+                method: "POST",
+                data: {
+                    cartId: cartId
+                },
+                success: function(response) {
+                    // Parse the JSON response
+                    var data = JSON.parse(response);
+
+                    // Check if deletion was successful
+                    if (data.success) {
+                        // Display success message
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Item deleted successfully',
+                            text: data.message,
+                            confirmButtonText: 'OK'
+                        }).then(function() {
+                            // Reload the page after deletion
+                            location.reload();
+                        });
+                    } else {
+                        // Display error message
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: data.message,
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // Display error message
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'There was an error deleting the item. Please try again later.',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            });
+        }
     });
     </script>
+
+
+
 </body>
 
 </html>

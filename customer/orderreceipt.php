@@ -13,48 +13,49 @@
 <body>
     <?php
     include '../src/config/config.php';
-    session_start(); 
+    session_start();
 
     if (!isset($_SESSION['userid'])) {
         header("Location: ../auth/login.php");
         exit();
     }
 
-    if(isset($_GET['transactionid'])) {
+    if (isset($_GET['transactionid'])) {
         $transactionid = $_GET['transactionid'];
 
         $query = "SELECT 
-                    o.transactionid,
-                    u.username, 
-                    p.productid,
-                    p.productname, 
-                    p.price, 
-                    p.image,
-                    o.quantity, 
-                    O.shippingfee,
-                     O.totalproductprice,
-                    o.totalprice, 
-                    o.orderdate, 
-                    o.ordercompleted,
-                    o.status, 
-                    o.paymentmethod,
-                    o.quantity,
-                    CONCAT(s.firstname, ' ', s.lastname) AS flname,
-                    CONCAT(s.addressline1, ', ', s.addressline2, ', ', s.city, ', ', s.province, ', ', s.country) AS address 
-                FROM 
-                    orderprocess o
-                JOIN 
-                    users u ON o.userid = u.userid
-                JOIN 
-                    products p ON o.productid = p.productid
-                JOIN 
-                    shippingaddresses s ON o.addressid = s.addressid
-                WHERE 
-                    o.transactionid = '$transactionid'";
+            o.transactionid,
+            u.username, 
+            p.productid,
+            p.productname, 
+            p.price, 
+            p.image,
+            o.quantity, 
+            o.shippingfee,
+            o.totalproductprice,
+            o.totalprice, 
+            o.orderdate, 
+            o.ordercompleted,
+            o.status, 
+            o.paymentmethod,
+            o.quantity,
+            CONCAT(s.firstname, ' ', s.lastname) AS flname,
+            CONCAT(s.addressline1, ', ', s.addressline2, ', ', s.city, ', ', s.province, ', ', s.country) AS address 
+        FROM 
+            orderprocess o
+        JOIN 
+            users u ON o.userid = u.userid
+        JOIN 
+            products p ON o.productid = p.productid
+        JOIN 
+            shippingaddresses s ON o.addressid = s.addressid
+        WHERE 
+            o.transactionid = '$transactionid'";
 
         $result = mysqli_query($conn, $query);
-        if(mysqli_num_rows($result) > 0) {
-            $transactionDetails = mysqli_fetch_assoc($result);
+
+        if (mysqli_num_rows($result) > 0) {
+            $transactionDetails = mysqli_fetch_assoc($result); // Fetch the transaction details
     ?>
     <div id="printSection" class="receipt">
         <img src="../public/img/medlinkuplandscape.png" alt="MedLinkup Logo" class="logo">

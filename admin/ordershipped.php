@@ -68,13 +68,22 @@ if (!isset($_SESSION['userid'])) {
             <li>
                 <a href="#">
                     <i class='fas fa-clone'></i>
+                    <span class="text">Shipping Settings</span>
+                </a>
+                <ul class="submenu">
+                    <li><a href="../admin/location.php">Location</a></li>
+                    <li><a href="../admin/shippingfee.php">Shipping Fee</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='fas fa-clone'></i>
                     <span class="text"> Supplier</span>
                 </a>
                 <ul class="submenu">
-                    <li><a href="../public/Shared/Layout/error.php">Order</a></li>
-                    <li><a href="../public/Shared/Layout/error.php">Pending Order</a></li>
-                    <li><a href="../public/Shared/Layout/error.php">Completed Order</a></li>
-                    <li><a href="../public/Shared/Layout/error.php">Add Supplier</a></li>
+                    <li><a href="../supplier/suppliershop.php">Order</a></li>
+                    <li><a href="../admin/orderstatus.php">Order Status</a></li>
+                    <li><a href="../admin/history.php">History</a></li>
                 </ul>
             </li>
 
@@ -85,8 +94,8 @@ if (!isset($_SESSION['userid'])) {
                         <span class="text"> Settings</span>
                     </a>
                     <ul class="submenu">
-                        <li><a href="../admin/location.php">Location</a></li>
-                        <li><a href="../admin/shippingfee.php">Shipping Fee</a></li>
+                        <li><a href="../admin/delivery.php">Delivery Address</a></li>
+
 
                     </ul>
                 </li>
@@ -158,38 +167,38 @@ if (!isset($_SESSION['userid'])) {
 
                         if (mysqli_num_rows($result) > 0) {
                             ?>
-                        <?php
+                            <?php
                             while ($row = mysqli_fetch_assoc($result)) {
                                 ?>
 
 
-                        <a href="orderdetails.php?transactionid=<?php echo $row['transactionid']; ?>"
-                            style="text-decoration: none; color: inherit;">
-                            <div class="product-box">
-                                <div class="product-details">
-                                    <img src="../productimg/<?php echo $row['image']; ?>"
-                                        alt="<?php echo $row['productname']; ?>" class="product-image">
-                                    <div class="product-info">
-                                        <div class="product-name">
-                                            <?php echo $row['productname']; ?>
+                                <a href="orderdetails.php?transactionid=<?php echo $row['transactionid']; ?>"
+                                    style="text-decoration: none; color: inherit;">
+                                    <div class="product-box">
+                                        <div class="product-details">
+                                            <img src="../productimg/<?php echo $row['image']; ?>"
+                                                alt="<?php echo $row['productname']; ?>" class="product-image">
+                                            <div class="product-info">
+                                                <div class="product-name">
+                                                    <?php echo $row['productname']; ?>
+                                                </div>
+                                                <p><strong>Order by:</strong>
+                                                    <?php echo $row['flname']; ?>
+                                                </p>
+                                                <div class="product-status"><span
+                                                        class="s <?php echo strtolower($row['status']); ?>">
+                                                        <?php echo $row['status']; ?>
+                                                    </span>
+                                                </div>
+                                                <div class="product-price price">₱
+                                                    <?php echo $row['totalprice']; ?>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <p><strong>Order by:</strong>
-                                            <?php echo $row['flname']; ?>
-                                        </p>
-                                        <div class="product-status"><span
-                                                class="s <?php echo strtolower($row['status']); ?>">
-                                                <?php echo $row['status']; ?>
-                                            </span>
-                                        </div>
-                                        <div class="product-price price">₱
-                                            <?php echo $row['totalprice']; ?>
-                                        </div>
-                                    </div>
-                                </div>
 
-                            </div>
-                        </a>
-                        <?php
+                                    </div>
+                                </a>
+                                <?php
                             }
                         } else {
                             echo '<p class="orderdisplay">No orders</p>';

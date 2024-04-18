@@ -1,6 +1,6 @@
 <?php
 include '../src/config/config.php';
-session_start(); 
+session_start();
 
 if (!isset($_SESSION['userid'])) {
     header("Location: ../auth/login.php");
@@ -68,13 +68,22 @@ if (!isset($_SESSION['userid'])) {
             <li>
                 <a href="#">
                     <i class='fas fa-clone'></i>
+                    <span class="text">Shipping Settings</span>
+                </a>
+                <ul class="submenu">
+                    <li><a href="../admin/location.php">Location</a></li>
+                    <li><a href="../admin/shippingfee.php">Shipping Fee</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='fas fa-clone'></i>
                     <span class="text"> Supplier</span>
                 </a>
                 <ul class="submenu">
-                    <li><a href="../public/Shared/Layout/error.php">Order</a></li>
-                    <li><a href="../public/Shared/Layout/error.php">Pending Order</a></li>
-                    <li><a href="../public/Shared/Layout/error.php">Completed Order</a></li>
-                    <li><a href="../public/Shared/Layout/error.php">Add Supplier</a></li>
+                    <li><a href="../supplier/suppliershop.php">Order</a></li>
+                    <li><a href="../admin/orderstatus.php">Order Status</a></li>
+                    <li><a href="../admin/history.php">History</a></li>
                 </ul>
             </li>
 
@@ -85,8 +94,8 @@ if (!isset($_SESSION['userid'])) {
                         <span class="text"> Settings</span>
                     </a>
                     <ul class="submenu">
-                        <li><a href="../admin/location.php">Location</a></li>
-                        <li><a href="../admin/shippingfee.php">Shipping Fee</a></li>
+                        <li><a href="../admin/delivery.php">Delivery Address</a></li>
+
 
                     </ul>
                 </li>
@@ -131,8 +140,8 @@ if (!isset($_SESSION['userid'])) {
                         <?php
 
 
-$userid = $_SESSION['userid'];
-$query = "SELECT 
+                        $userid = $_SESSION['userid'];
+                        $query = "SELECT 
             o.transactionid,
             MIN(o.orderid) AS orderid,
             u.username, 
@@ -159,42 +168,42 @@ $query = "SELECT
         GROUP BY 
             o.transactionid
         ORDER BY 
-            orderdate DESC"; 
+            orderdate DESC";
 
-$result = mysqli_query($conn, $query);
+                        $result = mysqli_query($conn, $query);
 
-if (mysqli_num_rows($result) > 0) {
-    ?>
-                        <?php
-    while ($row = mysqli_fetch_assoc($result)) {
-    ?>
+                        if (mysqli_num_rows($result) > 0) {
+                            ?>
+                            <?php
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                ?>
 
 
-                        <a href="orderdetails.php?transactionid=<?php echo $row['transactionid']; ?>"
-                            style="text-decoration: none; color: inherit;">
-                            <div class="product-box">
-                                <div class="product-details">
-                                    <img src="../productimg/<?php echo $row['image']; ?>"
-                                        alt="<?php echo $row['productname']; ?>" class="product-image">
-                                    <div class="product-info">
-                                        <div class="product-name"><?php echo $row['productname']; ?></div>
-                                        <p><strong>Order by:</strong> <?php echo $row['flname']; ?></p>
-                                        <div class="product-status"><span
-                                                class="s <?php echo strtolower($row['status']); ?>"><?php echo $row['status']; ?></span>
+                                <a href="orderdetails.php?transactionid=<?php echo $row['transactionid']; ?>"
+                                    style="text-decoration: none; color: inherit;">
+                                    <div class="product-box">
+                                        <div class="product-details">
+                                            <img src="../productimg/<?php echo $row['image']; ?>"
+                                                alt="<?php echo $row['productname']; ?>" class="product-image">
+                                            <div class="product-info">
+                                                <div class="product-name"><?php echo $row['productname']; ?></div>
+                                                <p><strong>Order by:</strong> <?php echo $row['flname']; ?></p>
+                                                <div class="product-status"><span
+                                                        class="s <?php echo strtolower($row['status']); ?>"><?php echo $row['status']; ?></span>
+                                                </div>
+                                                <div class="product-price price">₱<?php echo $row['totalprice']; ?></div>
+                                            </div>
                                         </div>
-                                        <div class="product-price price">₱<?php echo $row['totalprice']; ?></div>
+                                        <a class="orderapprove" href="#"
+                                            data-transactionid="<?php echo $row['transactionid']; ?>">Mark as Shipped</a>
                                     </div>
-                                </div>
-                                <a class="orderapprove" href="#"
-                                    data-transactionid="<?php echo $row['transactionid']; ?>">Mark as Shipped</a>
-                            </div>
-                        </a>
-                        <?php
-    }
-} else {
-    echo '<p class="orderdisplay">No orders</p>';
-}
-?>
+                                </a>
+                                <?php
+                            }
+                        } else {
+                            echo '<p class="orderdisplay">No orders</p>';
+                        }
+                        ?>
                         <p class="margin"></p>
                     </div>
                 </div>
@@ -212,41 +221,41 @@ if (mysqli_num_rows($result) > 0) {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-    $(document).ready(function() {
-        $('.orderapprove').click(function(e) {
-            e.preventDefault();
-            var transactionid = $(this).data('transactionid');
+        $(document).ready(function () {
+            $('.orderapprove').click(function (e) {
+                e.preventDefault();
+                var transactionid = $(this).data('transactionid');
 
-            $.ajax({
-                url: 'updates_order_status_shipped.php',
-                method: 'POST',
-                data: {
-                    transactionid: transactionid,
-                    status: 'Shipped'
-                },
-                success: function(response) {
-                    console.log(response);
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Order Shipped!',
-                        text: 'The order status has been updated successfully.',
-                        confirmButtonText: 'OK'
-                    }).then(function() {
-                        location.reload();
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error(xhr.responseText);
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: 'There was an error updating the order status. Please try again later.',
-                        confirmButtonText: 'OK'
-                    });
-                }
+                $.ajax({
+                    url: 'updates_order_status_shipped.php',
+                    method: 'POST',
+                    data: {
+                        transactionid: transactionid,
+                        status: 'Shipped'
+                    },
+                    success: function (response) {
+                        console.log(response);
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Order Shipped!',
+                            text: 'The order status has been updated successfully.',
+                            confirmButtonText: 'OK'
+                        }).then(function () {
+                            location.reload();
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'There was an error updating the order status. Please try again later.',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                });
             });
         });
-    });
     </script>
 
 </body>

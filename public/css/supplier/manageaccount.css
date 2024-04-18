@@ -1,49 +1,62 @@
 main {
-    margin-left: 280px;
-    padding: 20px;
+  margin-left: 280px;
+  padding: 20px;
+}
+.myprofile-section .lefth {
+  font-size: 24px;
+  margin-left: 10px;
+  margin-bottom: 50px;
 }
 
-.manage-account-section {
-    margin-top: 50px;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
+.myprofile-section {
+  margin-top: 20px;
+  margin-right: 6px;
+  padding: 5px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
-.manage-account-section h1 {
-    margin-bottom: 20px;
-    text-align: center;
-    color: #333;
+.myprofile-section h1 {
+  margin-bottom: 20px;
+  color: #333;
 }
 
-.manage-account-section form {
-    max-width: 500px;
-    margin: 0 auto;
-    margin-right: 600px;
-
+.myprofile-section form {
+  max-width: 500px;
+  margin: 0 auto;
+  margin-right: 600px;
 }
 
-.manage-account-section form input[type="text"],
-.manage-account-section form input[type="email"] {
-    margin-bottom: 20px;
-    border-radius: 5px;
-    padding: 10px;
-    width: 100%;
-    border: 1px solid #ddd;
+.myprofile-section form input[type="text"],
+.myprofile-section form input[type="email"] {
+  margin-bottom: 20px;
+  margin-top: 9px;
+  border-radius: 5px;
+  padding: 13px;
+  width: 90%;
+  border: 2px solid #1c9601;
+  font-size: 14px;
 }
 
-.manage-account-section form button[type="submit"] {
-    background-color: #4caf50;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 15px 40px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    font-size: 15px;
+.myprofile-section form button[type="submit"] {
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 15px 40px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 15px;
+  margin-bottom: 80px;
 }
-
-.manage-account-section form button[type="submit"]:hover {
-    background-color: #1c9601;
+label {
+  font-weight: bold;
+  font-size: 12px;
+  color: #333;
+  margin-bottom: 10px;
+  display: block;
+}
+.myprofile-section form button[type="submit"]:hover {
+  background-color: #1c9601;
 }

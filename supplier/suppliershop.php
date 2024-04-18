@@ -24,7 +24,7 @@ $loginLinkURL = '../auth/login.php';
 if (isset($_SESSION['userid']) && isset($_SESSION['username'])) {
     $loggedInUsername = $_SESSION['username'];
     $loginLinkText = '<i class="fas fa-user"></i> ' . $loggedInUsername;
-    $loginLinkURL = './dashboard.php';
+    $loginLinkURL = '../admin/dashboard.php';
 }
 
 ?>
@@ -105,7 +105,7 @@ if (isset($_SESSION['userid']) && isset($_SESSION['username'])) {
 
                                 ?>
                     <div class="col-md-15">
-                        <a href="../product.php?id=<?php echo $row["productid"]; ?>" class="product-card-link">
+                        <a href="./product.php?id=<?php echo $row["productid"]; ?>" class="product-card-link">
 
                             <div class="product-card">
                                 <img src="../productimg/<?php echo $row["image"]; ?>" alt="Product Image" />

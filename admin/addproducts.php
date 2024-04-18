@@ -57,15 +57,24 @@
                 </a>
             </li>
             <li>
+                <a href="#">
+                    <i class='fas fa-clone'></i>
+                    <span class="text">Shipping Settings</span>
+                </a>
+                <ul class="submenu">
+                    <li><a href="../admin/location.php">Location</a></li>
+                    <li><a href="../admin/shippingfee.php">Shipping Fee</a></li>
+                </ul>
+            </li>
+            <li>
                 <a href="supplier.php">
                     <i class='fas fa-clone'></i>
                     <span class="text"> Supplier</span>
                 </a>
                 <ul class="submenu">
-                    <li><a href="../public/Shared/Layout/error.php">Order</a></li>
-                    <li><a href="../public/Shared/Layout/error.php">Pending Order</a></li>
-                    <li><a href="../public/Shared/Layout/error.php">Completed Order</a></li>
-                    <li><a href="../public/Shared/Layout/error.php">Add Supplier</a></li>
+                    <li><a href="../supplier/suppliershop.php">Order</a></li>
+                    <li><a href="../admin/orderstatus.php">Order Status</a></li>
+                    <li><a href="../admin/history.php">History</a></li>
                 </ul>
             </li>
 
@@ -76,8 +85,8 @@
                         <span class="text"> Settings</span>
                     </a>
                     <ul class="submenu">
-                        <li><a href="../admin/location.php">Location</a></li>
-                        <li><a href="../admin/shippingfee.php">Shipping Fee</a></li>
+                        <li><a href="../admin/delivery.php">Delivery Address</a></li>
+
 
                     </ul>
                 </li>
@@ -142,16 +151,16 @@
                                         <select class="form-control" id="category" name="category" required>
                                             <option value="" disabled selected>Select Category</option>
                                             <?php
-                                                include '../src/config/config.php';
+                                            include '../src/config/config.php';
 
-                                                $sql = "SELECT categoryname FROM categories";
-                                                $result = $conn->query($sql);
+                                            $sql = "SELECT categoryname FROM categories";
+                                            $result = $conn->query($sql);
 
-                                                if ($result->num_rows > 0) {
-                                                    while($row = $result->fetch_assoc()) {
-                                                        echo "<option value='" . $row['categoryname'] . "'>" . $row['categoryname'] . "</option>";
-                                                    }
+                                            if ($result->num_rows > 0) {
+                                                while ($row = $result->fetch_assoc()) {
+                                                    echo "<option value='" . $row['categoryname'] . "'>" . $row['categoryname'] . "</option>";
                                                 }
+                                            }
                                             ?>
                                         </select>
                                     </div>
@@ -185,46 +194,47 @@
     <?php
     try {
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $productName = $_POST['productName'];
-        $price = $_POST['price'];
-        $details = $_POST['details'];
-        $category = $_POST['category'];
-        $stock = $_POST['stock'];
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $productName = $_POST['productName'];
+            $price = $_POST['price'];
+            $details = $_POST['details'];
+            $category = $_POST['category'];
+            $stock = $_POST['stock'];
 
-        $targetDir = "../productimg/";
-        $fileName = basename($_FILES["image"]["name"]);
-        $targetFilePath = $targetDir . $fileName;
-        $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
+            $targetDir = "../productimg/";
+            $fileName = basename($_FILES["image"]["name"]);
+            $targetFilePath = $targetDir . $fileName;
+            $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
 
-        $allowedTypes = array('jpg', 'png', 'jpeg', 'gif');
-        if (in_array($fileType, $allowedTypes)) {
+            $allowedTypes = array('jpg', 'png', 'jpeg', 'gif');
+            if (in_array($fileType, $allowedTypes)) {
 
-            if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFilePath)) {
+                if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFilePath)) {
 
-                $sql = "INSERT INTO products (productname, image, price, productdetails, productcategory, stock) VALUES ('$productName', '$fileName', '$price', '$details', '$category', '$stock')";
-                if ($conn->query($sql) === TRUE) {
-                    $message = "success";
+                    $sql = "INSERT INTO products (productname, image, price, productdetails, productcategory, stock, supplierid) 
+                    VALUES ('$productName', '$fileName', '$price', '$details', '$category', '$stock', '2')";
+                    if ($conn->query($sql) === TRUE) {
+                        $message = "success";
+                    } else {
+                        throw new Exception("Error executing SQL statement: " . $stmt->error);
+                    }
                 } else {
-                    throw new Exception("Error executing SQL statement: " . $stmt->error);
+                    throw new Exception("Sorry, there was an error uploading your file.");
                 }
             } else {
-                throw new Exception("Sorry, there was an error uploading your file.");
+                throw new Exception("Sorry, only JPG, JPEG, PNG, GIF files are allowed.");
             }
-        } else {
-            throw new Exception("Sorry, only JPG, JPEG, PNG, GIF files are allowed.");
         }
-    }
-} catch (Exception $e) {
-   
-    $message = $e->getMessage();
+    } catch (Exception $e) {
 
-}
+        $message = $e->getMessage();
+
+    }
     ?>
     <?php
-if (!empty($message)) {
-    if ($message === "success") {
-        echo "<script>
+    if (!empty($message)) {
+        if ($message === "success") {
+            echo "<script>
             Swal.fire({
                 title: 'Product Added Successfully!',
                 text: 'You have successfully added the Product.',
@@ -240,8 +250,8 @@ if (!empty($message)) {
                 }
             });
         </script>";
-    } else {
-        echo "<script>
+        } else {
+            echo "<script>
             Swal.fire({
                 title: 'Error',
                 text: '" . $message . "',
@@ -249,9 +259,9 @@ if (!empty($message)) {
                 confirmButtonText: 'OK'
             });
         </script>";
+        }
     }
-}
-?>
+    ?>
     <script>
     function previewImage(event) {
         var preview = document.getElementById('preview-image');

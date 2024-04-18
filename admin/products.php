@@ -59,13 +59,22 @@
             <li>
                 <a href="#">
                     <i class='fas fa-clone'></i>
+                    <span class="text">Shipping Settings</span>
+                </a>
+                <ul class="submenu">
+                    <li><a href="../admin/location.php">Location</a></li>
+                    <li><a href="../admin/shippingfee.php">Shipping Fee</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='fas fa-clone'></i>
                     <span class="text"> Supplier</span>
                 </a>
                 <ul class="submenu">
-                    <li><a href="../public/Shared/Layout/error.php">Order</a></li>
-                    <li><a href="../public/Shared/Layout/error.php">Pending Order</a></li>
-                    <li><a href="../public/Shared/Layout/error.php">Completed Order</a></li>
-                    <li><a href="../public/Shared/Layout/error.php">Add Supplier</a></li>
+                    <li><a href="../supplier/suppliershop.php">Order</a></li>
+                    <li><a href="../admin/orderstatus.php">Order Status</a></li>
+                    <li><a href="../admin/history.php">History</a></li>
                 </ul>
             </li>
 
@@ -76,8 +85,8 @@
                         <span class="text"> Settings</span>
                     </a>
                     <ul class="submenu">
-                        <li><a href="../admin/location.php">Location</a></li>
-                        <li><a href="../admin/shippingfee.php">Shipping Fee</a></li>
+                        <li><a href="../admin/delivery.php">Delivery Address</a></li>
+
 
                     </ul>
                 </li>
@@ -156,17 +165,22 @@
                                             echo "<a href='../admin/editproducts.php?id=" . $row["productid"] . "' class='button-like btn btn-sm btn-primary'>";
                                             echo "<i class='fas fa-edit'></i>";
                                             echo "</a>";
-                                            echo "<a href='#' class='button-like btn btn-sm btn-primary'>";
-                                            echo "<i class='fas fa-trash-alt'></i>";
+                                            echo "<a href='../supplier/product.php?id=" . $row["productid"] . "' class='button-like btn btn-sm btn-primary'>";
+
+                                            echo "<i class='fas fa-redo-alt'></i>";
                                             echo "</a>";
                                             echo "</td>";
                                             echo "</tr>";
                                         }
                                     } else {
-                                        echo "<tr><td colspan='7'>No products found</td></tr>";
+                                        echo "<tr>
+                                    <td colspan='7'>No products found</td>
+                                </tr>";
                                     }
                                 } catch (Exception $e) {
-                                    echo "<tr><td colspan='7'>Error fetching products: " . $e->getMessage() . "</td></tr>";
+                                    echo "<tr>
+                                    <td colspan='7'>Error fetching products: " . $e->getMessage() . "</td>
+                                </tr>";
                                 }
                                 ?>
                             </tbody>

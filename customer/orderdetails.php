@@ -88,50 +88,51 @@
         </nav>
     </section>
     <?php
-include '../src/config/config.php';
-session_start(); 
+    include '../src/config/config.php';
+    session_start();
 
-if (!isset($_SESSION['userid'])) {
-    header("Location: ../auth/login.php");
-    exit();
-}
+    if (!isset($_SESSION['userid'])) {
+        header("Location: ../auth/login.php");
+        exit();
+    }
 
-if(isset($_GET['transactionid'])) {
-    $transactionid = $_GET['transactionid'];
+    if (isset($_GET['transactionid'])) {
+        $transactionid = $_GET['transactionid'];
 
-    $query = "SELECT 
-                o.transactionid,
-                u.username, 
-                p.productid,
-                p.productname, 
-                p.price, 
-                p.image,
-                o.quantity, 
-                O.shippingfee,
-                O.totalproductprice,
-                o.totalprice, 
-                o.orderdate, 
-                o.ordercompleted,
-                o.status, 
-                o.paymentmethod,
-                o.quantity,
-                CONCAT(s.firstname, ' ', s.lastname) AS flname,
-                CONCAT(s.addressline1, ', ', s.addressline2, ', ', s.city, ', ', s.province, ', ', s.country) AS address 
-            FROM 
-                orderprocess o
-            JOIN 
-                users u ON o.userid = u.userid
-            JOIN 
-                products p ON o.productid = p.productid
-            JOIN 
-                shippingaddresses s ON o.addressid = s.addressid
-            WHERE 
-                o.transactionid = '$transactionid'";
+        $query = "SELECT 
+            o.transactionid,
+            u.username, 
+            p.productid,
+            p.productname, 
+            p.price, 
+            p.image,
+            o.quantity, 
+            o.shippingfee,
+            o.totalproductprice,
+            o.totalprice, 
+            o.orderdate, 
+            o.ordercompleted,
+            o.status, 
+            o.paymentmethod,
+            o.quantity,
+            CONCAT(s.firstname, ' ', s.lastname) AS flname,
+            CONCAT(s.addressline1, ', ', s.addressline2, ', ', s.city, ', ', s.province, ', ', s.country) AS address 
+        FROM 
+            orderprocess o
+        JOIN 
+            users u ON o.userid = u.userid
+        JOIN 
+            products p ON o.productid = p.productid
+        JOIN 
+            shippingaddresses s ON o.addressid = s.addressid
+        WHERE 
+            o.transactionid = '$transactionid'";
 
-    $result = mysqli_query($conn, $query);
-    if(mysqli_num_rows($result) > 0) {
-        $transactionDetails = mysqli_fetch_assoc($result);
-?>
+        $result = mysqli_query($conn, $query);
+
+        if (mysqli_num_rows($result) > 0) {
+            $transactionDetails = mysqli_fetch_assoc($result); // Fetch the transaction details
+    ?>
     <main>
         <div class="container">
             <div class="row justify-content-center">
@@ -217,8 +218,6 @@ if(isset($_GET['transactionid'])) {
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
     <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../node_modules/bootstrap/js/src/sidebar.js"></script>
-    <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 
     <script>

@@ -145,7 +145,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="row">
                     <div class="col-md-6">
                         <div class="logoregister text-center">
-                            <img src="../public/img/Auth/CoverRegistration.png" alt="Logo"
+                            <img src="../public/img/auth/CoverRegistration.png" alt="Logo"
                                 class="img-fluid custom-image">
                         </div>
                     </div>

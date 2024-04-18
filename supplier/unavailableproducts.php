@@ -37,14 +37,11 @@
                 </ul>
             </li>
             <li>
-                <a href="#">
-                    <i class=' fas fa-shopping-bag'></i>
+                <a href="./order.php">
+                    <i class='fas fa-shopping-bag'></i>
                     <span class="text"> Orders</span>
                 </a>
-                <ul class="submenu">
-                    <li><a href="../supplier/pending.php">Pending</a></li>
-                    <li><a href="../supplier/completed.php">Completed</a></li>
-                </ul>
+
             </li>
             <li>
                 <a href="sales.php">

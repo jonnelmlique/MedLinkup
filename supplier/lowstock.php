@@ -32,20 +32,17 @@
                     <span class="text">Inventory</span>
                 </a>
                 <ul class="submenu">
-                    <li class="active"><a href="../supplier/products.php">Products</a></li>
-                    <li><a href="../supplier/lowstock.php">Low Stock</a></li>
+                    <li><a href="../supplier/products.php">Products</a></li>
+                    <li class="active"><a href="../supplier/lowstock.php">Low Stock</a></li>
                     <li><a href="../supplier/unavailableproducts.php">Unavailable Products</a></li>
                 </ul>
             </li>
             <li>
-                <a href="#">
+                <a href="./order.php">
                     <i class='fas fa-shopping-bag'></i>
                     <span class="text"> Orders</span>
                 </a>
-                <ul class="submenu">
-                    <li><a href="../supplier/pending.php">Pending</a></li>
-                    <li><a href="../supplier/completed.php">Completed</a></li>
-                </ul>
+
             </li>
             <li>
                 <a href="sales.php">

@@ -1,16 +1,44 @@
+<?php
+include '../src/config/config.php';
+session_start();
+
+if (!isset($_SESSION['userid'])) {
+    header("Location: ../auth/login.php");
+    exit();
+}
+
+$userid = $_SESSION['userid'];
+
+try {
+
+
+    $sql_completed = "SELECT COUNT(DISTINCT(transactionid)) AS num_completed_orders FROM adminorderprocess WHERE userid = ? AND status = 'Completed'";
+    $stmt_completed = $conn->prepare($sql_completed);
+    $stmt_completed->bind_param("i", $userid);
+    $stmt_completed->execute();
+    $result_completed = $stmt_completed->get_result();
+    $row_completed = $result_completed->fetch_assoc();
+    $num_completed_orders = $row_completed['num_completed_orders'];
+
+    $num_completed_orders = $num_completed_orders ? $num_completed_orders : 0;
+} catch (Exception $e) {
+
+    echo "Error: " . $e->getMessage();
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Products</title>
-    <link rel="stylesheet" href="../public/css/admin/sidebar.css">
-    <link rel="stylesheet" href="../public/css/admin/products.css">
-
+    <title>History</title>
     <!-- <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="../public/css/admin/sidebar.css">
+    <link rel="stylesheet" href="../public/css/customer/history.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-
 </head>
 
 <body>
@@ -32,7 +60,7 @@
                     <span class="text">Inventory</span>
                 </a>
                 <ul class="submenu">
-                    <li class="active"><a href="../admin/products.php">Products</a></li>
+                    <li><a href="../admin/products.php">Products</a></li>
                     <li><a href="../admin/lowstock.php">Low Stock</a></li>
                     <li><a href="../admin/categories.php">Categories</a></li>
 
@@ -59,13 +87,22 @@
             <li>
                 <a href="#">
                     <i class='fas fa-clone'></i>
+                    <span class="text">Shipping Settings</span>
+                </a>
+                <ul class="submenu">
+                    <li><a href="../admin/location.php">Location</a></li>
+                    <li><a href="../admin/shippingfee.php">Shipping Fee</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='fas fa-clone'></i>
                     <span class="text"> Supplier</span>
                 </a>
                 <ul class="submenu">
-                    <li><a href="../public/Shared/Layout/error.php">Order</a></li>
-                    <li><a href="../public/Shared/Layout/error.php">Pending Order</a></li>
-                    <li><a href="../public/Shared/Layout/error.php">Completed Order</a></li>
-                    <li><a href="../public/Shared/Layout/error.php">Add Supplier</a></li>
+                    <li><a href="../supplier/suppliershop.php">Order</a></li>
+                    <li><a href="../admin/orderstatus.php">Order Status</a></li>
+                    <li class="active"><a href="../admin/history.php">History</a></li>
                 </ul>
             </li>
 
@@ -76,8 +113,8 @@
                         <span class="text"> Settings</span>
                     </a>
                     <ul class="submenu">
-                        <li><a href="../admin/location.php">Location</a></li>
-                        <li><a href="../admin/shippingfee.php">Shipping Fee</a></li>
+                        <li><a href="../admin/delivery.php">Delivery Address</a></li>
+
 
                     </ul>
                 </li>
@@ -99,89 +136,71 @@
         </nav>
     </section>
 
-
     <main>
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-6">
-                    <div class="box-section">
+                    <div class="history-section">
 
-                        <div class="search-bar">
-                            <div class="add-button">
-                                <a href="../admin/addsupplier.php" class="btn-link">
-                                    <button>Add</button>
-                                </a>
-                            </div>
+                        <h1 class="lefth">History (<?php echo $num_completed_orders; ?>)</h1>
+                        <?php
 
+                        try {
+                            $sql_completed_orders = "SELECT p.productname, op.totalprice, op.ordercompleted, op.status, op.transactionid
+                            FROM adminorderprocess op
+                            JOIN products p ON op.productid = p.productid
+                            WHERE op.status = 'Completed'
+                            GROUP BY op.transactionid";
 
-                            <input type="text" id="searchInput" placeholder="Search...">
-                            <button disabled><i class="fas fa-search"></i></button>
+                            $stmt_completed_orders = $conn->prepare($sql_completed_orders);
+                            $stmt_completed_orders->execute();
+                            $result_completed_orders = $stmt_completed_orders->get_result();
+                        } catch (Exception $e) {
+                            echo "Error: " . $e->getMessage();
+                        }
+                        ?>
 
-                        </div>
-
-                        <h1 class="lefth">Supplier List</h1>
-                        <table class="table" id="productTable">
+                        <table class="table">
                             <thead>
                                 <tr>
-                                    <th>Image</th>
-                                    <th>Name</th>
-                                    <th>Price</th>
-                                    <th>Details</th>
-                                    <th>Category</th>
-                                    <th>Stock</th>
-                                    <th>Action</th>
+                                    <th>Product</th>
+                                    <th>Total Price</th>
+                                    <th>Date Completed</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                include '../src/config/config.php';
-
                                 try {
-                                    $sql = "SELECT * FROM products";
-                                    $result = $conn->query($sql);
-
-                                    if ($result !== false && $result->num_rows > 0) {
-                                        while ($row = $result->fetch_assoc()) {
-                                            echo "<tr>";
-                                            echo "<td><img src='../productimg/{$row['image']}' alt='{$row['productname']}' style='width: 100px; height: auto;'></td>";
-                                            echo "<td>{$row['productname']}</td>";
-                                            echo "<td class='price'>₱{$row['price']}</td>";
-                                            echo "<td>{$row['productdetails']}</td>";
-                                            echo "<td>{$row['productcategory']}</td>";
-                                            echo "<td>{$row['stock']}</td>";
-                                            echo "<td class='actions'>";
-                                            echo "<a href='../admin/editproducts.php?id=" . $row["productid"] . "' class='button-like btn btn-sm btn-primary'>";
-                                            echo "<i class='fas fa-edit'></i>";
-                                            echo "</a>";
-                                            echo "<a href='#' class='button-like btn btn-sm btn-primary'>";
-                                            echo "<i class='fas fa-trash-alt'></i>";
-                                            echo "</a>";
-                                            echo "</td>";
-                                            echo "</tr>";
-                                        }
-                                    } else {
-                                        echo "<tr><td colspan='7'>No products found</td></tr>";
+                                    while ($row = $result_completed_orders->fetch_assoc()) {
+                                        echo "<tr onclick=\"window.location='supplierorderdetails.php?transactionid=" . $row['transactionid'] . "';\" style=\"cursor: pointer;\">";
+                                        echo "<td>" . $row['productname'] . "</td>";
+                                        $formatted_price = number_format($row['totalprice'], 2);
+                                        echo "<td class='totalprice'>₱" . $formatted_price . "</td>";
+                                        echo "<td>" . date("d-m-Y", strtotime($row['ordercompleted'])) . "</td>";
+                                        echo "<td><span class='status completed'>" . $row['status'] . "</span></td>";
+                                        echo "</tr>";
                                     }
                                 } catch (Exception $e) {
-                                    echo "<tr><td colspan='7'>Error fetching products: " . $e->getMessage() . "</td></tr>";
+                                    echo "Error: " . $e->getMessage();
                                 }
                                 ?>
                             </tbody>
+
                         </table>
+
+
                     </div>
                 </div>
             </div>
         </div>
 
     </main>
-    </section>
 
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
     <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-
-
 
 </body>
 

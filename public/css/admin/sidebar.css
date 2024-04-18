@@ -137,3 +137,10 @@ nav .profile img {
 .side-menu li:hover .submenu {
   display: block;
 }
+
+@media screen and (max-width: 768px) {
+  #sidebar {
+    width: 100%;
+    max-width: 300px;
+  }
+}

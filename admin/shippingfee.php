@@ -56,16 +56,26 @@
                     <span class="text"> Customers</span>
                 </a>
             </li>
+
+            <li>
+                <a href="#">
+                    <i class='fas fa-clone'></i>
+                    <span class="text">Shipping Settings</span>
+                </a>
+                <ul class="submenu">
+                    <li><a href="../admin/location.php">Location</a></li>
+                    <li><a href="../admin/shippingfee.php">Shipping Fee</a></li>
+                </ul>
+            </li>
             <li>
                 <a href="#">
                     <i class='fas fa-clone'></i>
                     <span class="text"> Supplier</span>
                 </a>
                 <ul class="submenu">
-                    <li><a href="../public/Shared/Layout/error.php">Order</a></li>
-                    <li><a href="../public/Shared/Layout/error.php">Pending Order</a></li>
-                    <li><a href="../public/Shared/Layout/error.php">Completed Order</a></li>
-                    <li><a href="../public/Shared/Layout/error.php">Add Supplier</a></li>
+                    <li><a href="../supplier/suppliershop.php">Order</a></li>
+                    <li><a href="../admin/orderstatus.php">Order Status</a></li>
+                    <li><a href="../admin/history.php">History</a></li>
                 </ul>
             </li>
 
@@ -76,8 +86,8 @@
                         <span class="text"> Settings</span>
                     </a>
                     <ul class="submenu">
-                        <li><a href="../admin/location.php">Location</a></li>
-                        <li class="active"><a href="../admin/shippingfee.php">Shipping Fee</a></li>
+                        <li><a href="../admin/delivery.php">Delivery Address</a></li>
+
 
                     </ul>
 
@@ -118,42 +128,42 @@
 
 
                         <?php
-include '../src/config/config.php';
+                        include '../src/config/config.php';
 
-$message = ""; 
+                        $message = "";
 
-try {
-  
-    if ($conn->connect_error) {
-        throw new Exception("Connection failed: " . $conn->connect_error);
-    }
+                        try {
 
-      $sql = "SELECT region, fee FROM shippingfees";
-      $result = $conn->query($sql);
+                            if ($conn->connect_error) {
+                                throw new Exception("Connection failed: " . $conn->connect_error);
+                            }
 
-      if ($result->num_rows > 0) {
-          echo '<h2>Shipping Fees</h2>';
-          echo '<table class="table">';
-          echo '<thead><tr><th>Region</th><th>Fee</th></tr></thead>';
-          echo '<tbody>';
+                            $sql = "SELECT region, fee FROM shippingfees";
+                            $result = $conn->query($sql);
 
-          while ($row = $result->fetch_assoc()) {
-              echo '<tr>';
-              echo '<td>' . $row['region'] . '</td>';
-              echo '<td>' . $row['fee'] . '</td>';
-              echo '</tr>';
-          }
+                            if ($result->num_rows > 0) {
+                                echo '<h2>Shipping Fees</h2>';
+                                echo '<table class="table">';
+                                echo '<thead><tr><th>Region</th><th>Fee</th></tr></thead>';
+                                echo '<tbody>';
 
-          echo '</tbody></table>';
-      } else {
-          echo "No shipping fees found";
-      }
+                                while ($row = $result->fetch_assoc()) {
+                                    echo '<tr>';
+                                    echo '<td>' . $row['region'] . '</td>';
+                                    echo '<td>' . $row['fee'] . '</td>';
+                                    echo '</tr>';
+                                }
 
-    $conn->close();
-} catch (Exception $e) {
-    $message = $e->getMessage();
-}
-?>
+                                echo '</tbody></table>';
+                            } else {
+                                echo "No shipping fees found";
+                            }
+
+                            $conn->close();
+                        } catch (Exception $e) {
+                            $message = $e->getMessage();
+                        }
+                        ?>
 
                         </tbody>
                         </table>

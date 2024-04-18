@@ -1,3 +1,12 @@
+<?php
+include '../src/config/config.php';
+session_start(); 
+
+if (!isset($_SESSION['userid'])) {
+    header("Location: ../auth/login.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -57,13 +66,22 @@
             <li>
                 <a href="#">
                     <i class='fas fa-clone'></i>
+                    <span class="text">Shipping Settings</span>
+                </a>
+                <ul class="submenu">
+                    <li><a href="../admin/location.php">Location</a></li>
+                    <li><a href="../admin/shippingfee.php">Shipping Fee</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='fas fa-clone'></i>
                     <span class="text"> Supplier</span>
                 </a>
                 <ul class="submenu">
-                    <li><a href="../public/Shared/Layout/error.php">Order</a></li>
-                    <li><a href="../public/Shared/Layout/error.php">Pending Order</a></li>
-                    <li><a href="../public/Shared/Layout/error.php">Completed Order</a></li>
-                    <li><a href="../public/Shared/Layout/error.php">Add Supplier</a></li>
+                    <li><a href="../supplier/suppliershop.php">Order</a></li>
+                    <li><a href="../admin/orderstatus.php">Order Status</a></li>
+                    <li><a href="../admin/history.php">History</a></li>
                 </ul>
             </li>
 
@@ -74,8 +92,8 @@
                         <span class="text"> Settings</span>
                     </a>
                     <ul class="submenu">
-                        <li><a href="../admin/location.php">Location</a></li>
-                        <li><a href="../admin/shippingfee.php">Shipping Fee</a></li>
+                        <li><a href="../admin/delivery.php">Delivery Address</a></li>
+
 
                     </ul>
                 </li>
@@ -98,13 +116,6 @@
     </section>
 
     <?php
-include '../src/config/config.php';
-session_start(); 
-
-if (!isset($_SESSION['userid'])) {
-    header("Location: ../auth/login.php");
-    exit();
-}
 
 if(isset($_GET['transactionid'])) {
     $transactionid = $_GET['transactionid'];
@@ -164,22 +175,20 @@ if(isset($_GET['transactionid'])) {
                             mysqli_data_seek($result, 0); 
                             while ($row = mysqli_fetch_assoc($result)) {
                             ?>
-                        <a href="../product.php?id=<?php echo $row['productid']; ?>"
-                            style="text-decoration: none; color: inherit;">
-                            <div class="product-box">
-                                <div class="product-details">
-                                    <img src="../productimg/<?php echo $row['image']; ?>"
-                                        alt="<?php echo $row['productname']; ?>" class="product-image">
-                                    <div class="product-info">
-                                        <div class="product-name"><?php echo $row['productname']; ?></div>
-                                        <div class="product-status">Quantity: <span
-                                                class="status <?php echo strtolower($row['quantity']); ?>"><?php echo $row['quantity']; ?></span>
-                                        </div>
-                                        <div class="product-price price">₱<?php echo $row['price']; ?></div>
+
+                        <div class="product-box">
+                            <div class="product-details">
+                                <img src="../productimg/<?php echo $row['image']; ?>"
+                                    alt="<?php echo $row['productname']; ?>" class="product-image">
+                                <div class="product-info">
+                                    <div class="product-name"><?php echo $row['productname']; ?></div>
+                                    <div class="product-status">Quantity: <span
+                                            class="status <?php echo strtolower($row['quantity']); ?>"><?php echo $row['quantity']; ?></span>
                                     </div>
+                                    <div class="product-price price">₱<?php echo $row['price']; ?></div>
                                 </div>
                             </div>
-                        </a>
+                        </div>
                         <?php
                             }
                             ?>

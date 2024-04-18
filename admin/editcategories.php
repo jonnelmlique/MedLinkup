@@ -19,9 +19,9 @@ if (isset($_GET['id'])) {
             $_SESSION['category_id'] = $category_id;
 
         } else {
-            
+
             header("Location: categories.php");
-            exit;            
+            exit;
         }
 
         $stmt->close();
@@ -160,13 +160,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <li>
                 <a href="#">
                     <i class='fas fa-clone'></i>
+                    <span class="text">Shipping Settings</span>
+                </a>
+                <ul class="submenu">
+                    <li><a href="../admin/location.php">Location</a></li>
+                    <li><a href="../admin/shippingfee.php">Shipping Fee</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='fas fa-clone'></i>
                     <span class="text"> Supplier</span>
                 </a>
                 <ul class="submenu">
-                    <li><a href="../public/Shared/Layout/error.php">Order</a></li>
-                    <li><a href="../public/Shared/Layout/error.php">Pending Order</a></li>
-                    <li><a href="../public/Shared/Layout/error.php">Completed Order</a></li>
-                    <li><a href="../public/Shared/Layout/error.php">Add Supplier</a></li>
+                    <li><a href="../supplier/suppliershop.php">Order</a></li>
+                    <li><a href="../admin/orderstatus.php">Order Status</a></li>
+                    <li><a href="../admin/history.php">History</a></li>
                 </ul>
             </li>
 
@@ -177,8 +186,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <span class="text"> Settings</span>
                     </a>
                     <ul class="submenu">
-                        <li><a href="../admin/location.php">Location</a></li>
-                        <li><a href="../admin/shippingfee.php">Shipping Fee</a></li>
+                        <li><a href="../admin/delivery.php">Delivery Address</a></li>
+
 
                     </ul>
                 </li>
@@ -251,9 +260,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <?php
-if (!empty($message)) {
-    if ($message === "success") {
-        echo "<script>
+    if (!empty($message)) {
+        if ($message === "success") {
+            echo "<script>
             Swal.fire({
                 title: 'Category Edited Successfully!',
                 text: 'You have successfully edidted the category.',
@@ -265,8 +274,8 @@ if (!empty($message)) {
                 } 
             });
         </script>";
-    } else {
-        echo "<script>
+        } else {
+            echo "<script>
             Swal.fire({
                 title: 'Error',
                 text: '" . $message . "',
@@ -274,9 +283,9 @@ if (!empty($message)) {
                 confirmButtonText: 'OK'
             });
         </script>";
+        }
     }
-}
-?>
+    ?>
     <script>
     function previewImage(event) {
         var preview = document.getElementById('preview-image');

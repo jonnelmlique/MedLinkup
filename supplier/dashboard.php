@@ -1,3 +1,26 @@
+<?php
+include '../src/config/config.php';
+
+try {
+    $sql_pending_orders = "SELECT COUNT(DISTINCT transactionid) AS pending_orders_count FROM adminorderprocess WHERE status IN ('Pending', 'Processing')";
+    $result_pending_orders = $conn->query($sql_pending_orders);
+    $row_pending_orders = $result_pending_orders->fetch_assoc();
+    $pending_orders_count = $row_pending_orders['pending_orders_count'] ?? 0;
+
+    $sql_products_count = "SELECT COUNT(*) AS products_count FROM products WHERE supplierprice IS NOT NULL AND supplierstock IS NOT NULL";
+    $result_products_count = $conn->query($sql_products_count);
+    $row_products_count = $result_products_count->fetch_assoc();
+    $products_count = $row_products_count['products_count'] ?? 0;
+
+    $sql_total_sale = "SELECT IFNULL(SUM(totalprice), 0) AS total_sale FROM (SELECT DISTINCT transactionid, totalprice FROM adminorderprocess WHERE status = 'Completed') AS completed_orders";
+    $result_total_sale = $conn->query($sql_total_sale);
+    $row_total_sale = $result_total_sale->fetch_assoc();
+    $total_sale = $row_total_sale['total_sale'] ?? 0;
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,17 +55,15 @@
                 <ul class="submenu">
                     <li><a href="../supplier/products.php">Products</a></li>
                     <li><a href="../supplier/lowstock.php">Low Stock</a></li>
+                    <li><a href="../supplier/unavailableproducts.php">Unavailable Products</a></li>
                 </ul>
             </li>
             <li>
-                <a href="#">
+                <a href="./order.php">
                     <i class='fas fa-shopping-bag'></i>
                     <span class="text"> Orders</span>
                 </a>
-                <ul class="submenu">
-                    <li><a href="../supplier/pending.php">Pending</a></li>
-                    <li><a href="../supplier/completed.php">Completed</a></li>
-                </ul>
+
             </li>
             <li>
                 <a href="sales.php">
@@ -89,72 +110,86 @@
 
         <ul class="box-info">
             <li>
-                <a href="../supplier/pending.php">
+                <a href="../admin/order.php">
                     <i class='fas fa-cart-plus'></i>
                     <span class="text">
-                        <h3>20</h3>
+                        <h3><?php echo $pending_orders_count; ?></h3>
                         <p>New Order</p>
                     </span>
                 </a>
             </li>
             <li>
-                <a href="../supplier/products.php">
+                <a href='../admin/products.php'>
                     <i class='fas fa-capsules'></i>
-                    <span class="text">
-                        <h3>34</h3>
-                        <p>Stock Medicine</p>
+                    <span class='text'>
+                        <h3>
+                            <h3><?php echo $products_count; ?></h3>
+                            <p>Products</p>
                     </span>
                 </a>
             </li>
             <li>
-                <a href="../supplier/sales.php">
+                <a href="../admin/sales.php">
                     <i class='fas fa-chart-bar'></i>
                     <span class="text">
-                        <h3>&#8369;430</h3>
+                        <h3>&#8369;<?php echo number_format($total_sale, 2); ?></h3>
                         <p>Total Sales</p>
                     </span>
+                </a>
                 </a>
             </li>
         </ul>
 
-
+        <?php
+        try {
+            $sql_orders = "SELECT op.*, p.productname, u.username
+    FROM adminorderprocess op
+    JOIN products p ON op.productid = p.productid
+    JOIN users u ON op.userid = u.userid
+    WHERE op.status IN ('Pending', 'Processing') 
+    GROUP BY op.transactionid 
+    ORDER BY op.orderdate DESC
+    LIMIT 5";
+            $result_orders = $conn->query($sql_orders);
+            $num_orders = $result_orders->num_rows;
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
+        ?>
         <div class="table-data">
             <div class="order">
                 <div class="head">
                     <h3>Orders</h3>
                 </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>User</th>
-                            <th>Date Order</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <p>MedLinkup</p>
-                            </td>
-                            <td>01-10-2021</td>
-                            <td><span class="status completed">Completed</span></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <p>MedLinkup</p>
-                            </td>
-                            <td>01-10-2021</td>
-                            <td><span class="status pending">Pending</span></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <p>MedLinkup</p>
-                            </td>
-                            <td>01-10-2021</td>
-                            <td><span class="status process">Process</span></td>
-                        </tr>
-                    </tbody>
-                </table>
+                <?php if ($num_orders > 0): ?>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Ordered By</th>
+                                <th>Product</th>
+                                <th>Date Order</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php while ($row = $result_orders->fetch_assoc()): ?>
+                                <tr>
+                                    <td>
+                                        <p><?php echo $row['username']; ?></p>
+                                    </td>
+                                    <td>
+                                        <p><?php echo $row['productname']; ?></p>
+                                    </td>
+                                    <td><?php echo date("d-m-Y", strtotime($row['orderdate'])); ?></td>
+                                    <td><span class="status"><?php echo $row['status']; ?></span></td>
+                                </tr>
+                            <?php endwhile; ?>
+                        </tbody>
+
+                    </table>
+                <?php else: ?>
+                    <p>No recent orders</p>
+                <?php endif; ?>
             </div>
         </div>
     </main>
