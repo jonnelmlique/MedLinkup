@@ -87,42 +87,50 @@ if (!isset($_SESSION['userid'])) {
         </nav>
     </section>
     <?php
+    include '../src/config/config.php';
+    session_start();
+
+    if (!isset($_SESSION['userid'])) {
+        header("Location: ../auth/login.php");
+        exit();
+    }
 
     if (isset($_GET['transactionid'])) {
         $transactionid = $_GET['transactionid'];
 
         $query = "SELECT 
-                o.transactionid,
-                u.username, 
-                p.productid,
-                p.productname, 
-                p.price, 
-                p.image,
-                o.quantity, 
-                O.shippingfee,
-                O.totalproductprice,
-                o.totalprice, 
-                o.orderdate, 
-                o.ordercompleted,
-                o.status, 
-                o.paymentmethod,
-                o.quantity,
-                CONCAT(s.firstname, ' ', s.lastname) AS flname,
-                CONCAT(s.addressline1, ', ', s.addressline2, ', ', s.city, ', ', s.province, ', ', s.country) AS address 
-            FROM 
-                adminorderprocess o
-            JOIN 
-                users u ON o.userid = u.userid
-            JOIN 
-                products p ON o.productid = p.productid
-            JOIN 
-                shippingaddresses s ON o.addressid = s.addressid
-            WHERE 
-                o.transactionid = '$transactionid'";
+            o.transactionid,
+            u.username, 
+            p.productid,
+            p.productname, 
+            p.supplierprice, 
+            p.image,
+            o.quantity, 
+            o.shippingfee,
+            o.totalproductprice,
+            o.totalprice, 
+            o.orderdate, 
+            o.ordercompleted,
+            o.status, 
+            o.paymentmethod,
+            o.quantity,
+            CONCAT(s.firstname, ' ', s.lastname) AS flname,
+            CONCAT(s.addressline1, ', ', s.addressline2, ', ', s.city, ', ', s.province, ', ', s.country) AS address 
+        FROM 
+            adminorderprocess o
+        JOIN 
+            users u ON o.userid = u.userid
+        JOIN 
+            products p ON o.productid = p.productid
+        JOIN 
+            shippingaddresses s ON o.addressid = s.addressid
+        WHERE 
+            o.transactionid = '$transactionid'";
 
         $result = mysqli_query($conn, $query);
+
         if (mysqli_num_rows($result) > 0) {
-            $transactionDetails = mysqli_fetch_assoc($result);
+            $transactionDetails = mysqli_fetch_assoc($result); // Fetch the transaction details
             ?>
     <main>
         <div class="container">
@@ -146,20 +154,22 @@ if (!isset($_SESSION['userid'])) {
                                 mysqli_data_seek($result, 0);
                                 while ($row = mysqli_fetch_assoc($result)) {
                                     ?>
-
-                        <div class="product-box">
-                            <div class="product-details">
-                                <img src="../productimg/<?php echo $row['image']; ?>"
-                                    alt="<?php echo $row['productname']; ?>" class="product-image">
-                                <div class="product-info">
-                                    <div class="product-name"><?php echo $row['productname']; ?></div>
-                                    <div class="product-status">Quantity: <span
-                                            class="status <?php echo strtolower($row['quantity']); ?>"><?php echo $row['quantity']; ?></span>
+                        <a href="../supplier/product.php?id=<?php echo $row['productid']; ?>"
+                            style="text-decoration: none; color: inherit;">
+                            <div class="product-box">
+                                <div class="product-details">
+                                    <img src="../productimg/<?php echo $row['image']; ?>"
+                                        alt="<?php echo $row['productname']; ?>" class="product-image">
+                                    <div class="product-info">
+                                        <div class="product-name"><?php echo $row['productname']; ?></div>
+                                        <div class="product-status">Quantity: <span
+                                                class="status <?php echo strtolower($row['quantity']); ?>"><?php echo $row['quantity']; ?></span>
+                                        </div>
+                                        <div class="product-price price">₱<?php echo $row['supplierprice']; ?></div>
                                     </div>
-                                    <div class="product-price price">₱<?php echo $row['price']; ?></div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                         <?php
                                 }
                                 ?>
@@ -198,6 +208,8 @@ if (!isset($_SESSION['userid'])) {
         echo "<p>Transaction ID not provided.</p>";
     }
     ?>
+
+
 
 
 
