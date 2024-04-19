@@ -116,16 +116,16 @@ if (mysqli_num_rows($result) > 0) {
 
 
                         ?>
-                    <li class="list-group-item d-flex justify-content-between lh-condensed">
-                        <div>
-                            <h6 class="my-0"><?php echo $row['productname']; ?></h6>
-                            <small class="text-muted">Quantity: <?php echo $row['quantity']; ?></small>
-                        </div>
-                        <span class="text-muted">₱<?php echo $row['price']; ?></span>
-                    </li>
+                        <li class="list-group-item d-flex justify-content-between lh-condensed">
+                            <div>
+                                <h6 class="my-0"><?php echo $row['productname']; ?></h6>
+                                <small class="text-muted">Quantity: <?php echo $row['quantity']; ?></small>
+                            </div>
+                            <span class="text-muted">₱<?php echo $row['price']; ?></span>
+                        </li>
 
 
-                    <?php
+                        <?php
                     }
                     ?>
                     <li class="list-group-item d-flex justify-content-between bg-light">
@@ -298,102 +298,102 @@ if (mysqli_num_rows($result) > 0) {
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script
-        src="https://www.paypal.com/sdk/js?client-id=Ac6-DA_lDGiu6FsHZRddA0716cAvXTq2FIRXyy9x_OGpL4_h_ACJOpMXgBCnL0XXJ89jNDAtG9Dr7PEH&currency=PHP&disable-funding=card"
+        src="https://www.paypal.com/sdk/js?client-id=Ae9Z3W30DpWjVNlWBmG1T9YGWw6oHNLJCSJk0KG3rzKOuuL5otVrWz5X5_rO64yvVqI5MqEhP2SFWo2m&currency=PHP&disable-funding=card"
         data-sdk-integration-source="button-factory"></script>
     <script>
-    document.getElementById("proceedButton").addEventListener("click", function() {
-        console.log("Clicked Proceed to Checkout button");
+        document.getElementById("proceedButton").addEventListener("click", function () {
+            console.log("Clicked Proceed to Checkout button");
 
-        var paymentMethod = document.getElementById("paymentMethod").value;
-        if (paymentMethod === "PayPal") {
-            var container = document.getElementById("paypal-button-container");
-            container.innerHTML = "";
+            var paymentMethod = document.getElementById("paymentMethod").value;
+            if (paymentMethod === "PayPal") {
+                var container = document.getElementById("paypal-button-container");
+                container.innerHTML = "";
 
-            var totalAmount = <?php echo $totalPrice + $shippingFee; ?>;
-            console.log("Total Amount:", totalAmount);
+                var totalAmount = <?php echo $totalPrice + $shippingFee; ?>;
+                console.log("Total Amount:", totalAmount);
 
-            paypal.Buttons({
-                createOrder: function(data, actions) {
-                    return actions.order.create({
-                        purchase_units: [{
-                            amount: {
-                                currency_code: 'PHP',
-                                value: totalAmount
-                            }
-                        }]
-                    });
-                },
-                onApprove: function(data, actions) {
-                    return actions.order.capture().then(function(details) {
-                        var transactionID = details.id;
+                paypal.Buttons({
+                    createOrder: function (data, actions) {
+                        return actions.order.create({
+                            purchase_units: [{
+                                amount: {
+                                    currency_code: 'PHP',
+                                    value: totalAmount
+                                }
+                            }]
+                        });
+                    },
+                    onApprove: function (data, actions) {
+                        return actions.order.capture().then(function (details) {
+                            var transactionID = details.id;
 
-                        <?php
+                            <?php
                             $result = mysqli_query($conn, $sql);
                             while ($row = mysqli_fetch_assoc($result)) {
                                 $productID = $row['productid'];
                                 $quantity = $row['quantity'];
                                 ?>
-                        var xhr = new XMLHttpRequest();
-                        xhr.open("POST", "./insert_order.php", true);
-                        xhr.setRequestHeader("Content-Type",
-                            "application/x-www-form-urlencoded");
-                        xhr.onreadystatechange = function() {
-                            if (xhr.readyState === 4 && xhr.status === 200) {
-                                console.log(xhr.responseText);
-                            }
-                        };
-                        var data =
-                            "userID=<?php echo $userID; ?>&productID=<?php echo $productID; ?>&quantity=<?php echo $quantity; ?>&totalPrice=<?php echo $totalPrice + $shippingFee; ?>&totalProductPrice=<?php echo $totalPrice; ?>&shippingFee=<?php echo $shippingFee; ?>&status=Processing&paymentMethod=PayPal&addressID=<?php echo $shippingAddress['addressid']; ?>&transactionID=" +
-                            transactionID;
-                        xhr.send(data);
-                        <?php
+                                var xhr = new XMLHttpRequest();
+                                xhr.open("POST", "./insert_order.php", true);
+                                xhr.setRequestHeader("Content-Type",
+                                    "application/x-www-form-urlencoded");
+                                xhr.onreadystatechange = function () {
+                                    if (xhr.readyState === 4 && xhr.status === 200) {
+                                        console.log(xhr.responseText);
+                                    }
+                                };
+                                var data =
+                                    "userID=<?php echo $userID; ?>&productID=<?php echo $productID; ?>&quantity=<?php echo $quantity; ?>&totalPrice=<?php echo $totalPrice + $shippingFee; ?>&totalProductPrice=<?php echo $totalPrice; ?>&shippingFee=<?php echo $shippingFee; ?>&status=Processing&paymentMethod=PayPal&addressID=<?php echo $shippingAddress['addressid']; ?>&transactionID=" +
+                                    transactionID;
+                                xhr.send(data);
+                                <?php
                             }
                             ?>
-                        window.location.href = 'transactioncomplete.php';
+                            window.location.href = 'transactioncomplete.php';
 
-                    });
-                }
-            }).render('#paypal-button-container');
-        } else if (paymentMethod === "COD") {
-            var today = new Date();
-            var dd = String(today.getDate()).padStart(2, '0');
-            var mm = String(today.getMonth() + 1).padStart(2, '0');
-            var yyyy = today.getFullYear();
-            var hours = String(today.getHours()).padStart(2, '0');
-            var minutes = String(today.getMinutes()).padStart(2, '0');
-            var seconds = String(today.getSeconds()).padStart(2, '0');
-            var randomSuffix = Math.floor(Math.random() *
-                10000);
-            var transactionID = randomSuffix + mm + seconds + dd + hours + minutes + yyyy;
+                        });
+                    }
+                }).render('#paypal-button-container');
+            } else if (paymentMethod === "COD") {
+                var today = new Date();
+                var dd = String(today.getDate()).padStart(2, '0');
+                var mm = String(today.getMonth() + 1).padStart(2, '0');
+                var yyyy = today.getFullYear();
+                var hours = String(today.getHours()).padStart(2, '0');
+                var minutes = String(today.getMinutes()).padStart(2, '0');
+                var seconds = String(today.getSeconds()).padStart(2, '0');
+                var randomSuffix = Math.floor(Math.random() *
+                    10000);
+                var transactionID = randomSuffix + mm + seconds + dd + hours + minutes + yyyy;
 
 
-            <?php
+                <?php
                 $result = mysqli_query($conn, $sql);
                 while ($row = mysqli_fetch_assoc($result)) {
                     $productID = $row['productid'];
                     $quantity = $row['quantity'];
                     ?>
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", "./insert_order.php", true);
-            xhr.setRequestHeader("Content-Type",
-                "application/x-www-form-urlencoded");
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    console.log(xhr.responseText);
-                }
-            };
-            var data =
-                "userID=<?php echo $userID; ?>&productID=<?php echo $productID; ?>&quantity=<?php echo $quantity; ?>&totalPrice=<?php echo $totalPrice + $shippingFee; ?>&totalProductPrice=<?php echo $totalPrice; ?>&shippingFee=<?php echo $shippingFee; ?>&status=Pending&paymentMethod=COD&addressID=<?php echo $shippingAddress['addressid']; ?>&transactionID=" +
-                transactionID;
-            xhr.send(data);
-            <?php
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "./insert_order.php", true);
+                    xhr.setRequestHeader("Content-Type",
+                        "application/x-www-form-urlencoded");
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState === 4 && xhr.status === 200) {
+                            console.log(xhr.responseText);
+                        }
+                    };
+                    var data =
+                        "userID=<?php echo $userID; ?>&productID=<?php echo $productID; ?>&quantity=<?php echo $quantity; ?>&totalPrice=<?php echo $totalPrice + $shippingFee; ?>&totalProductPrice=<?php echo $totalPrice; ?>&shippingFee=<?php echo $shippingFee; ?>&status=Pending&paymentMethod=COD&addressID=<?php echo $shippingAddress['addressid']; ?>&transactionID=" +
+                        transactionID;
+                    xhr.send(data);
+                    <?php
                 }
                 ?>
-            window.location.href = 'transactioncomplete.php';
-        } else {
-            alert("Proceeding with other payment method.");
-        }
-    });
+                window.location.href = 'transactioncomplete.php';
+            } else {
+                alert("Proceeding with other payment method.");
+            }
+        });
     </script>
 
     <?php
