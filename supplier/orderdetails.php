@@ -228,7 +228,7 @@ if (!isset($_SESSION['userid'])) {
         $(".printReceipt").click(function(e) {
             e.preventDefault();
             var transactionid = $(this).data("transactionid");
-            window.open('orderreceiptsupplier.phP?transactionid=' + transactionid, '_blank',
+            window.open('orderreceiptsupplier.php?transactionid=' + transactionid, '_blank',
                 'width=800,height=600');
         });
     });
