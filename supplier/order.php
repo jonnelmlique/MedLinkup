@@ -16,7 +16,7 @@ if (!isset($_SESSION['userid'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Order</title>
     <link rel="stylesheet" href="../public/css/supplier/sidebar.css">
-    <link rel="stylesheet" href="../public/css/supplier/order.css">
+    <link rel="stylesheet" href="../public/css/supplier/pendingorder.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 
 </head>
@@ -98,7 +98,7 @@ if (!isset($_SESSION['userid'])) {
                         <h1 class="lefth">Order - Pending</h1>
                         <hr>
                         <div class="buttonabc">
-                            <a class="buttona" href="../supplier/order.php">Pending</a>
+                            <a class="buttona" href="../supplier/pending.php">Pending</a>
                             <a class="buttonb" href="../supplier/orderprocessing.php">Processing</a>
                             <a class="buttonc" href="../supplier/ordershipped.php">Shipped</a>
                             <a class="buttond" href="../supplier/ordercompleted.php">Completed</a>

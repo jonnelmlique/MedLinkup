@@ -92,9 +92,9 @@
                                 <button class="printLowStock">Print
                                 </button>
                             </div>
-
+                            <!-- 
                             <input type="text" id="searchInput" placeholder="Search...">
-                            <button disabled><i class="fas fa-search"></i></button>
+                            <button disabled><i class="fas fa-search"></i></button> -->
 
                         </div>
 
@@ -155,6 +155,14 @@
     <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script>
+    $(document).ready(function() {
+        $(".printLowStock").click(function(e) {
+            e.preventDefault();
+            window.open('product-print.php', '_blank', 'width=800,height=600');
+        });
+    });
+    </script>
 </body>
 
 </html>

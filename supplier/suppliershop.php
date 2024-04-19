@@ -32,7 +32,7 @@ if (isset($_SESSION['userid']) && isset($_SESSION['username'])) {
 <body>
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
-            <a class="navbar-brand" href="./index.php">
+            <a class="navbar-brand" href="../supplier/suppliershop.php">
                 <img src="../public/img/logo.png" alt="MedLinkup Logo" class="logo"> MedLinkup
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"

@@ -85,7 +85,7 @@
                 <div class="col-md-6">
                     <div class="box-section">
 
-                        <div class="search-bar">
+                        <!-- <div class="search-bar">
 
                             <div class="print">
                                 <button class="printLowStock">Print
@@ -95,7 +95,7 @@
                             <input type="text" id="searchInput" placeholder="Search...">
                             <button disabled><i class="fas fa-search"></i></button>
 
-                        </div>
+                        </div> -->
 
                         <h1 class="lefth">Unavailable Products</h1>
                         <table class="table" id="productTable">
