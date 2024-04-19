@@ -115,7 +115,7 @@ if (!isset($_SESSION['userid'])) {
         </nav>
     </section>
     <?php
-git 
+
     if (isset($_GET['transactionid'])) {
         $transactionid = $_GET['transactionid'];
 
