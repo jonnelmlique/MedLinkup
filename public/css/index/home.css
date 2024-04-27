@@ -131,3 +131,14 @@
 .text-truncate {
   color: #5ab347;
 }
+/* Light mode styles */
+body {
+  background-color: #ffffff; /* Light background color */
+  color: #000000; /* Light text color */
+}
+
+/* Dark mode styles */
+.dark body {
+  background-color: #212121; /* Dark background color */
+  color: #ffffff; /* Dark text color */
+}

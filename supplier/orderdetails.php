@@ -87,13 +87,6 @@ if (!isset($_SESSION['userid'])) {
         </nav>
     </section>
     <?php
-    include '../src/config/config.php';
-    session_start();
-
-    if (!isset($_SESSION['userid'])) {
-        header("Location: ../auth/login.php");
-        exit();
-    }
 
     if (isset($_GET['transactionid'])) {
         $transactionid = $_GET['transactionid'];

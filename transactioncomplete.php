@@ -29,11 +29,11 @@ if(isset($_SESSION['userid']) && isset($_SESSION['username'])) {
 
     <link href="./node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-   
+
 </head>
 
-<body>    
-<nav class="navbar navbar-expand-lg navbar-light">
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
             <a class="navbar-brand" href="./index.php">
                 <img src="./public/img/logo.png" alt="MedLinkup Logo" class="logo"> MedLinkup
@@ -59,14 +59,14 @@ if(isset($_SESSION['userid']) && isset($_SESSION['username'])) {
                     </li>
                 </ul>
                 <div class="navbar-icons d-flex align-items-center">
-                <a href="<?php echo $loginLinkURL; ?>" class="nav-link"><?php echo $loginLinkText; ?></a>
+                    <a href="<?php echo $loginLinkURL; ?>" class="nav-link"><?php echo $loginLinkText; ?></a>
                     <a href="./cart.php" class="nav-link"><i class="fas fa-shopping-cart"></i> Cart </a>
                 </div>
             </div>
         </div>
-        </nav>
+    </nav>
 
-<div class="container">
+    <div class="container">
         <div class="row mt-5">
             <div class="col-md-12 text-center">
                 <div class="checkmark">

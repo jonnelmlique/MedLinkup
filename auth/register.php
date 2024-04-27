@@ -109,7 +109,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
-            <a class="navbar-brand" href="/index.html">
+            <a class="navbar-brand" href="../index.php">
                 <img src="../public/img/logo.png" alt="MedLinkup Logo" class="logo"> MedLinkup
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -194,8 +194,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <div class="form-group form-check">
                                 <input type="checkbox" class="form-check-input" id="agreeCheckbox" required>
                                 <label class="form-check-label" for="agreeCheckbox">I accept the <a
-                                        href="/privacypolicy.html" target="_blank">Privacy Policy</a> and <a
-                                        href="/termsofservice.html" target="_blank">Terms of Service</a></label>
+                                        href="../privacypolicy.php" target="_blank">Privacy Policy</a> and <a
+                                        href="../termsofservice.php" target="_blank">Terms of Service</a></label>
                                 <div class="invalid-feedback">You must agree to the privacy policy and terms.</div>
                             </div>
                             <button type="submit" class="btn btn-success btn-block">Register</button>
@@ -225,7 +225,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="container">
             <p>
                 &copy; 2024 MedLinkup. All rights reserved. |
-                <a href="/privacypolicy.html">Privacy Policy</a> | <a href="/termsofservice.html">Terms of Service</a>
+                <a href="../privacypolicy.php">Privacy Policy</a> | <a href="../termsofservice.php">Terms of
+                    Service</a>
             </p>
         </div>
     </footer>
