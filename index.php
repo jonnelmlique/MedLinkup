@@ -8,9 +8,9 @@ $message = '';
 $loginLinkText = '<i class="fas fa-user"></i> Login';
 $loginLinkURL = './auth/login.php';
 
-if (isset($_SESSION['userid']) && isset($_SESSION['username'])) {
-    $loggedInUsername = $_SESSION['username'];
-    $loginLinkText = '<i class="fas fa-user"></i> ' . $loggedInUsername;
+if(isset($_SESSION['userid']) && isset($_SESSION['username'])) {
+    $loggedInUsername = $_SESSION['username']; 
+    $loginLinkText = '<i class="fas fa-user"></i> ' . $loggedInUsername; 
     $loginLinkURL = './customer/dashboard.php';
 }
 
@@ -65,7 +65,7 @@ if (isset($_SESSION['userid']) && isset($_SESSION['username'])) {
 
     <a href="./shop.php" class="hero-section">
         <div class="container">
-            <span class="btn btn-success btn-lg" style="font-size: 24px;">Shop Now</span>
+            <span class="btn btn-success btn-lg" style="font-size: 24px; margin-top: 200px;">Shop Now</span>
         </div>
     </a>
 
@@ -79,24 +79,24 @@ if (isset($_SESSION['userid']) && isset($_SESSION['username'])) {
             <div id="categoryCarousel" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
                     <?php
-                    $query = "SELECT * FROM categories";
-                    $result = mysqli_query($conn, $query);
-
-                    if (mysqli_num_rows($result) > 0) {
-                        $count = 0;
-                        $first = true;
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            $categoryName = $row['categoryname'];
-                            $imagePath = $row['imagepath'];
-
-                            if ($count % 6 == 0) {
-                                if (!$first) {
-                                    echo '</div></div>';
-                                }
-                                echo '<div class="carousel-item' . ($first ? ' active' : '') . '"><div class="row">';
-                                $first = false;
+                $query = "SELECT * FROM categories";
+                $result = mysqli_query($conn, $query);
+                
+                if (mysqli_num_rows($result) > 0) {
+                    $count = 0;
+                    $first = true;
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        $categoryName = $row['categoryname'];
+                        $imagePath = $row['imagepath'];
+                        
+                        if ($count % 6 == 0) { 
+                            if (!$first) {
+                                echo '</div></div>'; 
                             }
-                            echo '<div class="col-sm-2">
+                            echo '<div class="carousel-item' . ($first ? ' active' : '') . '"><div class="row">';
+                            $first = false;
+                        }
+                        echo '<div class="col-sm-2">
                         <a href="./shop-categories.php?category=' . urlencode($categoryName) . '" class="text-decoration-none text-inherit">
                             <div class="card card-product mb-lg-4">
                                 <div class="card-body text-center py-4">
@@ -106,14 +106,14 @@ if (isset($_SESSION['userid']) && isset($_SESSION['username'])) {
                             </div>
                         </a>
                     </div>';
-
-                            $count++;
-                        }
-                        echo '</div></div>';
-                    } else {
-                        echo "No categories found";
+                
+                        $count++;
                     }
-                    ?>
+                    echo '</div></div>'; 
+                } else {
+                    echo "No categories found";
+                }
+                ?>
                 </div>
                 <!-- <a class="carousel-control-prev" href="#categoryCarousel" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -135,15 +135,15 @@ if (isset($_SESSION['userid']) && isset($_SESSION['username'])) {
 
             <div class="row">
                 <?php
-                try {
-                    $sql = "SELECT productid, productname, price, image FROM products LIMIT 10";
-                    $result = $conn->query($sql);
+    try {
+        $sql = "SELECT productid, productname, price, image FROM products LIMIT 10"; 
+        $result = $conn->query($sql);
 
-                    if ($result->num_rows > 0) {
+        if ($result->num_rows > 0) {
 
-                        while ($row = $result->fetch_assoc()) {
-                            $productName = strlen($row["productname"]) > 35 ? substr($row["productname"], 0, 35) . '...' : $row["productname"];
-                            ?>
+            while ($row = $result->fetch_assoc()) {
+                $productName = strlen($row["productname"]) > 35 ? substr($row["productname"], 0, 35) . '...' : $row["productname"];
+    ?>
                 <div class="col-md-15">
                     <a href="./product.php?id=<?php echo $row["productid"]; ?>" class="product-card-link">
 
@@ -157,15 +157,15 @@ if (isset($_SESSION['userid']) && isset($_SESSION['username'])) {
                 </div>
             </div>
             <?php
-                        }
-                    } else {
-                        echo "No products available.";
-                    }
-                } catch (Exception $e) {
-                    echo "Error: " . $e->getMessage();
-                }
-                $conn->close();
-                ?>
+            }
+        } else {
+            echo "No products available.";
+        }
+    } catch (Exception $e) {
+        echo "Error: " . $e->getMessage();
+    }
+    $conn->close();
+    ?>
 
 
         </div>
@@ -194,14 +194,7 @@ if (isset($_SESSION['userid']) && isset($_SESSION['username'])) {
     <script src="./node_modules/popper.js/dist/umd/popper.min.js"></script>
     <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-    <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var heroSection = document.querySelector(".hero-section");
-        var imageUrl = "hero.jpg";
 
-        heroSection.style.backgroundImage = "url('" + imageUrl + "')";
-    });
-    </script>
 </body>
 
 </html>
