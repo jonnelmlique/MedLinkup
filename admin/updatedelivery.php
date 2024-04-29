@@ -172,25 +172,36 @@ try {
                     <li><a href="../admin/history.php">History</a></li>
                 </ul>
             </li>
-
             <ul class="side-menu">
                 <li>
                     <a href="#">
-                        <i class='fa fa-cogs'></i>
-                        <span class="text">Settings</span>
+                        <i class='fa fa-user-cog'></i>
+                        <span class="text">System Maintenane</span>
                     </a>
                     <ul class="submenu">
-                        <li class="active"><a href="../admin/delivery.php">Delivery Address</a></li>
-
+                        <li class="active"><a href="../admin/about.php">About</a></li>
+                        <li><a href="../admin/privacypolicy.php">Privacy Policy</a></li>
+                        <li><a href="../admin/termsofservice.php">Terms of Service</a></li>
                     </ul>
                 </li>
-                <li>
-                    <a href="../logout.php" class="logout">
-                        <i class='fas fa-user'></i>
-                        <span class="text"> Logout</span>
-                    </a>
-                </li>
-            </ul>
+                <ul class="side-menu">
+                    <li>
+                        <a href="#">
+                            <i class='fa fa-cogs'></i>
+                            <span class="text">Settings</span>
+                        </a>
+                        <ul class="submenu">
+                            <li class="active"><a href="../admin/delivery.php">Delivery Address</a></li>
+
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="../logout.php" class="logout">
+                            <i class='fas fa-user'></i>
+                            <span class="text"> Logout</span>
+                        </a>
+                    </li>
+                </ul>
     </section>
 
 

@@ -144,9 +144,6 @@ try {
                         <li><a href="../admin/about.php">About</a></li>
                         <li><a href="../admin/privacypolicy.php">Privacy Policy</a></li>
                         <li><a href="../admin/termsofservice.php">Terms of Service</a></li>
-                        <li><a href="../admin/home.php">Home</a></li>
-                        <li><a href="../admin/header.php">Header</a></li>
-                        <li><a href="../admin/footer.php">Footer</a></li>
                     </ul>
                 </li>
                 <ul class="side-menu">
@@ -321,7 +318,7 @@ try {
                     confirmButtonText: 'OK',                
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        window.location.href = '../customer/delivery.php';
+                        window.location.href = '../admin/delivery.php';
                     } 
                 });
                  </script>";
@@ -334,7 +331,7 @@ try {
                     confirmButtonText: 'OK'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        window.location.href = '../customer/delivery.php';
+                        window.location.href = '../admin/delivery.php';
                     } 
                 });
             </script>";

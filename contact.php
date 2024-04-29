@@ -69,6 +69,7 @@ if (isset($_SESSION['userid']) && isset($_SESSION['username'])) {
         </div>
 
         <?php
+
         use PHPMailer\PHPMailer\PHPMailer;
         use PHPMailer\PHPMailer\Exception;
 
@@ -81,6 +82,9 @@ if (isset($_SESSION['userid']) && isset($_SESSION['username'])) {
             $email = $_POST['email'];
             $subject = $_POST['subject'];
             $message = $_POST['message'];
+            $messageToInsert = $_POST['message'];
+
+            $mail = new PHPMailer(true);
             $mail = new PHPMailer(true);
 
             try {
@@ -103,14 +107,20 @@ if (isset($_SESSION['userid']) && isset($_SESSION['username'])) {
                 $mail->Body = $message;
 
                 $mail->send();
-                echo '<div class="alert alert-success" role="alert">Message has been sent</div>';
+
+                $stmt = $conn->prepare("INSERT INTO contact (email, subject, messagecontent) VALUES (?, ?, ?)");
+                $stmt->bind_param("sss", $email, $subject, $messageToInsert);
+
+                $stmt->execute();
+
+                $message = "success";
             } catch (Exception $e) {
-                echo '<div class="alert alert-danger" role="alert">Message could not be sent. Mailer Error: ' . $mail->ErrorInfo . '</div>';
+                $message = "Message could not be sent. Mailer Error:";
             }
         }
         ?>
 
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="needs-validation">
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" class="form-control" id="email" name="email" required>
@@ -151,7 +161,36 @@ if (isset($_SESSION['userid']) && isset($_SESSION['username'])) {
     <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <?php
+    if (!empty($message)) {
+        if ($message === "success") {
+            echo "<script>
+            Swal.fire({
+                title: 'Message has been sent Successfully!',
+                text: 'You have successfully sent your message.',
+                icon: 'success',
+                confirmButtonText: 'OK',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = 'contact.php';
 
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                }
+            });
+        </script>";
+        } else {
+            echo "<script>
+            Swal.fire({
+                title: 'Error',
+                text: '" . $message . "',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        </script>";
+        }
+    }
+    ?>
 </body>
 
 </html>
