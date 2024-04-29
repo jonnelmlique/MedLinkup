@@ -85,26 +85,40 @@ if (!isset($_SESSION['userid'])) {
                     <li><a href="../admin/history.php">History</a></li>
                 </ul>
             </li>
-
             <ul class="side-menu">
                 <li>
                     <a href="#">
-                        <i class='fa fa-cogs'></i>
-                        <span class="text"> Settings</span>
+                        <i class='fa fa-user-cog'></i>
+                        <span class="text">System Maintenane</span>
                     </a>
                     <ul class="submenu">
-                        <li><a href="../admin/delivery.php">Delivery Address</a></li>
-
-
+                        <li><a href="../admin/about.php">About</a></li>
+                        <li><a href="../admin/privacypolicy.php">Privacy Policy</a></li>
+                        <li><a href="../admin/termsofservice.php">Terms of Service</a></li>
+                        <li><a href="../admin/home.php">Home</a></li>
+                        <li><a href="../admin/header.php">Header</a></li>
+                        <li><a href="../admin/footer.php">Footer</a></li>
                     </ul>
                 </li>
-                <li>
-                    <a href="../logout.php" class="logout">
-                        <i class='fas fa-user'></i>
-                        <span class="text"> Logout</span>
-                    </a>
-                </li>
-            </ul>
+                <ul class="side-menu">
+                    <li>
+                        <a href="#">
+                            <i class='fa fa-cogs'></i>
+                            <span class="text"> Settings</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="../admin/delivery.php">Delivery Address</a></li>
+
+
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="../logout.php" class="logout">
+                            <i class='fas fa-user'></i>
+                            <span class="text"> Logout</span>
+                        </a>
+                    </li>
+                </ul>
     </section>
 
     <section id="content">
@@ -165,26 +179,26 @@ if (!isset($_SESSION['userid'])) {
                         $result = mysqli_query($conn, $query);
                         if (mysqli_num_rows($result) > 0) {
                             ?>
-                        <?php
+                            <?php
                             while ($row = mysqli_fetch_assoc($result)) {
                                 ?>
-                        <a href="supplierorderdetails.php?transactionid=<?php echo $row['transactionid']; ?>"
-                            style="text-decoration: none; color: inherit;">
-                            <div class="product-box">
-                                <div class="product-details">
-                                    <img src="../productimg/<?php echo $row['image']; ?>"
-                                        alt="<?php echo $row['productname']; ?>" class="product-image">
-                                    <div class="product-info">
-                                        <div class="product-name"><?php echo $row['productname']; ?></div>
-                                        <div class="product-status"><span
-                                                class="s <?php echo strtolower($row['status']); ?>"><?php echo $row['status']; ?></span>
+                                <a href="supplierorderdetails.php?transactionid=<?php echo $row['transactionid']; ?>"
+                                    style="text-decoration: none; color: inherit;">
+                                    <div class="product-box">
+                                        <div class="product-details">
+                                            <img src="../productimg/<?php echo $row['image']; ?>"
+                                                alt="<?php echo $row['productname']; ?>" class="product-image">
+                                            <div class="product-info">
+                                                <div class="product-name"><?php echo $row['productname']; ?></div>
+                                                <div class="product-status"><span
+                                                        class="s <?php echo strtolower($row['status']); ?>"><?php echo $row['status']; ?></span>
+                                                </div>
+                                                <div class="product-price price">₱<?php echo $row['totalprice']; ?></div>
+                                            </div>
                                         </div>
-                                        <div class="product-price price">₱<?php echo $row['totalprice']; ?></div>
                                     </div>
-                                </div>
-                            </div>
-                        </a>
-                        <?php
+                                </a>
+                                <?php
                             }
                         } else {
                             echo '<p class="orderdisplay">No orders</p>';

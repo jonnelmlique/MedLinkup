@@ -8,9 +8,9 @@ $message = '';
 $loginLinkText = '<i class="fas fa-user"></i> Login';
 $loginLinkURL = './auth/login.php';
 
-if(isset($_SESSION['userid']) && isset($_SESSION['username'])) {
-    $loggedInUsername = $_SESSION['username']; 
-    $loginLinkText = '<i class="fas fa-user"></i> ' . $loggedInUsername; 
+if (isset($_SESSION['userid']) && isset($_SESSION['username'])) {
+    $loggedInUsername = $_SESSION['username'];
+    $loginLinkText = '<i class="fas fa-user"></i> ' . $loggedInUsername;
     $loginLinkURL = './customer/dashboard.php';
 }
 
@@ -65,73 +65,32 @@ if(isset($_SESSION['userid']) && isset($_SESSION['username'])) {
         <section class="privacy-policy-section">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-12">
-                        <h1>Privacy Policy</h1>
-                        <p>At MedLinkUp, we are committed to protecting your privacy and ensuring the security of your
-                            personal data. This Privacy Policy outlines how we collect, use, and safeguard your
-                            information when you access or use our online pharmacy platform. By using MedLinkUp, you
-                            consent to the practices described in this Privacy Policy.</p>
+                    <?php
+                    $sql = "SELECT * FROM privacypolicy";
+                    $result = $conn->query($sql);
 
-                        <h5>Information Collection and Use</h5>
+                    if ($result->num_rows > 0) {
+                        echo '<div class="container about-us">';
+                        echo '    <section class="about-section">';
+                        echo '        <div class="row">';
 
-                        <p>We may collect personal information from you when you access or use our platform, including
-                            but not limited to:</p>
-                        <ul>
-                            <li>Name</li>
-                            <li>Contact information (such as email address, phone number, mailing address)</li>
-                            <li>Payment information (if applicable)</li>
-                            <li>Demographic information</li>
-                            <li>User preferences and behavior data</li>
-                        </ul>
+                        while ($row = $result->fetch_assoc()) {
+                                echo '            <div class="col-md-12">';
+                                echo '                <h1>' . $row["sectiontitle"] . '</h1>';
+                                echo '                <p>' . nl2br($row["sectioncontent"]) . '</p>';
+                                echo '                <br>';
+                                echo '            </div>';
+                            
+                        }
 
-                        <p>We use this information to provide and improve our services, process transactions, respond to
-                            inquiries or requests, personalize user experience, and comply with legal obligations.</p>
-
-                        <h5>Security Measures</h5>
-
-                        <p>We employ industry-standard security measures to protect your personal information from
-                            unauthorized access, alteration, disclosure, or destruction. These measures include secure
-                            server infrastructure, encryption techniques, and regular security audits.</p>
-
-                        <h5>Information Sharing</h5>
-
-                        <p>We do not sell, trade, or otherwise transfer your personal information to third parties
-                            without your consent, except as required by law or to facilitate services provided by our
-                            trusted partners (such as payment processors or shipping companies).</p>
-
-                        <h5>Cookies and Tracking Technologies</h5>
-
-                        <p>We may use cookies and similar tracking technologies to enhance your browsing experience and
-                            analyze usage patterns on our platform. You can configure your browser settings to reject
-                            cookies, but this may affect the functionality of certain features.</p>
-
-                        <h5>Third-party Links</h5>
-
-                        <p>Our platform may contain links to third-party websites or services that are not operated or
-                            controlled by MedLinkUp. We are not responsible for the privacy practices or content of
-                            these third-party sites. We encourage you to review the privacy policies of those sites
-                            before providing any personal information.</p>
-
-                        <h5>Updates to Privacy Policy</h5>
-
-                        <p>We reserve the right to update or modify this Privacy Policy at any time without prior
-                            notice. Changes will be effective immediately upon posting on this page. It is your
-                            responsibility to review this Privacy Policy periodically for updates.</p>
-
-                        <h5>Contact Us</h5>
-
-                        <p>If you have any questions, concerns, or feedback regarding our Privacy Policy or data
-                            practices, please contact us at:</p>
-                        <ul>
-                            <li>Email: medlinkupcontact@gmail.com</li>
-                        </ul>
-
-                        <p>By accessing or using MedLinkUp, you agree to the terms and conditions outlined in this
-                            Privacy Policy. If you do not agree with any part of this Policy, please refrain from using
-                            our services.</p>
-
-                        <p>Thank you for choosing MedLinkUp for your healthcare needs!</p>
-                    </div>
+                        echo '        </div>';
+                        echo '    </section>';
+                        echo '</div>';
+                    } else {
+                        echo "0 results";
+                    }
+                    $conn->close();
+                    ?>
                 </div>
             </div>
         </section>
@@ -142,7 +101,8 @@ if(isset($_SESSION['userid']) && isset($_SESSION['username'])) {
             <div class="row">
                 <div class="col-md-12 text-center">
                     <h3>Our Mission</h3>
-                    <p>Empowering health through easy access to medications. Your trusted online platform for quality pharmaceuticals.</p>
+                    <p>Empowering health through easy access to medications. Your trusted online platform for quality
+                        pharmaceuticals.</p>
                 </div>
             </div>
         </div>

@@ -8,9 +8,9 @@ $message = '';
 $loginLinkText = '<i class="fas fa-user"></i> Login';
 $loginLinkURL = './auth/login.php';
 
-if(isset($_SESSION['userid']) && isset($_SESSION['username'])) {
-    $loggedInUsername = $_SESSION['username']; 
-    $loginLinkText = '<i class="fas fa-user"></i> ' . $loggedInUsername; 
+if (isset($_SESSION['userid']) && isset($_SESSION['username'])) {
+    $loggedInUsername = $_SESSION['username'];
+    $loginLinkText = '<i class="fas fa-user"></i> ' . $loggedInUsername;
     $loginLinkURL = './customer/dashboard.php';
 }
 
@@ -27,6 +27,7 @@ if(isset($_SESSION['userid']) && isset($_SESSION['username'])) {
     <link href="./node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 </head>
+
 <body>
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
@@ -54,7 +55,7 @@ if(isset($_SESSION['userid']) && isset($_SESSION['username'])) {
                     </li>
                 </ul>
                 <div class="navbar-icons d-flex align-items-center">
-                <a href="<?php echo $loginLinkURL; ?>" class="nav-link"><?php echo $loginLinkText; ?></a>
+                    <a href="<?php echo $loginLinkURL; ?>" class="nav-link"><?php echo $loginLinkText; ?></a>
                     <a href="./cart.php" class="nav-link"><i class="fas fa-shopping-cart"></i> Cart </a>
                 </div>
             </div>
@@ -64,56 +65,35 @@ if(isset($_SESSION['userid']) && isset($_SESSION['username'])) {
         <section class="terms-of-service-section">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-12">
-                        <h1>Terms of Service</h1>
-                       
-                        <h5>User Agreement:</h5>
+                    <?php
+                    $sql = "SELECT * FROM termsofservice";
+                    $result = $conn->query($sql);
 
-<p>Welcome to MedLinkUp! By accessing and using our online pharmacy platform, you agree to abide by the following terms and conditions. Please read this agreement carefully before accessing or using our services.</p>
+                    if ($result->num_rows > 0) {
+                        echo '<div class="container about-us">';
+                        echo '    <section class="about-section">';
+                        echo '        <div class="row">';
 
-<h5>Product and Service Offerings:</h5>
+                        while ($row = $result->fetch_assoc()) {
+                                echo '            <div class="col-md-12">';
+                                echo '                <h1>' . $row["sectiontitle"] . '</h1>';
+                                echo '                <p>' . nl2br($row["sectioncontent"]) . '</p>';
+                                echo '                <br>'; 
+                                echo '            </div>';
+                            
+                        }
 
-<p>MedLinkUp offers a wide range of products and services, including prescription drugs, over-the-counter medications, supplements, and other health-related products. Our platform aims to provide users with convenient access to quality healthcare products.</p>
+                        echo '        </div>';
+                        echo '    </section>';
+                        echo '</div>';
+                    } else {
+                        echo "0 results";
+                    }
+                    $conn->close();
+                    ?>
 
-<h5>Ordering Process:</h5>
-
-<p>To place an order on MedLinkUp, users can navigate through our website, select desired products, and proceed to checkout. We accept various payment methods, including PayPal and Cash on Delivery (COD). Upon successful payment, users will receive confirmation of their order along with shipping details.</p>
-
-<h5>Privacy Policy:</h5>
-
-<p>Please refer to our Privacy Policy for detailed information on how we collect, use, and protect your personal data. Your privacy and security are of utmost importance to us, and we are committed to safeguarding your information.</p>
-
-<h5>Security Measures:</h5>
-
-<p>At MedLinkUp, we prioritize the security of our users' data and employ industry-standard measures to protect against unauthorized access or misuse. Our secure payment gateway ensures the confidentiality of your payment information during transactions.</p>
-
-<h5>Legal Disclaimers:</h5>
-
-<p>While we strive to provide accurate and up-to-date information, MedLinkUp cannot guarantee the accuracy or completeness of all content on our platform. We disclaim any liability for errors or omissions in product descriptions, pricing, or other information provided.</p>
-
-<h5>Refund and Return Policy:</h5>
-
-<p>Please note that MedLinkUp does not offer refunds for purchases. We encourage users to review their orders carefully before completing the transaction. Once an order is confirmed and processed, it cannot be canceled or refunded. We apologize for any inconvenience this may cause and appreciate your understanding.</p>
-
-<h5>Compliance with Laws:</h5>
-
-<p>MedLinkUp operates in compliance with all relevant laws, regulations, and industry standards governing the sale of medications and healthcare products online. We are committed to upholding the highest standards of ethics and integrity in all our business practices.</p>
-
-<h5>Contact Information:</h5>
-
-<p>For any inquiries, concerns, or feedback regarding our services, please feel free to contact us:</p>
-<ul>
-    <li>Email: medlinkupcontact@gmail.com</li>
-    <li>Phone: [insert phone number]</li>
-    <li>Address: [insert mailing address]</li>
-</ul>
-
-<p>By accessing or using MedLinkUp, you agree to be bound by these terms and conditions. If you do not agree with any part of this agreement, please refrain from using our services. We reserve the right to update or modify these terms at any time without prior notice. Continued use of our platform after any such changes constitutes your acceptance of the revised terms.</p>
-
-<p>Thank you for choosing MedLinkUp for your healthcare needs!</p>
-</div>
-                    </div>
                 </div>
+            </div>
             </div>
         </section>
     </main>
@@ -123,7 +103,8 @@ if(isset($_SESSION['userid']) && isset($_SESSION['username'])) {
             <div class="row">
                 <div class="col-md-12 text-center">
                     <h3>Our Mission</h3>
-                    <p>Empowering health through easy access to medications. Your trusted online platform for quality pharmaceuticals.</p>
+                    <p>Empowering health through easy access to medications. Your trusted online platform for quality
+                        pharmaceuticals.</p>
                 </div>
             </div>
         </div>

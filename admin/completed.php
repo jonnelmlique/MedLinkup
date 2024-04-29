@@ -76,26 +76,40 @@
                     <li><a href="../admin/history.php">History</a></li>
                 </ul>
             </li>
-
             <ul class="side-menu">
                 <li>
                     <a href="#">
-                        <i class='fa fa-cogs'></i>
-                        <span class="text"> Settings</span>
+                        <i class='fa fa-user-cog'></i>
+                        <span class="text">System Maintenane</span>
                     </a>
                     <ul class="submenu">
-                        <li><a href="../admin/delivery.php">Delivery Address</a></li>
-
-
+                        <li><a href="../admin/about.php">About</a></li>
+                        <li><a href="../admin/privacypolicy.php">Privacy Policy</a></li>
+                        <li><a href="../admin/termsofservice.php">Terms of Service</a></li>
+                        <li><a href="../admin/home.php">Home</a></li>
+                        <li><a href="../admin/header.php">Header</a></li>
+                        <li><a href="../admin/footer.php">Footer</a></li>
                     </ul>
                 </li>
-                <li>
-                    <a href="../logout.php" class="logout">
-                        <i class='fas fa-user'></i>
-                        <span class="text"> Logout</span>
-                    </a>
-                </li>
-            </ul>
+                <ul class="side-menu">
+                    <li>
+                        <a href="#">
+                            <i class='fa fa-cogs'></i>
+                            <span class="text"> Settings</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="../admin/delivery.php">Delivery Address</a></li>
+
+
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="../logout.php" class="logout">
+                            <i class='fas fa-user'></i>
+                            <span class="text"> Logout</span>
+                        </a>
+                    </li>
+                </ul>
     </section>
 
     <section id="content">
@@ -174,20 +188,20 @@
     <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-    function previewImage(event) {
-        var preview = document.getElementById('preview-image');
-        var file = event.target.files[0];
-        var reader = new FileReader();
+        function previewImage(event) {
+            var preview = document.getElementById('preview-image');
+            var file = event.target.files[0];
+            var reader = new FileReader();
 
-        reader.onloadend = function() {
-            preview.style.display = 'block';
-            preview.querySelector('img').src = reader.result;
-        }
+            reader.onloadend = function () {
+                preview.style.display = 'block';
+                preview.querySelector('img').src = reader.result;
+            }
 
-        if (file) {
-            reader.readAsDataURL(file);
+            if (file) {
+                reader.readAsDataURL(file);
+            }
         }
-    }
     </script>
 </body>
 

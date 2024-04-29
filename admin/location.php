@@ -77,27 +77,41 @@
                     <li><a href="../admin/history.php">History</a></li>
                 </ul>
             </li>
-
             <ul class="side-menu">
                 <li>
                     <a href="#">
-                        <i class='fa fa-cogs'></i>
-                        <span class="text"> Settings</span>
+                        <i class='fa fa-user-cog'></i>
+                        <span class="text">System Maintenane</span>
                     </a>
                     <ul class="submenu">
-                        <li><a href="../admin/delivery.php">Delivery Address</a></li>
-
-
+                        <li><a href="../admin/about.php">About</a></li>
+                        <li><a href="../admin/privacypolicy.php">Privacy Policy</a></li>
+                        <li><a href="../admin/termsofservice.php">Terms of Service</a></li>
+                        <li><a href="../admin/home.php">Home</a></li>
+                        <li><a href="../admin/header.php">Header</a></li>
+                        <li><a href="../admin/footer.php">Footer</a></li>
                     </ul>
+                </li>
+                <ul class="side-menu">
+                    <li>
+                        <a href="#">
+                            <i class='fa fa-cogs'></i>
+                            <span class="text"> Settings</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="../admin/delivery.php">Delivery Address</a></li>
 
-                </li>
-                <li>
-                    <a href="../logout.php" class="logout">
-                        <i class='fas fa-user'></i>
-                        <span class="text"> Logout</span>
-                    </a>
-                </li>
-            </ul>
+
+                        </ul>
+
+                    </li>
+                    <li>
+                        <a href="../logout.php" class="logout">
+                            <i class='fas fa-user'></i>
+                            <span class="text"> Logout</span>
+                        </a>
+                    </li>
+                </ul>
     </section>
 
     <section id="content">
@@ -129,44 +143,44 @@
 
 
                         <?php
-include '../src/config/config.php';
+                        include '../src/config/config.php';
 
-$message = ""; 
+                        $message = "";
 
-try {
-  
-    if ($conn->connect_error) {
-        throw new Exception("Connection failed: " . $conn->connect_error);
-    }
+                        try {
 
-    $sql = "SELECT country, region, province, city, barangay FROM availablelocations";
-    $result = $conn->query($sql);
+                            if ($conn->connect_error) {
+                                throw new Exception("Connection failed: " . $conn->connect_error);
+                            }
 
-    if ($result->num_rows > 0) {
+                            $sql = "SELECT country, region, province, city, barangay FROM availablelocations";
+                            $result = $conn->query($sql);
 
-        echo '<h2>Available Location List</h2>';
-        echo '<table class="table">';
-        echo '<thead><tr><th>Country</th><th>Region</th><th>Province</th><th>City</th><th>Barangay</th></tr></thead>';
-        echo '<tbody>';
-        while ($row = $result->fetch_assoc()) {
-            echo '<tr>';
-            echo '<td>' . $row['country'] . '</td>';
-            echo '<td>' . $row['region'] . '</td>';
-            echo '<td>' . $row['province'] . '</td>';
-            echo '<td>' . $row['city'] . '</td>';
-            echo '<td>' . $row['barangay'] . '</td>';
-            echo '</tr>';
-        }
-        echo '</tbody></table>';
-    } else {
-        echo "No available locations found";
-    }
+                            if ($result->num_rows > 0) {
 
-    $conn->close();
-} catch (Exception $e) {
-    $message = $e->getMessage();
-}
-?>
+                                echo '<h2>Available Location List</h2>';
+                                echo '<table class="table">';
+                                echo '<thead><tr><th>Country</th><th>Region</th><th>Province</th><th>City</th><th>Barangay</th></tr></thead>';
+                                echo '<tbody>';
+                                while ($row = $result->fetch_assoc()) {
+                                    echo '<tr>';
+                                    echo '<td>' . $row['country'] . '</td>';
+                                    echo '<td>' . $row['region'] . '</td>';
+                                    echo '<td>' . $row['province'] . '</td>';
+                                    echo '<td>' . $row['city'] . '</td>';
+                                    echo '<td>' . $row['barangay'] . '</td>';
+                                    echo '</tr>';
+                                }
+                                echo '</tbody></table>';
+                            } else {
+                                echo "No available locations found";
+                            }
+
+                            $conn->close();
+                        } catch (Exception $e) {
+                            $message = $e->getMessage();
+                        }
+                        ?>
 
 
                         </tbody>
