@@ -14,12 +14,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $paymentMethod = $_POST['paymentMethod'];
     $addressID = $_POST['addressID'];
     $transactionID = $_POST['transactionID'];
-
+    $discount_amount = $_POST['discount_amount'];
     $orderDate = date("Y-m-d H:i:s");
 
 
-    $sql = "INSERT INTO orderprocess (userid, productid, quantity, totalproductprice, shippingfee, totalprice, orderdate, status, paymentmethod, addressid, transactionid) 
-    VALUES ('$userID', '$productID', '$quantity', '$totalProductPrice', '$shippingFee', '$totalPrice', '$orderDate', '$status', '$paymentMethod', '$addressID', '$transactionID')";
+    $sql = "INSERT INTO orderprocess (userid, productid, quantity, totalproductprice, shippingfee, totalprice, orderdate, status, paymentmethod, addressid, transactionid, discount_percentage) 
+    VALUES ('$userID', '$productID', '$quantity', '$totalProductPrice', '$shippingFee', '$totalPrice', '$orderDate', '$status', '$paymentMethod', '$addressID', '$transactionID', '$discount_amount')";
 
 
     if (mysqli_query($conn, $sql)) {

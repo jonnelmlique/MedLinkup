@@ -145,10 +145,70 @@ if (mysqli_num_rows($result) > 0) {
                         </div>
                         <span class="text-success">₱<?php echo $shippingFee; ?></span>
                     </li>
+                    <?php
+                    // Initialize discount amount to 0
+                    $discount_amount = 0;
+
+                    // Check if the user ID is set in the session
+                    if (isset($_SESSION['userid'])) {
+                        // Get the user ID from the session
+                        $user_id = $_SESSION['userid'];
+
+                        // Query to check the user's status and get the discount type
+                        $verification_query = "SELECT status, type FROM discountverification WHERE userid = ?";
+                        $stmt = $conn->prepare($verification_query);
+                        $stmt->bind_param("i", $user_id);
+                        $stmt->execute();
+                        $verification_result = $stmt->get_result();
+
+                        // Check if the query executed successfully
+                        if ($verification_result) {
+                            // Fetching user's verification information
+                            $verification_info = $verification_result->fetch_assoc();
+                            $status = $verification_info['status'];
+                            $discount_type = $verification_info['type'];
+
+                            if ($status === 'Accepted' && $discount_type !== 'None') {
+                                // User is eligible for a discount, retrieve the discount percentage
+                                $discount_query = "SELECT discountpercentage FROM discounts WHERE discounttype = ?";
+                                $stmt = $conn->prepare($discount_query);
+                                $stmt->bind_param("s", $discount_type);
+                                $stmt->execute();
+                                $discount_result = $stmt->get_result();
+
+                                // Check if the discount percentage is retrieved successfully
+                                if ($discount_result && $discount_result->num_rows > 0) {
+                                    $discount_info = $discount_result->fetch_assoc();
+                                    $discount_percentage = $discount_info['discountpercentage'];
+
+                                    // Calculate the discount amount based on the total price
+                                    $discount_amount = ($totalPrice + $shippingFee) * ($discount_percentage / 100);
+
+                                    // Cap the discount amount at 100 pesos
+                                    $discount_amount = min($discount_amount, 100);
+                                }
+                            }
+                        }
+                    }
+
+                    // Calculate the percentage of the capped discount relative to the cap
+                    $discount_percentage_relative_to_cap = ($discount_amount / 100) * 100;
+
+                    // Display the discount amount
+                    echo '<li class="list-group-item d-flex justify-content-between bg-light">';
+                    echo '<div class="text-success">';
+                    echo '<h6 class="my-0">Discount</h6>';
+                    echo '</div>';
+                    echo '<span class="text-success">₱' . number_format($discount_amount, 2) . ' / 100 ( ' . $discount_percentage_relative_to_cap . '% )</span>';
+                    echo '</li>';
+
+                    // Calculate the total price after applying the discount
+                    $totalPriceWithDiscount = $totalPrice + $shippingFee - $discount_amount;
+                    ?>
 
                     <li class="list-group-item d-flex justify-content-between">
                         <span>Total (PHP)</span>
-                        <strong>₱<?php echo $totalPrice + $shippingFee; ?></strong>
+                        <strong>₱<?php echo number_format($totalPriceWithDiscount, 2); ?></strong>
                     </li>
 
                 </ul>
@@ -321,7 +381,7 @@ if (mysqli_num_rows($result) > 0) {
             var container = document.getElementById("paypal-button-container");
             container.innerHTML = "";
 
-            var totalAmount = <?php echo $totalPrice + $shippingFee; ?>;
+            var totalAmount = <?php echo $totalPrice + $shippingFee - $discount_amount; ?>;
             console.log("Total Amount:", totalAmount);
 
             paypal.Buttons({
@@ -355,7 +415,7 @@ if (mysqli_num_rows($result) > 0) {
                             }
                         };
                         var data =
-                            "userID=<?php echo $userID; ?>&productID=<?php echo $productID; ?>&quantity=<?php echo $quantity; ?>&totalPrice=<?php echo $totalPrice + $shippingFee; ?>&totalProductPrice=<?php echo $totalPrice; ?>&shippingFee=<?php echo $shippingFee; ?>&status=Processing&paymentMethod=PayPal&addressID=<?php echo $shippingAddress['addressid']; ?>&transactionID=" +
+                            "userID=<?php echo $userID; ?>&productID=<?php echo $productID; ?>&quantity=<?php echo $quantity; ?>&totalPrice=<?php echo $totalPrice + $shippingFee - $discount_amount; ?>&totalProductPrice=<?php echo $totalPrice; ?>&shippingFee=<?php echo $shippingFee; ?>&status=Processing&paymentMethod=PayPal&addressID=<?php echo $shippingAddress['addressid']; ?>&discount_percentage=<?php echo $discount_amount; ?>&transactionID=" +
                             transactionID;
                         xhr.send(data);
                         <?php
@@ -395,7 +455,7 @@ if (mysqli_num_rows($result) > 0) {
                 }
             };
             var data =
-                "userID=<?php echo $userID; ?>&productID=<?php echo $productID; ?>&quantity=<?php echo $quantity; ?>&totalPrice=<?php echo $totalPrice + $shippingFee; ?>&totalProductPrice=<?php echo $totalPrice; ?>&shippingFee=<?php echo $shippingFee; ?>&status=Pending&paymentMethod=COD&addressID=<?php echo $shippingAddress['addressid']; ?>&transactionID=" +
+                "userID=<?php echo $userID; ?>&productID=<?php echo $productID; ?>&quantity=<?php echo $quantity; ?>&totalPrice=<?php echo $totalPrice + $shippingFee - $discount_percentage; ?>&totalProductPrice=<?php echo $totalPrice; ?>&shippingFee=<?php echo $shippingFee; ?>&status=Pending&paymentMethod=COD&addressID=<?php echo $shippingAddress['addressid']; ?>&discount_amount=<?php echo $discount_amount; ?>&transactionID=" +
                 transactionID;
             xhr.send(data);
             <?php

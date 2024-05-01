@@ -115,6 +115,7 @@
             o.status, 
             o.paymentmethod,
             o.quantity,
+            o.discount_percentage,
             CONCAT(s.firstname, ' ', s.lastname) AS flname,
             CONCAT(s.addressline1, ', ', s.addressline2, ', ', s.city, ', ', s.province, ', ', s.country) AS address 
         FROM 
@@ -132,7 +133,7 @@
 
         if (mysqli_num_rows($result) > 0) {
             $transactionDetails = mysqli_fetch_assoc($result); // Fetch the transaction details
-    ?>
+            ?>
     <main>
         <div class="container">
             <div class="row justify-content-center">
@@ -140,10 +141,10 @@
                     <div class="pending-section">
                         <h1 class="lefth">Order Details</h1>
                         <?php
-                            if (!empty($transactionDetails['status']) && $transactionDetails['status'] === 'Completed') {
-                            echo '<button class="printReceipt" data-transactionid="' . $transactionid . '">Print Receipt</button>';
-                            }
-                            ?>
+                                if (!empty($transactionDetails['status']) && $transactionDetails['status'] === 'Completed') {
+                                    echo '<button class="printReceipt" data-transactionid="' . $transactionid . '">Print Receipt</button>';
+                                }
+                                ?>
                         <div class="customerinformation">
                             <p><strong>Name:</strong> <?php echo $transactionDetails['flname']; ?></p>
                             <p><strong>Username:</strong> <?php echo $transactionDetails['username']; ?></p>
@@ -152,9 +153,9 @@
                         <hr>
 
                         <?php
-                            mysqli_data_seek($result, 0); 
-                            while ($row = mysqli_fetch_assoc($result)) {
-                            ?>
+                                mysqli_data_seek($result, 0);
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    ?>
                         <a href="../product.php?id=<?php echo $row['productid']; ?>"
                             style="text-decoration: none; color: inherit;">
                             <div class="product-box">
@@ -172,8 +173,8 @@
                             </div>
                         </a>
                         <?php
-                            }
-                            ?>
+                                }
+                                ?>
 
                         <hr>
                         <div class="transactiondetails">
@@ -181,6 +182,9 @@
                             <p><strong>Merchandise Subtotal:</strong>
                                 ₱<?php echo $transactionDetails['totalproductprice']; ?></p>
                             <p><strong>Shipping Fee:</strong> ₱<?php echo $transactionDetails['shippingfee']; ?></p>
+                            <?php if ($transactionDetails['discount_percentage'] != 0): ?>
+                            <p><strong>Discount:</strong> ₱<?php echo $transactionDetails['discount_percentage']; ?></p>
+                            <?php endif; ?>
                             <p><strong>Order Total:</strong> ₱<?php echo $transactionDetails['totalprice']; ?></p>
                             <p><strong>Payment Method:</strong> <?php echo $transactionDetails['paymentmethod']; ?></p>
                             <p><strong>Order Date:</strong> <?php echo $transactionDetails['orderdate']; ?></p>
@@ -202,13 +206,13 @@
 
     </main>
     <?php
+        } else {
+            echo "<p>No products found for this order.</p>";
+        }
     } else {
-        echo "<p>No products found for this order.</p>";
+        echo "<p>Transaction ID not provided.</p>";
     }
-} else {
-    echo "<p>Transaction ID not provided.</p>";
-}
-?>
+    ?>
 
 
 

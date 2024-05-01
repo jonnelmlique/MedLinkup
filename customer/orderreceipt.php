@@ -39,6 +39,7 @@
             o.status, 
             o.paymentmethod,
             o.quantity,
+            o.discount_percentage,
             CONCAT(s.firstname, ' ', s.lastname) AS flname,
             CONCAT(s.addressline1, ', ', s.addressline2, ', ', s.city, ', ', s.province, ', ', s.country) AS address 
         FROM 
@@ -97,6 +98,9 @@
             <p><strong>Transaction ID:</strong> <?php echo $transactionDetails['transactionid']; ?></p>
             <p><strong>Merchandise Subtotal:</strong> ₱<?php echo $transactionDetails['totalproductprice']; ?></p>
             <p><strong>Shipping Fee:</strong> ₱<?php echo $transactionDetails['shippingfee']; ?></p>
+            <?php if ($transactionDetails['discount_percentage'] != 0): ?>
+            <p><strong>Discount:</strong> ₱<?php echo $transactionDetails['discount_percentage']; ?></p>
+            <?php endif; ?>
             <p><strong>Total:</strong> ₱<?php echo $transactionDetails['totalprice']; ?></p>
             <p><strong>Payment Method:</strong> <?php echo $transactionDetails['paymentmethod']; ?></p>
             <p><strong>Order Date:</strong> <?php echo $transactionDetails['orderdate']; ?></p>

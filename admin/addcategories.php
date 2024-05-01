@@ -138,9 +138,7 @@ if (isset($conn)) {
                         <li><a href="../admin/about.php">About</a></li>
                         <li><a href="../admin/privacypolicy.php">Privacy Policy</a></li>
                         <li><a href="../admin/termsofservice.php">Terms of Service</a></li>
-                        <li><a href="../admin/home.php">Home</a></li>
-                        <li><a href="../admin/header.php">Header</a></li>
-                        <li><a href="../admin/footer.php">Footer</a></li>
+
                     </ul>
                 </li>
                 <ul class="side-menu">
@@ -248,20 +246,20 @@ if (isset($conn)) {
     ?>
 
     <script>
-        function previewImage(event) {
-            var preview = document.getElementById('preview-image');
-            var file = event.target.files[0];
-            var reader = new FileReader();
+    function previewImage(event) {
+        var preview = document.getElementById('preview-image');
+        var file = event.target.files[0];
+        var reader = new FileReader();
 
-            reader.onloadend = function () {
-                preview.style.display = 'block';
-                preview.querySelector('img').src = reader.result;
-            }
-
-            if (file) {
-                reader.readAsDataURL(file);
-            }
+        reader.onloadend = function() {
+            preview.style.display = 'block';
+            preview.querySelector('img').src = reader.result;
         }
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    }
     </script>
 </body>
 
