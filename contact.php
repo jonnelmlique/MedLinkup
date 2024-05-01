@@ -84,7 +84,10 @@ if (isset($_SESSION['userid']) && isset($_SESSION['username'])) {
             $message = $_POST['message'];
             $messageToInsert = $_POST['message'];
 
-            $mail = new PHPMailer(true);
+
+            date_default_timezone_set('Asia/Manila');
+
+            $currentTimestamp = date("Y-m-d H:i:s");
             $mail = new PHPMailer(true);
 
             try {
@@ -108,8 +111,8 @@ if (isset($_SESSION['userid']) && isset($_SESSION['username'])) {
 
                 $mail->send();
 
-                $stmt = $conn->prepare("INSERT INTO contact (email, subject, messagecontent) VALUES (?, ?, ?)");
-                $stmt->bind_param("sss", $email, $subject, $messageToInsert);
+                $stmt = $conn->prepare("INSERT INTO contact (email, subject, messagecontent, received) VALUES (?, ?, ?, ?)");
+                $stmt->bind_param("ssss", $email, $subject, $messageToInsert, $currentTimestamp);
 
                 $stmt->execute();
 

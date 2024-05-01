@@ -81,10 +81,16 @@ try {
                             <span class="text"> Sales</span>
                         </a>
                     </li>
-                    <li>
+                    <li class="active">
                         <a href="../admin/customer.php">
                             <i class='fas fa-portrait'></i>
                             <span class="text"> Customers</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../admin/contact.php">
+                            <i class='fas fa-envelope'></i>
+                            <span class="text"> Contact</span>
                         </a>
                     </li>
                     <li>
@@ -118,9 +124,6 @@ try {
                                 <li><a href="../admin/about.php">About</a></li>
                                 <li><a href="../admin/privacypolicy.php">Privacy Policy</a></li>
                                 <li><a href="../admin/termsofservice.php">Terms of Service</a></li>
-                                <li><a href="../admin/home.php">Home</a></li>
-                                <li><a href="../admin/header.php">Header</a></li>
-                                <li><a href="../admin/footer.php">Footer</a></li>
                             </ul>
                         </li>
                         <ul class="side-menu">

@@ -129,8 +129,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <div class="invalid-feedback">Please enter your password.</div>
                             </div>
                             <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" id="rememberMe">
-                                <label class="form-check-label" for="rememberMe">Remember me</label>
+                                <input type="checkbox" class="form-check-input" id="showPasswordCheckbox">
+                                <label class="form-check-label" for="showPasswordCheckbox">Show Password</label>
                             </div>
                             <button type="submit" class="btn btn-success btn-block">Login</button>
                         </form>
@@ -186,6 +186,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </script>";
     }
     ?>
+    <script>
+        $(document).ready(function () {
+            $('#showPasswordCheckbox').change(function () {
+                var passwordInput = $('#password');
+                var isChecked = $(this).is(':checked');
+                if (isChecked) {
+                    passwordInput.attr('type', 'text');
+                } else {
+                    passwordInput.attr('type', 'password');
+                }
+            });
+        });
+    </script>
+
 </body>
 
 </html>

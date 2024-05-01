@@ -30,11 +30,27 @@ body {
   overflow-y: auto;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.3s;
+  
 }
 #sidebar:hover {
   box-shadow: 0 8px 12px rgba(28, 150, 1, 0.2);
 }
+#sidebar::-webkit-scrollbar {
+  width: 3px; 
+}
 
+#sidebar::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+
+#sidebar::-webkit-scrollbar-thumb {
+  background: #888; 
+  border-radius: 5px; 
+}
+
+#sidebar::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
 .brand {
   display: block;
   text-decoration: none;
@@ -83,6 +99,7 @@ body {
 }
 .side-menu li a.logout {
   color: #d92222;
+  margin-bottom: 40px;
 }
 .side-menu a:hover {
   background-color: rgba(51, 169, 25, 0.767);
@@ -91,11 +108,9 @@ body {
 .active a {
   background-color: #7acb68;
 }
-
 .text {
   margin-left: 10px;
 }
-
 nav {
   background-color: #f0f3f2;
   color: #21313c;

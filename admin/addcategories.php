@@ -100,7 +100,12 @@ if (isset($conn)) {
                     <span class="text"> Customers</span>
                 </a>
             </li>
-
+            <li>
+                <a href="../admin/contact.php">
+                    <i class='fas fa-envelope'></i>
+                    <span class="text"> Contact</span>
+                </a>
+            </li>
             <li>
                 <a href="#">
                     <i class='fas fa-clone'></i>

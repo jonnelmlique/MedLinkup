@@ -149,7 +149,12 @@ try {
                     <span class="text"> Customers</span>
                 </a>
             </li>
-
+            <li>
+                <a href="../admin/contact.php">
+                    <i class='fas fa-envelope'></i>
+                    <span class="text"> Contact</span>
+                </a>
+            </li>
             <li>
                 <a href="#">
                     <i class='fas fa-clone'></i>
@@ -426,67 +431,67 @@ try {
     }
     ?>
     <script>
-    function fetchRegions(country) {
-        $.ajax({
-            url: 'fetch_regions.php',
-            type: 'POST',
-            data: {
-                country: country
-            },
-            success: function(response) {
-                $('#region').html(response);
-                $('#region').prop('disabled', false);
-                $('#province').prop('disabled', true).val('');
-                $('#city').prop('disabled', true).val('');
-                $('#barangay').prop('disabled', true).val('');
-            }
-        });
-    }
+        function fetchRegions(country) {
+            $.ajax({
+                url: 'fetch_regions.php',
+                type: 'POST',
+                data: {
+                    country: country
+                },
+                success: function (response) {
+                    $('#region').html(response);
+                    $('#region').prop('disabled', false);
+                    $('#province').prop('disabled', true).val('');
+                    $('#city').prop('disabled', true).val('');
+                    $('#barangay').prop('disabled', true).val('');
+                }
+            });
+        }
 
-    function fetchProvinces(region) {
-        $.ajax({
-            url: 'fetch_provinces.php',
-            type: 'POST',
-            data: {
-                region: region
-            },
-            success: function(response) {
-                $('#province').html(response);
-                $('#province').prop('disabled', false);
-                $('#city').prop('disabled', true).val('');
-                $('#barangay').prop('disabled', true).val('');
-            }
-        });
-    }
+        function fetchProvinces(region) {
+            $.ajax({
+                url: 'fetch_provinces.php',
+                type: 'POST',
+                data: {
+                    region: region
+                },
+                success: function (response) {
+                    $('#province').html(response);
+                    $('#province').prop('disabled', false);
+                    $('#city').prop('disabled', true).val('');
+                    $('#barangay').prop('disabled', true).val('');
+                }
+            });
+        }
 
-    function fetchCities(province) {
-        $.ajax({
-            url: 'fetch_cities.php',
-            type: 'POST',
-            data: {
-                province: province
-            },
-            success: function(response) {
-                $('#city').html(response);
-                $('#city').prop('disabled', false);
-                $('#barangay').prop('disabled', true).val('');
-            }
-        });
-    }
+        function fetchCities(province) {
+            $.ajax({
+                url: 'fetch_cities.php',
+                type: 'POST',
+                data: {
+                    province: province
+                },
+                success: function (response) {
+                    $('#city').html(response);
+                    $('#city').prop('disabled', false);
+                    $('#barangay').prop('disabled', true).val('');
+                }
+            });
+        }
 
-    function fetchBarangays(city) {
-        $.ajax({
-            url: 'fetch_barangays.php',
-            type: 'POST',
-            data: {
-                city: city
-            },
-            success: function(response) {
-                $('#barangay').html(response);
-                $('#barangay').prop('disabled', false);
-            }
-        });
-    }
+        function fetchBarangays(city) {
+            $.ajax({
+                url: 'fetch_barangays.php',
+                type: 'POST',
+                data: {
+                    city: city
+                },
+                success: function (response) {
+                    $('#barangay').html(response);
+                    $('#barangay').prop('disabled', false);
+                }
+            });
+        }
     </script>
 
 

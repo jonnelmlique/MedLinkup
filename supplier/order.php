@@ -186,6 +186,8 @@ if (!isset($_SESSION['userid'])) {
     <script src="../node_modules/bootstrap/js/src/sidebar.js"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
     $(document).ready(function() {
         $('.orderapprove').click(function(e) {
@@ -201,10 +203,23 @@ if (!isset($_SESSION['userid'])) {
                 },
                 success: function(response) {
                     console.log(response);
-                    location.reload();
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Order Approved!',
+                        text: 'The order status has been updated successfully.',
+                        confirmButtonText: 'OK'
+                    }).then(function() {
+                        location.reload();
+                    });
                 },
                 error: function(xhr, status, error) {
-                    console.error(error);
+                    console.error(xhr.responseText);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'There was an error updating the order status. Please try again later.',
+                        confirmButtonText: 'OK'
+                    });
                 }
             });
         });

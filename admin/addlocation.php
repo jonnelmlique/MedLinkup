@@ -99,6 +99,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </a>
             </li>
             <li>
+                <a href="../admin/contact.php">
+                    <i class='fas fa-envelope'></i>
+                    <span class="text"> Contact</span>
+                </a>
+            </li>
+            <li>
                 <a href="#">
                     <i class='fas fa-clone'></i>
                     <span class="text">Shipping Settings</span>

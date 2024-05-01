@@ -65,6 +65,12 @@ if (!isset($_SESSION['userid'])) {
                 </a>
             </li>
             <li>
+                <a href="../admin/contact.php">
+                    <i class='fas fa-envelope'></i>
+                    <span class="text"> Contact</span>
+                </a>
+            </li>
+            <li>
                 <a href="#">
                     <i class='fas fa-clone'></i>
                     <span class="text">Shipping Settings</span>
@@ -95,9 +101,7 @@ if (!isset($_SESSION['userid'])) {
                         <li><a href="../admin/about.php">About</a></li>
                         <li><a href="../admin/privacypolicy.php">Privacy Policy</a></li>
                         <li><a href="../admin/termsofservice.php">Terms of Service</a></li>
-                        <li><a href="../admin/home.php">Home</a></li>
-                        <li><a href="../admin/header.php">Header</a></li>
-                        <li><a href="../admin/footer.php">Footer</a></li>
+
                     </ul>
                 </li>
                 <ul class="side-menu">
@@ -138,7 +142,7 @@ if (!isset($_SESSION['userid'])) {
                         <h1 class="lefth">Order - To Ship</h1>
                         <hr>
                         <div class="buttonabc">
-                            <a class="buttona" href="../admin/orderstatus.php">To Ship</a>
+                                <a class="buttona" href="../admin/orderstatus.php">To Ship</a>
                             <a class="buttonb" href="../admin/toreceived.php">To Received</a>
                             <a class="buttonc" href="../admin/completedorder.php">Completed</a>
                         </div>
@@ -179,36 +183,40 @@ if (!isset($_SESSION['userid'])) {
                         $result = mysqli_query($conn, $query);
                         if (mysqli_num_rows($result) > 0) {
                             ?>
-                            <?php
-                            while ($row = mysqli_fetch_assoc($result)) {
-                                ?>
-                                <a href="supplierorderdetails.php?transactionid=<?php echo $row['transactionid']; ?>"
-                                    style="text-decoration: none; color: inherit;">
-                                    <div class="product-box">
-                                        <div class="product-details">
-                                            <img src="../productimg/<?php echo $row['image']; ?>"
-                                                alt="<?php echo $row['productname']; ?>" class="product-image">
-                                            <div class="product-info">
-                                                <div class="product-name"><?php echo $row['productname']; ?></div>
-                                                <div class="product-status"><span
-                                                        class="s <?php echo strtolower($row['status']); ?>"><?php echo $row['status']; ?></span>
-                                                </div>
-                                                <div class="product-price price">₱<?php echo $row['totalprice']; ?></div>
+                                <?php
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    ?>
+                                    <a href="supplierorderdetails.php?transactionid=<?php echo $row['transactionid']; ?>"
+                                        style="text-decoration: none; color: inherit;">
+                                        <div class="product-box">
+                                            <div class="product-details">
+                                                <img src="../productimg/<?php echo $row['image']; ?>"
+                                                alt=" <?php echo $row['productname']; ?>" class="product-image">
+                                                <div class="product-info">
+                                                    <div class="product-name">
+                                                        <?php echo $row['productname']; ?>
+                                                    </div>
+                                                    <div class="product-status"><span
+                                                            class="s <?php echo strtolower($row['status']); ?>">
+                                                            <?php echo $row['status']; ?>
+                                                        </span>
+                                                    </div>
+                                                                    <div class="product-price price">₱<?php echo $row['totalprice']; ?></div>
                                             </div>
                                         </div>
                                     </div>
                                 </a>
                                 <?php
-                            }
+                                }
                         } else {
                             echo '<p class="orderdisplay">No orders</p>';
                         }
                         ?>
-                        <p class="margin"></p>
-                    </div>
-                </div>
-            </div>
-        </div>
+                                            <p class="margin"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
     </main>
 
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>

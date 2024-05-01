@@ -1,51 +1,35 @@
 <?php
+
 include '../src/config/config.php';
 
-$message = "";
+session_start();
 
-$sql = "SELECT sectiontitle, sectioncontent FROM termsofservice WHERE tosid = 1";
-$result = $conn->query($sql);
+if (!isset($_SESSION['userid'])) {
 
-if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-    $terms_title = $row["sectiontitle"];
-    $terms_content = $row["sectioncontent"];
-} else {
-    $terms_title = "";
-    $terms_content = "";
+    header("Location: ../auth/login.php");
+    exit();
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    try {
-        if (isset($_POST["termsname"])) {
-            $terms_name = $_POST["termsname"];
+if ($_SESSION['usertype'] != 'admin') {
 
-            if ($_POST["termsname"] !== $terms_title || $_POST["editorcontent"] !== $terms_content) {
-
-                $sql = "UPDATE termsofservice SET sectiontitle = ?, sectioncontent = ?";
-                $params = array($terms_name, $_POST["editorcontent"]);
-
-                $sql .= " WHERE tosid = 1";
-                $stmt = $conn->prepare($sql);
-                $stmt->bind_param("ss", $terms_name, $_POST["editorcontent"]);
-                if ($stmt->execute()) {
-                    $message = "success";
-                } else {
-                    throw new Exception("Error executing SQL statement: " . $stmt->error);
-                }
-                $stmt->close();
-            } else {
-                $message = "No changes made to the terms of service section.";
-            }
-        } else {
-            throw new Exception("Please provide all required fields.");
-        }
-    } catch (Exception $e) {
-        $message = $e->getMessage();
+    if ($_SESSION['usertype'] == 'customer') {
+        header("Location: ../customer/dashboard.php");
+        exit();
+    } elseif ($_SESSION['usertype'] == 'supplier') {
+        header("Location: ../supplier/dashboard.php");
+        exit();
     }
 }
-?>
 
+try {
+    if ($_SESSION['usertype'] == 'admin') {
+        $query = "SELECT email, subject, messagecontent, received FROM contact ORDER BY received DESC";
+        $result = mysqli_query($conn, $query);
+
+        if (!$result) {
+            throw new Exception("Query failed: " . mysqli_error($conn));
+        }
+        ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -53,9 +37,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Terms of Service | System Maintenance</title>
+    <title>Contact</title>
+    <!-- <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="../public/css/admin/sidebar.css">
-    <link rel="stylesheet" href="../public/css/admin/termsofservice.css">
+    <link rel="stylesheet" href="../public/css/admin/contact.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 </head>
 
@@ -81,6 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <li><a href="../admin/products.php">Products</a></li>
                     <li><a href="../admin/lowstock.php">Low Stock</a></li>
                     <li><a href="../admin/categories.php">Categories</a></li>
+
                 </ul>
             </li>
             <li>
@@ -101,7 +87,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <span class="text"> Customers</span>
                 </a>
             </li>
-            <li>
+            <li class="active">
                 <a href="../admin/contact.php">
                     <i class='fas fa-envelope'></i>
                     <span class="text"> Contact</span>
@@ -117,7 +103,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <li><a href="../admin/shippingfee.php">Shipping Fee</a></li>
                 </ul>
             </li>
-
             <li>
                 <a href="#">
                     <i class='fas fa-clone'></i>
@@ -138,17 +123,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <ul class="submenu">
                         <li><a href="../admin/about.php">About</a></li>
                         <li><a href="../admin/privacypolicy.php">Privacy Policy</a></li>
-                        <li class="active"><a href="../admin/termsofservice.php">Terms of Service</a></li>
+                        <li><a href="../admin/termsofservice.php">Terms of Service</a></li>
                     </ul>
                 </li>
                 <ul class="side-menu">
                     <li>
                         <a href="#">
                             <i class='fa fa-cogs'></i>
-                            <span class="text">Settings</span>
+                            <span class="text"> Settings</span>
                         </a>
                         <ul class="submenu">
                             <li><a href="../admin/delivery.php">Delivery Address</a></li>
+
 
                         </ul>
                     </li>
@@ -161,7 +147,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </ul>
     </section>
 
-
     <section id="content">
         <nav>
             <i class='fa-pills'></i>
@@ -170,77 +155,63 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </a>
         </nav>
     </section>
-    <main>
-        <div class="box-section">
-            <div class="head-title">
-                <div class="left">
-                    <h1 class="lefth">Terms of Service</h1>
-                </div>
-            </div>
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-md-6">
-                        <div class="add-category-section">
-
-
-                            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST"
-                                enctype="multipart/form-data" class="needs-validation">
-                                <div id="form-container">
-                                    <div class="input">
-                                        <div class="mb-3">
-                                            <label for="title">Title</label>
-                                            <input type="text" class="form-control" id="termsname" name="termsname"
-                                                placeholder="Terms of Service" value="<?php echo $terms_title; ?>"
-                                                required>
-                                        </div>
-                                        <div class="editor-content">
-                                            <textarea class="editor-textarea" id="editorcontent" name="editorcontent"
-                                                placeholder="Start typing..."><?php echo $terms_content; ?></textarea>
-                                        </div>
-                                        <button type="submit" class="btn btn-submit">Update</button>
-                                    </div>
-                                </div>
-                        </div>
+    <section id="content">
+        <main>
+            <div class="table-data">
+                <div class="order">
+                    <div class="head">
+                        <h3>Contact</h3>
                     </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Email</th>
+                                <th>Subject</th>
+                                <th>Message</th>
+                                <th>Received</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                                    try {
+                                        while ($row = mysqli_fetch_assoc($result)) {
+                                            echo "<tr>";
+                                            echo "<td>" . $row['email'] . "</td>";
+                                            echo "<td>" . $row['subject'] . "</td>";
+                                            echo "<td>" . $row['messagecontent'] . "</td>";
+                                            echo "<td>" . $row['received'] . "</td>";
+                                            // Add reply button
+                                            echo "<td><a class='reply-button' href='https://mail.google.com/mail/?view=cm&fs=1&to=" . urlencode($row['email']) . "' target='_blank'>Reply</a></td>";
+                                            echo "</tr>";
+                                        }
+                                    } catch (Exception $e) {
+                                        echo "<tr><td colspan='5'>No Message found</td></tr>";
+                                    }
+                                    ?>
+                        </tbody>
+                    </table>
+
+
+
                 </div>
             </div>
-        </div>
-        </div>
-    </main>
+        </main>
+    </section>
+    <!-- node -->
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
     <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <?php
-    if (!empty($message)) {
-        if ($message === "success") {
-            echo "<script>
-            Swal.fire({
-                title: 'Terms of Service Updated Successfully!',
-                text: 'You have successfully Updated the Terms of Service.',
-                icon: 'success',
-                confirmButtonText: 'OK',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = '../admin/termsofservice.php';
-                } else if (result.dismiss === Swal.DismissReason.cancel) {
-                }
-            });
-        </script>";
-        } else {
-            echo "<script>
-            Swal.fire({
-                title: 'Error',
-                text: '" . $message . "',
-                icon: 'error',
-                confirmButtonText: 'OK'
-            });
-        </script>";
-        }
     }
-    ?>
-
-
+    mysqli_free_result($result);
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+}
+mysqli_close($conn);
+?>
 </body>
 
 </html>

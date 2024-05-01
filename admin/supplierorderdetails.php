@@ -1,3 +1,12 @@
+<?php
+    include '../src/config/config.php';
+    session_start();
+
+    if (!isset($_SESSION['userid'])) {
+        header("Location: ../auth/login.php");
+        exit();
+    }
+    ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -55,6 +64,12 @@
                 </a>
             </li>
             <li>
+                <a href="../admin/contact.php">
+                    <i class='fas fa-envelope'></i>
+                    <span class="text"> Contact</span>
+                </a>
+            </li>
+            <li>
                 <a href="#">
                     <i class='fas fa-clone'></i>
                     <span class="text">Shipping Settings</span>
@@ -85,9 +100,7 @@
                         <li><a href="../admin/about.php">About</a></li>
                         <li><a href="../admin/privacypolicy.php">Privacy Policy</a></li>
                         <li><a href="../admin/termsofservice.php">Terms of Service</a></li>
-                        <li><a href="../admin/home.php">Home</a></li>
-                        <li><a href="../admin/header.php">Header</a></li>
-                        <li><a href="../admin/footer.php">Footer</a></li>
+
                     </ul>
                 </li>
                 <ul class="side-menu">
@@ -120,13 +133,7 @@
         </nav>
     </section>
     <?php
-    include '../src/config/config.php';
-    session_start();
-
-    if (!isset($_SESSION['userid'])) {
-        header("Location: ../auth/login.php");
-        exit();
-    }
+  
 
     if (isset($_GET['transactionid'])) {
         $transactionid = $_GET['transactionid'];
@@ -165,75 +172,75 @@
         if (mysqli_num_rows($result) > 0) {
             $transactionDetails = mysqli_fetch_assoc($result); // Fetch the transaction details
             ?>
-            <main>
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-md-6">
-                            <div class="pending-section">
-                                <h1 class="lefth">Order Details</h1>
-                                <?php
+    <main>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="pending-section">
+                        <h1 class="lefth">Order Details</h1>
+                        <?php
                                 if (!empty($transactionDetails['status']) && $transactionDetails['status'] === 'Completed') {
                                     echo '<button class="printReceipt" data-transactionid="' . $transactionid . '">Print Receipt</button>';
                                 }
                                 ?>
-                                <div class="customerinformation">
-                                    <p><strong>Name:</strong> <?php echo $transactionDetails['flname']; ?></p>
-                                    <p><strong>Username:</strong> <?php echo $transactionDetails['username']; ?></p>
-                                    <p><strong>Shipping Address:</strong> <?php echo $transactionDetails['address']; ?></p>
-                                </div>
-                                <hr>
+                        <div class="customerinformation">
+                            <p><strong>Name:</strong> <?php echo $transactionDetails['flname']; ?></p>
+                            <p><strong>Username:</strong> <?php echo $transactionDetails['username']; ?></p>
+                            <p><strong>Shipping Address:</strong> <?php echo $transactionDetails['address']; ?></p>
+                        </div>
+                        <hr>
 
-                                <?php
+                        <?php
                                 mysqli_data_seek($result, 0);
                                 while ($row = mysqli_fetch_assoc($result)) {
                                     ?>
-                                    <a href="../supplier/product.php?id=<?php echo $row['productid']; ?>"
-                                        style="text-decoration: none; color: inherit;">
-                                        <div class="product-box">
-                                            <div class="product-details">
-                                                <img src="../productimg/<?php echo $row['image']; ?>"
-                                                    alt="<?php echo $row['productname']; ?>" class="product-image">
-                                                <div class="product-info">
-                                                    <div class="product-name"><?php echo $row['productname']; ?></div>
-                                                    <div class="product-status">Quantity: <span
-                                                            class="status <?php echo strtolower($row['quantity']); ?>"><?php echo $row['quantity']; ?></span>
-                                                    </div>
-                                                    <div class="product-price price">₱<?php echo $row['supplierprice']; ?></div>
-                                                </div>
-                                            </div>
+                        <a href="../supplier/product.php?id=<?php echo $row['productid']; ?>"
+                            style="text-decoration: none; color: inherit;">
+                            <div class="product-box">
+                                <div class="product-details">
+                                    <img src="../productimg/<?php echo $row['image']; ?>"
+                                        alt="<?php echo $row['productname']; ?>" class="product-image">
+                                    <div class="product-info">
+                                        <div class="product-name"><?php echo $row['productname']; ?></div>
+                                        <div class="product-status">Quantity: <span
+                                                class="status <?php echo strtolower($row['quantity']); ?>"><?php echo $row['quantity']; ?></span>
                                         </div>
-                                    </a>
-                                    <?php
+                                        <div class="product-price price">₱<?php echo $row['supplierprice']; ?></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <?php
                                 }
                                 ?>
 
-                                <hr>
-                                <div class="transactiondetails">
-                                    <p><strong>Transaction ID:</strong> <?php echo $transactionDetails['transactionid']; ?></p>
-                                    <p><strong>Merchandise Subtotal:</strong>
-                                        ₱<?php echo $transactionDetails['totalproductprice']; ?></p>
-                                    <p><strong>Shipping Fee:</strong> ₱<?php echo $transactionDetails['shippingfee']; ?></p>
-                                    <p><strong>Order Total:</strong> ₱<?php echo $transactionDetails['totalprice']; ?></p>
-                                    <p><strong>Payment Method:</strong> <?php echo $transactionDetails['paymentmethod']; ?></p>
-                                    <p><strong>Order Date:</strong> <?php echo $transactionDetails['orderdate']; ?></p>
-                                    <?php if (!empty($transactionDetails['ordercompleted'])): ?>
-                                        <p><strong>Order Completed:</strong> <?php echo $transactionDetails['ordercompleted']; ?>
-                                        </p>
-                                    <?php endif; ?>
-                                    <p><strong>Status: </strong><?php echo $transactionDetails['status']; ?></p>
+                        <hr>
+                        <div class="transactiondetails">
+                            <p><strong>Transaction ID:</strong> <?php echo $transactionDetails['transactionid']; ?></p>
+                            <p><strong>Merchandise Subtotal:</strong>
+                                ₱<?php echo $transactionDetails['totalproductprice']; ?></p>
+                            <p><strong>Shipping Fee:</strong> ₱<?php echo $transactionDetails['shippingfee']; ?></p>
+                            <p><strong>Order Total:</strong> ₱<?php echo $transactionDetails['totalprice']; ?></p>
+                            <p><strong>Payment Method:</strong> <?php echo $transactionDetails['paymentmethod']; ?></p>
+                            <p><strong>Order Date:</strong> <?php echo $transactionDetails['orderdate']; ?></p>
+                            <?php if (!empty($transactionDetails['ordercompleted'])): ?>
+                            <p><strong>Order Completed:</strong> <?php echo $transactionDetails['ordercompleted']; ?>
+                            </p>
+                            <?php endif; ?>
+                            <p><strong>Status: </strong><?php echo $transactionDetails['status']; ?></p>
 
-                                </div>
-
-                            </div>
                         </div>
 
                     </div>
-
-
                 </div>
 
-            </main>
-            <?php
+            </div>
+
+
+        </div>
+
+    </main>
+    <?php
         } else {
             echo "<p>No products found for this order.</p>";
         }
@@ -253,14 +260,14 @@
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 
     <script>
-        $(document).ready(function () {
-            $(".printReceipt").click(function (e) {
-                e.preventDefault();
-                var transactionid = $(this).data("transactionid");
-                window.open('orderreceiptsupplier.php?transactionid=' + transactionid, '_blank',
-                    'width=800,height=600');
-            });
+    $(document).ready(function() {
+        $(".printReceipt").click(function(e) {
+            e.preventDefault();
+            var transactionid = $(this).data("transactionid");
+            window.open('orderreceiptsupplier.php?transactionid=' + transactionid, '_blank',
+                'width=800,height=600');
         });
+    });
     </script>
 
 </body>
