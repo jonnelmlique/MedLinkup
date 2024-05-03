@@ -246,7 +246,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                                     echo '</tbody></table>';
                                 } else {
-                                    echo "No shipping fees found";
+                                    echo "No Discount found";
                                 }
 
                                 $conn->close();

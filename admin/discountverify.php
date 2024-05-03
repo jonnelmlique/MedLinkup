@@ -81,7 +81,7 @@ try {
                     <span class="text"> Sales</span>
                 </a>
             </li>
-            <li class="active">
+            <li>
                 <a href="../admin/customer.php">
                     <i class='fas fa-portrait'></i>
                     <span class="text"> Customers</span>
