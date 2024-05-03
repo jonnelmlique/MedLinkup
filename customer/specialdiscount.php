@@ -234,12 +234,8 @@ try {
                                             placeholder="Email" required>
                                     </div>
 
-                                    <button type="submit" class="btn btn-submit">Add Product</button>
-                                    <a href="./products.php" class="cancel-btn" style="display: inline-block; padding: 13px 16px; 
-                                        background-color: #f44336; color: #fff; text-decoration: 
-                                        none; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;"
-                                        onmouseover="this.style.backgroundColor='#d32f2f';"
-                                        onmouseout="this.style.backgroundColor='#f44336';">Cancel</a>
+                                    <button type="submit" class="btn btn-submit">Verify</button>
+
                                 </form>
                             </div>
                         </div>
