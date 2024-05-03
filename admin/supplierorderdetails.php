@@ -1,12 +1,12 @@
 <?php
-    include '../src/config/config.php';
-    session_start();
+include '../src/config/config.php';
+session_start();
 
-    if (!isset($_SESSION['userid'])) {
-        header("Location: ../auth/login.php");
-        exit();
-    }
-    ?>
+if (!isset($_SESSION['userid'])) {
+    header("Location: ../auth/login.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -72,6 +72,16 @@
             <li>
                 <a href="#">
                     <i class='fas fa-clone'></i>
+                    <span class="text">Discounts</span>
+                </a>
+                <ul class="submenu">
+                    <li><a href="../admin/discounttype.php">Add Discount</a></li>
+                    <li><a href="../admin/discountverify.php">Verification</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='fas fa-clone'></i>
                     <span class="text">Shipping Settings</span>
                 </a>
                 <ul class="submenu">
@@ -133,7 +143,7 @@
         </nav>
     </section>
     <?php
-  
+
 
     if (isset($_GET['transactionid'])) {
         $transactionid = $_GET['transactionid'];

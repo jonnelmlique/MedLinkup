@@ -25,13 +25,13 @@
             </li>
             <li>
                 <a href="#">
-                    <i class='fas fa-portrait'></i>
+                    <i class="fas fa-portrait"></i>
                     <span class="text"> Profile</span>
                 </a>
                 <ul class="submenu">
                     <li><a href="../customer/myprofile.php">My Profile</a></li>
                     <li><a href="../customer/delivery.php">Delivery Address</a></li>
-
+                    <li><a href="../customer/specialdiscount.php">Discount</a></li>
                 </ul>
             </li>
 
@@ -88,18 +88,18 @@
         </nav>
     </section>
     <?php
-include '../src/config/config.php';
-session_start(); 
+    include '../src/config/config.php';
+    session_start();
 
-if (!isset($_SESSION['userid'])) {
-    header("Location: ../auth/login.php");
-    exit();
-}
+    if (!isset($_SESSION['userid'])) {
+        header("Location: ../auth/login.php");
+        exit();
+    }
 
-if(isset($_GET['transactionid'])) {
-    $transactionid = $_GET['transactionid'];
+    if (isset($_GET['transactionid'])) {
+        $transactionid = $_GET['transactionid'];
 
-    $query = "SELECT 
+        $query = "SELECT 
                 o.transactionid,
                 u.username, 
                 p.productid,
@@ -128,10 +128,10 @@ if(isset($_GET['transactionid'])) {
             WHERE 
                 o.transactionid = '$transactionid'";
 
-    $result = mysqli_query($conn, $query);
-    if(mysqli_num_rows($result) > 0) {
-        $transactionDetails = mysqli_fetch_assoc($result);
-?>
+        $result = mysqli_query($conn, $query);
+        if (mysqli_num_rows($result) > 0) {
+            $transactionDetails = mysqli_fetch_assoc($result);
+            ?>
     <main>
         <div class="container">
             <div class="row justify-content-center">
@@ -139,10 +139,10 @@ if(isset($_GET['transactionid'])) {
                     <div class="pending-section">
                         <h1 class="lefth">Order Details</h1>
                         <?php
-                            if (!empty($transactionDetails['status']) && $transactionDetails['status'] === 'Completed') {
-                            echo '<button class="printReceipt" data-transactionid="' . $transactionid . '">Print Receipt</button>';
-                            }
-                            ?>
+                                if (!empty($transactionDetails['status']) && $transactionDetails['status'] === 'Completed') {
+                                    echo '<button class="printReceipt" data-transactionid="' . $transactionid . '">Print Receipt</button>';
+                                }
+                                ?>
                         <div class="customerinformation">
                             <p><strong>Name:</strong> <?php echo $transactionDetails['flname']; ?></p>
                             <p><strong>Username:</strong> <?php echo $transactionDetails['username']; ?></p>
@@ -151,9 +151,9 @@ if(isset($_GET['transactionid'])) {
                         <hr>
 
                         <?php
-                            mysqli_data_seek($result, 0); 
-                            while ($row = mysqli_fetch_assoc($result)) {
-                            ?>
+                                mysqli_data_seek($result, 0);
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    ?>
                         <a href="../product.php?id=<?php echo $row['productid']; ?>"
                             style="text-decoration: none; color: inherit;">
                             <div class="product-box">
@@ -171,8 +171,8 @@ if(isset($_GET['transactionid'])) {
                             </div>
                         </a>
                         <?php
-                            }
-                            ?>
+                                }
+                                ?>
 
                         <hr>
                         <div class="transactiondetails">
@@ -201,13 +201,13 @@ if(isset($_GET['transactionid'])) {
 
     </main>
     <?php
+        } else {
+            echo "<p>No products found for this order.</p>";
+        }
     } else {
-        echo "<p>No products found for this order.</p>";
+        echo "<p>Transaction ID not provided.</p>";
     }
-} else {
-    echo "<p>Transaction ID not provided.</p>";
-}
-?>
+    ?>
 
 
 

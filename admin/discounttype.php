@@ -43,7 +43,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $message = "success";
 
         $insert_stmt->close();
-        $conn->close();
     } catch (Exception $e) {
         $message = $e->getMessage();
     }
@@ -58,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Add Product</title>
     <link rel="stylesheet" href="../public/css/admin/sidebar.css">
-    <link rel="stylesheet" href="../public/css/admin/addlocation.css">
+    <link rel="stylesheet" href="../public/css/admin/discounttype.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 
 </head>
@@ -111,6 +110,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <i class='fas fa-envelope'></i>
                     <span class="text"> Contact</span>
                 </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='fas fa-clone'></i>
+                    <span class="text">Discounts</span>
+                </a>
+                <ul class="submenu">
+                    <li class="active"><a href="../admin/discounttype.php">Add Discount</a></li>
+                    <li><a href="../admin/discountverify.php">Verification</a></li>
+                </ul>
             </li>
             <li>
                 <a href="#">
@@ -183,7 +192,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="box-section">
             <div class="head-title">
                 <div class="left">
-                    <h1>Add Location</h1>
+                    <h1>Add Discount</h1>
                 </div>
             </div>
             <div class="container">
@@ -207,13 +216,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     </div>
 
                                     <button type="submit" class="btn btn-submit">Add</button>
-                                    <a href="./location.php" class="cancel-btn" style="display: inline-block; padding: 13px 16px; 
-                                        background-color: #f44336; color: #fff; text-decoration: 
-                                        none; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;"
-                                        onmouseover="this.style.backgroundColor='#d32f2f';"
-                                        onmouseout="this.style.backgroundColor='#f44336';">Cancel</a>
                                 </form>
                             </div>
+
+                            <?php
+
+                        $message = "";
+
+                        try {
+
+                            if ($conn->connect_error) {
+                                throw new Exception("Connection failed: " . $conn->connect_error);
+                            }
+
+                            $sql = "SELECT discounttype, discountpercentage FROM discounts";
+                            $result = $conn->query($sql);
+
+                            if ($result->num_rows > 0) {
+                                echo '<table class="table">';
+                                echo '<thead><tr><th>Type</th><th>Percent</th></tr></thead>';
+                                echo '<tbody>';
+
+                                while ($row = $result->fetch_assoc()) {
+                                    echo '<tr>';
+                                    echo '<td>' . $row['discounttype'] . '</td>';
+                                    echo '<td>' . $row['discountpercentage'] . '</td>';
+                                    echo '</tr>';
+                                }
+
+                                echo '</tbody></table>';
+                            } else {
+                                echo "No shipping fees found";
+                            }
+
+                            $conn->close();
+                        } catch (Exception $e) {
+                            $message = $e->getMessage();
+                        }
+                        ?>
                         </div>
                     </div>
                 </div>
@@ -232,14 +272,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     title: 'Discount Added Successfully!',
                     text: 'You have successfully added the discount.',
                     icon: 'success',
-                    showCancelButton: true,
                     confirmButtonText: 'OK',
-                    cancelButtonText: 'View Discounts'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        // Do something if user clicks OK
+                        window.location.href = '../admin/discounttype.php';
                     } else if (result.dismiss === Swal.DismissReason.cancel) {
-                        window.location.href = '../admin/discounts.php';
                     }
                 });
             </script>";

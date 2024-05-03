@@ -96,6 +96,16 @@ try {
             <li>
                 <a href="#">
                     <i class='fas fa-clone'></i>
+                    <span class="text">Discounts</span>
+                </a>
+                <ul class="submenu">
+                    <li><a href="../admin/discounttype.php">Add Discount</a></li>
+                    <li class="active"><a href="../admin/discountverify.php">Verification</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='fas fa-clone'></i>
                     <span class="text">Shipping Settings</span>
                 </a>
                 <ul class="submenu">
@@ -172,18 +182,18 @@ try {
                         </thead>
                         <tbody>
                             <?php
-                        try {
-                            while ($row = mysqli_fetch_assoc($result)) {
-                                echo "<tr onclick=\"window.location='discountinfo.php?verificationid=" . $row['verificationid'] . "';\" style=\"cursor: pointer;\">";
-                                echo "<td>" . $row['firstname'] . " " . $row['middlename'] . " " . $row['lastname'] . "</td>";
-                                echo "<td>" . $row['email'] . "</td>";
-                                echo "<td>" . $row['status'] . "</td>";
-                                echo "</tr>";
-                            }
-                        } catch (Exception $e) {
-                            echo "<tr><td colspan='3'>No customers found</td></tr>";
-                        }
-?>
+                                    try {
+                                        while ($row = mysqli_fetch_assoc($result)) {
+                                            echo "<tr onclick=\"window.location='discountinfo.php?verificationid=" . $row['verificationid'] . "';\" style=\"cursor: pointer;\">";
+                                            echo "<td>" . $row['firstname'] . " " . $row['middlename'] . " " . $row['lastname'] . "</td>";
+                                            echo "<td>" . $row['email'] . "</td>";
+                                            echo "<td>" . $row['status'] . "</td>";
+                                            echo "</tr>";
+                                        }
+                                    } catch (Exception $e) {
+                                        echo "<tr><td colspan='3'>No customers found</td></tr>";
+                                    }
+                                    ?>
                         </tbody>
                     </table>
 

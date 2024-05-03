@@ -85,6 +85,17 @@ try {
             <li>
                 <a href="#">
                     <i class='fas fa-clone'></i>
+                    <span class="text">Discounts</span>
+                </a>
+                <ul class="submenu">
+                    <li><a href="../admin/discounttype.php">Add Discount</a>
+                    </li>
+                    <li><a href="../admin/discountverify.php">Verification</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='fas fa-clone'></i>
                     <span class="text">Shipping Settings</span>
                 </a>
                 <ul class="submenu">
@@ -209,33 +220,33 @@ try {
                     <h3>Orders</h3>
                 </div>
                 <?php if ($num_orders > 0): ?>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Ordered By</th>
-                                <th>Product</th>
-                                <th>Date Order</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php while ($row = $result_orders->fetch_assoc()): ?>
-                                <tr>
-                                    <td>
-                                        <p><?php echo $row['username']; ?></p>
-                                    </td>
-                                    <td>
-                                        <p><?php echo $row['productname']; ?></p>
-                                    </td>
-                                    <td><?php echo date("d-m-Y", strtotime($row['orderdate'])); ?></td>
-                                    <td><span class="status"><?php echo $row['status']; ?></span></td>
-                                </tr>
-                            <?php endwhile; ?>
-                        </tbody>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Ordered By</th>
+                            <th>Product</th>
+                            <th>Date Order</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php while ($row = $result_orders->fetch_assoc()): ?>
+                        <tr>
+                            <td>
+                                <p><?php echo $row['username']; ?></p>
+                            </td>
+                            <td>
+                                <p><?php echo $row['productname']; ?></p>
+                            </td>
+                            <td><?php echo date("d-m-Y", strtotime($row['orderdate'])); ?></td>
+                            <td><span class="status"><?php echo $row['status']; ?></span></td>
+                        </tr>
+                        <?php endwhile; ?>
+                    </tbody>
 
-                    </table>
+                </table>
                 <?php else: ?>
-                    <p>No recent orders</p>
+                <p>No recent orders</p>
                 <?php endif; ?>
             </div>
         </div>

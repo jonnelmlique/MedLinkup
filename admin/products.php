@@ -65,6 +65,16 @@
             <li>
                 <a href="#">
                     <i class='fas fa-clone'></i>
+                    <span class="text">Discounts</span>
+                </a>
+                <ul class="submenu">
+                    <li><a href="../admin/discounttype.php">Add Discount</a></li>
+                    <li><a href="../admin/discountverify.php">Verification</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='fas fa-clone'></i>
                     <span class="text">Shipping Settings</span>
                 </a>
                 <ul class="submenu">
@@ -217,31 +227,31 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <script>
-        $(document).ready(function () {
-            $('#searchInput').on('keyup', function () {
-                var searchText = $(this).val().trim();
-                if (searchText !== '') {
-                    $.ajax({
-                        url: 'search.php',
-                        type: 'post',
-                        data: {
-                            search: searchText
-                        },
-                        success: function (response) {
-                            $('#productTable tbody').html(response);
-                        }
-                    });
-                }
-            });
+    $(document).ready(function() {
+        $('#searchInput').on('keyup', function() {
+            var searchText = $(this).val().trim();
+            if (searchText !== '') {
+                $.ajax({
+                    url: 'search.php',
+                    type: 'post',
+                    data: {
+                        search: searchText
+                    },
+                    success: function(response) {
+                        $('#productTable tbody').html(response);
+                    }
+                });
+            }
         });
+    });
     </script>
     <script>
-        $(document).ready(function () {
-            $(".printLowStock").click(function (e) {
-                e.preventDefault();
-                window.open('product-print.php', '_blank', 'width=800,height=600');
-            });
+    $(document).ready(function() {
+        $(".printLowStock").click(function(e) {
+            e.preventDefault();
+            window.open('product-print.php', '_blank', 'width=800,height=600');
         });
+    });
     </script>
 
 </body>

@@ -183,6 +183,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <li>
                 <a href="#">
                     <i class='fas fa-clone'></i>
+                    <span class="text">Discounts</span>
+                </a>
+                <ul class="submenu">
+                    <li><a href="../admin/discounttype.php">Add Discount</a></li>
+                    <li><a href="../admin/discountverify.php">Verification</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='fas fa-clone'></i>
                     <span class="text">Shipping Settings</span>
                 </a>
                 <ul class="submenu">

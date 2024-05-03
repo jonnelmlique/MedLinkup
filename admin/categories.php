@@ -71,6 +71,16 @@ $result = $conn->query($sql);
             <li>
                 <a href="#">
                     <i class='fas fa-clone'></i>
+                    <span class="text">Discounts</span>
+                </a>
+                <ul class="submenu">
+                    <li><a href="../admin/discounttype.php">Add Discount</a></li>
+                    <li><a href="../admin/discountverify.php">Verification</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='fas fa-clone'></i>
                     <span class="text">Shipping Settings</span>
                 </a>
                 <ul class="submenu">
@@ -200,23 +210,23 @@ $result = $conn->query($sql);
 
 
     <script>
-        $(document).ready(function () {
-            $('#searchInput').on('keyup', function () {
-                var searchText = $(this).val().trim();
-                if (searchText !== '') {
-                    $.ajax({
-                        url: 'catagoriessearch.php',
-                        type: 'post',
-                        data: {
-                            search: searchText
-                        },
-                        success: function (response) {
-                            $('#categories-table tbody').html(response);
-                        }
-                    });
-                }
-            });
+    $(document).ready(function() {
+        $('#searchInput').on('keyup', function() {
+            var searchText = $(this).val().trim();
+            if (searchText !== '') {
+                $.ajax({
+                    url: 'catagoriessearch.php',
+                    type: 'post',
+                    data: {
+                        search: searchText
+                    },
+                    success: function(response) {
+                        $('#categories-table tbody').html(response);
+                    }
+                });
+            }
         });
+    });
     </script>
 </body>
 

@@ -1,33 +1,24 @@
 <?php
 include '../src/config/config.php';
 
-// Initialize the verification ID variable
 $verificationid = "";
 
-// Check if the verification ID is set in the URL
 if (isset($_GET['verificationid'])) {
-    // Assign the verification ID from the URL parameter
     $verificationid = $_GET['verificationid'];
 
-    // Query to fetch user's information based on verificationid
     $user_query = "SELECT * FROM discountverification WHERE verificationid = ?";
     $stmt = $conn->prepare($user_query);
     $stmt->bind_param("i", $verificationid);
     $stmt->execute();
     $user_result = $stmt->get_result();
 
-    // Check if the query executed successfully
     if (!$user_result) {
-        // If the query fails, display an error message
         die("<script>Swal.fire('Error', 'Database error. Please try again later.', 'error');</script>");
     }
 
-    // Check if user information is found
     if ($user_result->num_rows > 0) {
-        // Fetching user's information
         $userInfo = $user_result->fetch_assoc();
     } else {
-        // No user information found, you can handle this case as per your requirement
         die("<script>Swal.fire('Error', 'No user information found.', 'error');</script>");
     }
 
@@ -56,73 +47,117 @@ $conn->close();
 <body>
 
     <section id="sidebar">
-        <a href="../customer/dashboard.php" class="brand">
+        <a href="../admin/dashboard.php" class="brand">
             <img src="../public/img/logo.png" alt="MedLinkup Logo" class="logo">
             <span class="text"> MedLinkup</span>
         </a>
         <ul class="side-menu top">
             <li>
-                <a href="../customer/dashboard.php">
+                <a href="../admin/dashboard.php">
                     <i class='fas fa-clone'></i>
                     <span class="text"> Dashboard</span>
                 </a>
             </li>
             <li>
                 <a href="#">
-                    <i class='fas fa-portrait'></i>
-                    <span class="text"> Profile</span>
+                    <i class='fas fa-capsules'></i>
+                    <span class="text">Inventory</span>
                 </a>
                 <ul class="submenu">
-                    <li><a href="../customer/myprofile.php">My Profile</a></li>
-                    <li><a href="../customer/delivery.php">Delivery Address</a></li>
-
-
+                    <li><a href="../admin/products.php">Products</a></li>
+                    <li><a href="../admin/lowstock.php">Low Stock</a></li>
+                    <li><a href="../admin/categories.php">Categories</a></li>
                 </ul>
             </li>
-
             <li>
-                <a href="../cart.php">
-                    <i class='fas fa-cart-plus'></i>
-                    <span class="text"> Cart</span>
+                <a href="../admin/order.php">
+                    <i class='fas fa-shopping-bag'></i>
+                    <span class="text"> Orders</span>
                 </a>
             </li>
             <li>
-                <a href="../customer/order.php">
-                    <i class="fas fa-cart-arrow-down"></i>
-                    <span class="text">Order</span>
+                <a href="../admin/sales.php">
+                    <i class='fas fa-chart-bar'></i>
+                    <span class="text"> Sales</span>
                 </a>
             </li>
             <li>
-                <a href="history.php">
-                    <i class='fas fa-shopping-basket'></i>
-                    <span class="text"> History</span>
+                <a href="../admin/customer.php">
+                    <i class='fas fa-portrait'></i>
+                    <span class="text"> Customers</span>
                 </a>
             </li>
-        </ul>
-        <ul class="side-menu">
+            <li>
+                <a href="../admin/contact.php">
+                    <i class='fas fa-envelope'></i>
+                    <span class="text"> Contact</span>
+                </a>
+            </li>
             <li>
                 <a href="#">
-                    <i class='fa fa-cogs'></i>
-                    <span class="text"> Settings</span>
+                    <i class='fas fa-clone'></i>
+                    <span class="text">Discounts</span>
                 </a>
                 <ul class="submenu">
-                    <li class="active"><a href="../customer/changepassword.php">Change Password</a></li>
+                    <li><a href="../admin/discounttype.php">Add Discount</a></li>
+                    <li class="active"><a href="../admin/discountverify.php">Verification</a></li>
                 </ul>
             </li>
             <li>
-                <a href="../index.php">
-                    <i class="fas fa-shopping-bag"></i>
-                    <span class="text"> Continue Shopping</span>
+                <a href="#">
+                    <i class='fas fa-clone'></i>
+                    <span class="text">Shipping Settings</span>
                 </a>
+                <ul class="submenu">
+                    <li><a href="../admin/location.php">Location</a></li>
+                    <li><a href="../admin/shippingfee.php">Shipping Fee</a></li>
+                </ul>
             </li>
+
             <li>
-                <a href="../logout.php" class="logout">
-                    <i class='fas fa-user'></i>
-                    <span class="text"> Logout</span>
+                <a href="#">
+                    <i class='fas fa-clone'></i>
+                    <span class="text"> Supplier</span>
                 </a>
+                <ul class="submenu">
+                    <li><a href="../supplier/suppliershop.php">Order</a></li>
+                    <li><a href="../admin/orderstatus.php">Order Status</a></li>
+                    <li><a href="../admin/history.php">History</a></li>
+                </ul>
             </li>
-        </ul>
+            <ul class="side-menu">
+                <li>
+                    <a href="#">
+                        <i class='fa fa-user-cog'></i>
+                        <span class="text">System Maintenane</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="../admin/about.php">About</a></li>
+                        <li><a href="../admin/privacypolicy.php">Privacy Policy</a></li>
+                        <li><a href="../admin/termsofservice.php">Terms of Service</a></li>
+
+                    </ul>
+                </li>
+                <ul class="side-menu">
+                    <li>
+                        <a href="#">
+                            <i class='fa fa-cogs'></i>
+                            <span class="text">Settings</span>
+                        </a>
+                        <ul class="submenu">
+                            <li class="active"><a href="../admin/delivery.php">Delivery Address</a></li>
+
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="../logout.php" class="logout">
+                            <i class='fas fa-user'></i>
+                            <span class="text"> Logout</span>
+                        </a>
+                    </li>
+                </ul>
     </section>
+
 
     <section id="content">
         <nav>
@@ -157,9 +192,8 @@ $conn->close();
                                 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST"
                                     enctype="multipart/form-data">
 
-                                    <input type="text" name="verificationid"
+                                    <input type="hidden" name="verificationid"
                                         value="<?php echo isset($userInfo['verificationid']) ? htmlspecialchars($userInfo['verificationid']) : ''; ?>">
-                                    <!-- Display user's information -->
                                     <div class="mb-3">
                                         <label for="firstname">First Name</label>
                                         <input type="text" class="form-control" id="firstname" name="firstname"
@@ -217,7 +251,7 @@ $conn->close();
                                         data-verificationid="<?php echo htmlspecialchars($verificationid); ?>">Reject</a>
 
 
-                                    <a href="./products.php" class="cancel-btn" style="display: inline-block; padding: 13px 16px; 
+                                    <a href="./discountverify.php" class="cancel-btn" style="display: inline-block; padding: 13px 16px; 
             background-color: #f44336; color: #fff; text-decoration: 
             none; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;"
                                         onmouseover="this.style.backgroundColor='#d32f2f';"
@@ -258,7 +292,7 @@ $conn->close();
     $(document).ready(function() {
         $(".accept-btn").click(function(e) {
             e.preventDefault();
-            var verificationid = $(this).attr("data-verificationid"); // Change here
+            var verificationid = $(this).attr("data-verificationid");
             $.ajax({
                 url: "accept.php",
                 method: "POST",
@@ -272,7 +306,7 @@ $conn->close();
                         text: 'The status has been successfully updated to Accepted.',
                         confirmButtonText: 'OK'
                     }).then(function() {
-                        location.reload();
+                        window.location.href = '../admin/discountverify.php';
                     });
                 },
                 error: function(xhr, status, error) {
@@ -289,7 +323,7 @@ $conn->close();
 
         $(".reject-btn").click(function(e) {
             e.preventDefault();
-            var verificationid = $(this).attr("data-verificationid"); // Change here
+            var verificationid = $(this).attr("data-verificationid");
             $.ajax({
                 url: "reject.php",
                 method: "POST",
@@ -303,7 +337,7 @@ $conn->close();
                         text: 'The status has been successfully updated to Rejected.',
                         confirmButtonText: 'OK'
                     }).then(function() {
-                        location.reload();
+                        window.location.href = '../admin/discountverify.php';
                     });
                 },
                 error: function(xhr, status, error) {

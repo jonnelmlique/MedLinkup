@@ -65,6 +65,16 @@
             <li>
                 <a href="#">
                     <i class='fas fa-clone'></i>
+                    <span class="text">Discounts</span>
+                </a>
+                <ul class="submenu">
+                    <li><a href="../admin/discounttype.php">Add Discount</a></li>
+                    <li><a href="../admin/discountverify.php">Verification</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='fas fa-clone'></i>
                     <span class="text">Shipping Settings</span>
                 </a>
                 <ul class="submenu">
@@ -234,33 +244,33 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script>
-        $(document).ready(function () {
-            var lowStockProducts = <?php echo isset($low_stock_products_json) ? $low_stock_products_json : '[]'; ?>;
+    $(document).ready(function() {
+        var lowStockProducts = <?php echo isset($low_stock_products_json) ? $low_stock_products_json : '[]'; ?>;
 
-            lowStockProducts.forEach(function (product) {
-                toastr.options.positionClass = 'toast-bottom-right';
-                toastr.options.progressBar = true;
-                toastr.options.closeButton = true;
-                toastr.warning('<div class="toast-title">Low stock for:</div><div class="toast-message">' +
-                    product.productname + ' (' + product.stock + ' remaining)</div>');
-            });
+        lowStockProducts.forEach(function(product) {
+            toastr.options.positionClass = 'toast-bottom-right';
+            toastr.options.progressBar = true;
+            toastr.options.closeButton = true;
+            toastr.warning('<div class="toast-title">Low stock for:</div><div class="toast-message">' +
+                product.productname + ' (' + product.stock + ' remaining)</div>');
         });
+    });
     </script>
     <script>
-        function previewImage(event) {
-            var preview = document.getElementById('preview-image');
-            var file = event.target.files[0];
-            var reader = new FileReader();
+    function previewImage(event) {
+        var preview = document.getElementById('preview-image');
+        var file = event.target.files[0];
+        var reader = new FileReader();
 
-            reader.onloadend = function () {
-                preview.style.display = 'block';
-                preview.querySelector('img').src = reader.result;
-            }
-
-            if (file) {
-                reader.readAsDataURL(file);
-            }
+        reader.onloadend = function() {
+            preview.style.display = 'block';
+            preview.querySelector('img').src = reader.result;
         }
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    }
     </script>
     <!-- <script>
     document.getElementById('print-button').addEventListener('click', function() {
@@ -318,31 +328,31 @@
     </script> -->
 
     <script>
-        $(document).ready(function () {
-            $('#searchInput').on('keyup', function () {
-                var searchText = $(this).val().trim();
-                if (searchText !== '') {
-                    $.ajax({
-                        url: 'lowstocksearch.php',
-                        type: 'post',
-                        data: {
-                            search: searchText
-                        },
-                        success: function (response) {
-                            $('#medicine-table tbody').html(response);
-                        }
-                    });
-                }
-            });
+    $(document).ready(function() {
+        $('#searchInput').on('keyup', function() {
+            var searchText = $(this).val().trim();
+            if (searchText !== '') {
+                $.ajax({
+                    url: 'lowstocksearch.php',
+                    type: 'post',
+                    data: {
+                        search: searchText
+                    },
+                    success: function(response) {
+                        $('#medicine-table tbody').html(response);
+                    }
+                });
+            }
         });
+    });
     </script>
     <script>
-        $(document).ready(function () {
-            $(".printLowStock").click(function (e) {
-                e.preventDefault();
-                window.open('lowstock-print.php', '_blank', 'width=800,height=600');
-            });
+    $(document).ready(function() {
+        $(".printLowStock").click(function(e) {
+            e.preventDefault();
+            window.open('lowstock-print.php', '_blank', 'width=800,height=600');
         });
+    });
     </script>
 
 

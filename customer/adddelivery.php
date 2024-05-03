@@ -9,7 +9,7 @@ try {
     if ($conn->connect_error) {
         throw new Exception("Connection failed: " . $conn->connect_error);
     }
-    
+
     $userid = $_SESSION['userid'];
     $stmt = $conn->prepare("SELECT * FROM shippingaddresses WHERE userid = ?");
     $stmt->bind_param("i", $userid);
@@ -19,34 +19,34 @@ try {
     if ($result->num_rows > 0) {
         $message = "You already have a delivery address.";
     } else {
-    
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $userid = $_SESSION['userid'];
-        $firstname = htmlspecialchars($_POST["firstname"]);
-        $lastname = htmlspecialchars($_POST["lastname"]);
-        $email = htmlspecialchars($_POST["email"]);
-        $contact = htmlspecialchars($_POST["contact"]);
-        $country = htmlspecialchars($_POST["country"]);
-        $region = htmlspecialchars($_POST["region"]);
-        $province = htmlspecialchars($_POST["province"]);
-        $city = htmlspecialchars($_POST["city"]);
-        $barangay = htmlspecialchars($_POST["barangay"]);
-        $zipcode = htmlspecialchars($_POST["zipcode"]);
-        $addressline1 = htmlspecialchars($_POST["address"]);
-        $addressline2 = htmlspecialchars($_POST["address2"]);
 
-        $stmt = $conn->prepare("INSERT INTO shippingaddresses (userid, firstname, lastname, email, contact, country, region, province, city, barangay, zipcode, addressline1, addressline2) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("issssssssssss", $userid, $firstname, $lastname, $email, $contact, $country, $region, $province, $city, $barangay, $zipcode, $addressline1, $addressline2);
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $userid = $_SESSION['userid'];
+            $firstname = htmlspecialchars($_POST["firstname"]);
+            $lastname = htmlspecialchars($_POST["lastname"]);
+            $email = htmlspecialchars($_POST["email"]);
+            $contact = htmlspecialchars($_POST["contact"]);
+            $country = htmlspecialchars($_POST["country"]);
+            $region = htmlspecialchars($_POST["region"]);
+            $province = htmlspecialchars($_POST["province"]);
+            $city = htmlspecialchars($_POST["city"]);
+            $barangay = htmlspecialchars($_POST["barangay"]);
+            $zipcode = htmlspecialchars($_POST["zipcode"]);
+            $addressline1 = htmlspecialchars($_POST["address"]);
+            $addressline2 = htmlspecialchars($_POST["address2"]);
 
-        if ($stmt->execute()) {
-            $message = "success";
-        } else {
-            throw new Exception("Error: " . $stmt->error);
+            $stmt = $conn->prepare("INSERT INTO shippingaddresses (userid, firstname, lastname, email, contact, country, region, province, city, barangay, zipcode, addressline1, addressline2) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("issssssssssss", $userid, $firstname, $lastname, $email, $contact, $country, $region, $province, $city, $barangay, $zipcode, $addressline1, $addressline2);
+
+            if ($stmt->execute()) {
+                $message = "success";
+            } else {
+                throw new Exception("Error: " . $stmt->error);
+            }
+
+            $stmt->close();
         }
-
-        $stmt->close();
     }
-}
 } catch (Exception $e) {
     $message = $e->getMessage();
 }
@@ -89,8 +89,8 @@ try {
                 </a>
                 <ul class="submenu">
                     <li><a href="../customer/myprofile.php">My Profile</a></li>
-                    <li class="active"><a href="../customer/delivery.php">Delivery Address</a></li>
-
+                    <li><a href="../customer/delivery.php">Delivery Address</a></li>
+                    <li><a href="../customer/spedcialdiscount.php">Discount</a></li>
                 </ul>
             </li>
             <li>

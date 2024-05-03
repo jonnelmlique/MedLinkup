@@ -52,8 +52,8 @@ if (mysqli_num_rows($result) > 0) {
                 </a>
                 <ul class="submenu">
                     <li><a href="../customer/myprofile.php">My Profile</a></li>
-                    <li><a href="../customer/delivery.php">Delivery Address</a></li>
-
+                    <li class="active"><a href="../customer/delivery.php">Delivery Address</a></li>
+                    <li><a href="../customer/specialdiscount.php">Discount</a></li>
                 </ul>
             </li>
             <li>

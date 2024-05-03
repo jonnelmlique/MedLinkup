@@ -26,13 +26,13 @@
             </li>
             <li>
                 <a href="#">
-                    <i class='fas fa-portrait'></i>
+                    <i class="fas fa-portrait"></i>
                     <span class="text"> Profile</span>
                 </a>
                 <ul class="submenu">
                     <li><a href="../customer/myprofile.php">My Profile</a></li>
                     <li><a href="../customer/delivery.php">Delivery Address</a></li>
-
+                    <li><a href="../customer/specialdiscount.php">Discount</a></li>
                 </ul>
             </li>
 
@@ -103,16 +103,16 @@
                         </div>
 
                         <?php
-include '../src/config/config.php';
-session_start(); 
+                        include '../src/config/config.php';
+                        session_start();
 
-if (!isset($_SESSION['userid'])) {
-    header("Location: ../auth/login.php");
-    exit();
-}
+                        if (!isset($_SESSION['userid'])) {
+                            header("Location: ../auth/login.php");
+                            exit();
+                        }
 
-$userid = $_SESSION['userid'];
-$query = "SELECT 
+                        $userid = $_SESSION['userid'];
+                        $query = "SELECT 
             o.transactionid,
             MIN(o.orderid) AS orderid,
             u.username, 
@@ -139,14 +139,14 @@ $query = "SELECT
         GROUP BY 
             o.transactionid
         ORDER BY 
-            orderdate DESC"; 
+            orderdate DESC";
 
-$result = mysqli_query($conn, $query);
-if (mysqli_num_rows($result) > 0) {
-    ?>
+                        $result = mysqli_query($conn, $query);
+                        if (mysqli_num_rows($result) > 0) {
+                            ?>
                         <?php
-    while ($row = mysqli_fetch_assoc($result)) {
-    ?>
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                ?>
                         <a href="orderdetails.php?transactionid=<?php echo $row['transactionid']; ?>"
                             style="text-decoration: none; color: inherit;">
                             <div class="product-box">
@@ -164,11 +164,11 @@ if (mysqli_num_rows($result) > 0) {
                             </div>
                         </a>
                         <?php
-    }
-} else {
-    echo '<p class="orderdisplay">No orders</p>';
-}
-?>
+                            }
+                        } else {
+                            echo '<p class="orderdisplay">No orders</p>';
+                        }
+                        ?>
                         <p class="margin"></p>
                     </div>
                 </div>

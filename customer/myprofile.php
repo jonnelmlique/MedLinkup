@@ -96,14 +96,13 @@ $conn->close();
             </li>
             <li>
                 <a href="#">
-                    <i class='fas fa-portrait'></i>
+                    <i class="fas fa-portrait"></i>
                     <span class="text"> Profile</span>
                 </a>
                 <ul class="submenu">
                     <li class="active"><a href="../customer/myprofile.php">My Profile</a></li>
                     <li><a href="../customer/delivery.php">Delivery Address</a></li>
-
-
+                    <li><a href="../customer/specialdiscount.php">Discount</a></li>
                 </ul>
             </li>
 

@@ -3,9 +3,15 @@ include '../src/config/config.php';
 session_start();
 
 try {
-    // Check if userid is set in session
     if (isset($_SESSION['userid'])) {
         $userid = $_SESSION['userid'];
+
+        $checkVerificationQuery = "SELECT * FROM discountverification WHERE userid = $userid";
+        $verificationResult = $conn->query($checkVerificationQuery);
+        if ($verificationResult && $verificationResult->num_rows > 0) {
+            header("Location: verificationstatus.php");
+            exit();
+        }
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $firstname = $_POST['firstname'];
@@ -83,14 +89,13 @@ try {
             </li>
             <li>
                 <a href="#">
-                    <i class='fas fa-portrait'></i>
+                    <i class="fas fa-portrait"></i>
                     <span class="text"> Profile</span>
                 </a>
                 <ul class="submenu">
                     <li><a href="../customer/myprofile.php">My Profile</a></li>
                     <li><a href="../customer/delivery.php">Delivery Address</a></li>
-
-
+                    <li class="avtive"><a href="../customer/specialdiscount.php">Discount</a></li>
                 </ul>
             </li>
 
@@ -153,7 +158,7 @@ try {
         <div class="box-section">
             <div class="head-title">
                 <div class="left">
-                    <h1>Add Product</h1>
+                    <h1>Verify Your Informationn</h1>
                 </div>
             </div>
             <div class="container">
@@ -260,14 +265,11 @@ try {
             title: 'Verification Request Sent!',
             text: 'Your verification request has been sent successfully.',
             icon: 'success',
-            showCancelButton: true,
             confirmButtonText: 'OK',
-            cancelButtonText: 'View Products'
         }).then((result) => {
             if (result.isConfirmed) {
-                // Do something if user clicks OK
             } else if (result.dismiss === Swal.DismissReason.cancel) {
-                window.location.href = '../admin/products.php';
+                window.location.href = '../customer/specialdiscount.php';
             }
         });
         </script>";

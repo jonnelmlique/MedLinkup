@@ -65,6 +65,16 @@
             <li>
                 <a href="#">
                     <i class='fas fa-clone'></i>
+                    <span class="text">Discounts</span>
+                </a>
+                <ul class="submenu">
+                    <li><a href="../admin/discounttype.php">Add Discount</a></li>
+                    <li><a href="../admin/discountverify.php">Verification</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='fas fa-clone'></i>
                     <span class="text">Shipping Settings</span>
                 </a>
                 <ul class="submenu">
@@ -279,20 +289,20 @@
     }
     ?>
     <script>
-        function previewImage(event) {
-            var preview = document.getElementById('preview-image');
-            var file = event.target.files[0];
-            var reader = new FileReader();
+    function previewImage(event) {
+        var preview = document.getElementById('preview-image');
+        var file = event.target.files[0];
+        var reader = new FileReader();
 
-            reader.onloadend = function () {
-                preview.style.display = 'block';
-                preview.querySelector('img').src = reader.result;
-            }
-
-            if (file) {
-                reader.readAsDataURL(file);
-            }
+        reader.onloadend = function() {
+            preview.style.display = 'block';
+            preview.querySelector('img').src = reader.result;
         }
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    }
     </script>
 
 </body>

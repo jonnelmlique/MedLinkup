@@ -74,6 +74,16 @@ if (!isset($_SESSION['userid'])) {
             <li>
                 <a href="#">
                     <i class='fas fa-clone'></i>
+                    <span class="text">Discounts</span>
+                </a>
+                <ul class="submenu">
+                    <li><a href="../admin/discounttype.php">Add Discount</a></li>
+                    <li><a href="../admin/discountverify.php">Verification</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='fas fa-clone'></i>
                     <span class="text">Shipping Settings</span>
                 </a>
                 <ul class="submenu">
@@ -185,38 +195,38 @@ if (!isset($_SESSION['userid'])) {
 
                         if (mysqli_num_rows($result) > 0) {
                             ?>
-                            <?php
+                        <?php
                             while ($row = mysqli_fetch_assoc($result)) {
                                 ?>
 
 
-                                <a href="orderdetails.php?transactionid=<?php echo $row['transactionid']; ?>"
-                                    style="text-decoration: none; color: inherit;">
-                                    <div class="product-box">
-                                        <div class="product-details">
-                                            <img src="../productimg/<?php echo $row['image']; ?>"
-                                                alt="<?php echo $row['productname']; ?>" class="product-image">
-                                            <div class="product-info">
-                                                <div class="product-name">
-                                                    <?php echo $row['productname']; ?>
-                                                </div>
-                                                <p><strong>Order by:</strong>
-                                                    <?php echo $row['flname']; ?>
-                                                </p>
-                                                <div class="product-status"><span
-                                                        class="s <?php echo strtolower($row['status']); ?>">
-                                                        <?php echo $row['status']; ?>
-                                                    </span>
-                                                </div>
-                                                <div class="product-price price">₱
-                                                    <?php echo $row['totalprice']; ?>
-                                                </div>
-                                            </div>
+                        <a href="orderdetails.php?transactionid=<?php echo $row['transactionid']; ?>"
+                            style="text-decoration: none; color: inherit;">
+                            <div class="product-box">
+                                <div class="product-details">
+                                    <img src="../productimg/<?php echo $row['image']; ?>"
+                                        alt="<?php echo $row['productname']; ?>" class="product-image">
+                                    <div class="product-info">
+                                        <div class="product-name">
+                                            <?php echo $row['productname']; ?>
                                         </div>
-
+                                        <p><strong>Order by:</strong>
+                                            <?php echo $row['flname']; ?>
+                                        </p>
+                                        <div class="product-status"><span
+                                                class="s <?php echo strtolower($row['status']); ?>">
+                                                <?php echo $row['status']; ?>
+                                            </span>
+                                        </div>
+                                        <div class="product-price price">₱
+                                            <?php echo $row['totalprice']; ?>
+                                        </div>
                                     </div>
-                                </a>
-                                <?php
+                                </div>
+
+                            </div>
+                        </a>
+                        <?php
                             }
                         } else {
                             echo '<p class="orderdisplay">No orders</p>';
