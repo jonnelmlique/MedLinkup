@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Add Product</title>
+    <title>Add Disocunt</title>
     <link rel="stylesheet" href="../public/css/admin/sidebar.css">
     <link rel="stylesheet" href="../public/css/admin/discounttype.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
@@ -221,39 +221,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                             <?php
 
-                        $message = "";
+                            $message = "";
 
-                        try {
+                            try {
 
-                            if ($conn->connect_error) {
-                                throw new Exception("Connection failed: " . $conn->connect_error);
-                            }
-
-                            $sql = "SELECT discounttype, discountpercentage FROM discounts";
-                            $result = $conn->query($sql);
-
-                            if ($result->num_rows > 0) {
-                                echo '<table class="table">';
-                                echo '<thead><tr><th>Type</th><th>Percent</th></tr></thead>';
-                                echo '<tbody>';
-
-                                while ($row = $result->fetch_assoc()) {
-                                    echo '<tr>';
-                                    echo '<td>' . $row['discounttype'] . '</td>';
-                                    echo '<td>' . $row['discountpercentage'] . '</td>';
-                                    echo '</tr>';
+                                if ($conn->connect_error) {
+                                    throw new Exception("Connection failed: " . $conn->connect_error);
                                 }
 
-                                echo '</tbody></table>';
-                            } else {
-                                echo "No shipping fees found";
-                            }
+                                $sql = "SELECT discounttype, discountpercentage FROM discounts";
+                                $result = $conn->query($sql);
 
-                            $conn->close();
-                        } catch (Exception $e) {
-                            $message = $e->getMessage();
-                        }
-                        ?>
+                                if ($result->num_rows > 0) {
+                                    echo '<table class="table">';
+                                    echo '<thead><tr><th>Type</th><th>Percent</th></tr></thead>';
+                                    echo '<tbody>';
+
+                                    while ($row = $result->fetch_assoc()) {
+                                        echo '<tr>';
+                                        echo '<td>' . $row['discounttype'] . '</td>';
+                                        echo '<td>' . $row['discountpercentage'] . '</td>';
+                                        echo '</tr>';
+                                    }
+
+                                    echo '</tbody></table>';
+                                } else {
+                                    echo "No shipping fees found";
+                                }
+
+                                $conn->close();
+                            } catch (Exception $e) {
+                                $message = $e->getMessage();
+                            }
+                            ?>
                         </div>
                     </div>
                 </div>
