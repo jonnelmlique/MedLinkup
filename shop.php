@@ -100,53 +100,80 @@ if (isset($_SESSION['userid']) && isset($_SESSION['username'])) {
                             class="fas fa-search"></i></button>
                 </div>
                 <h4 class="mb-4">Products</h4>
-
                 <div id="productContainer" class="row">
 
                     <?php
+// Number of products per page
+$productsPerPage = 10;
 
-                    try {
-                        $sql = "SELECT productid, productname, price, image FROM products";
-                        $result = $conn->query($sql);
+// Current page number, default is 1
+$currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
 
-                        if ($result->num_rows > 0) {
+// Calculate the starting product index for the current page
+$startIndex = ($currentPage - 1) * $productsPerPage;
 
-                            while ($row = $result->fetch_assoc()) {
-                                $productName = strlen($row["productname"]) > 35 ? substr($row["productname"], 0, 35) . '...' : $row["productname"];
+try {
+    // Query to get products for the current page
+    $sql = "SELECT productid, productname, price, image FROM products LIMIT $startIndex, $productsPerPage";
+    $result = $conn->query($sql);
 
-                                ?>
+    if ($result->num_rows > 0) {
+
+        while ($row = $result->fetch_assoc()) {
+            $productName = strlen($row["productname"]) > 35 ? substr($row["productname"], 0, 35) . '...' : $row["productname"];
+
+            ?>
                     <div class="col-md-15">
-                        <a href="./product.php?id=<?php echo $row["productid"]; ?>" class="product-card-link">
+                        <div class="product-card-container">
+                            <a href="./product.php?id=<?php echo $row["productid"]; ?>" class="product-card-link"
+                                style="text-decoration: none;">
+                                <div class="product-card">
+                                    <img src="./productimg/<?php echo $row["image"]; ?>" alt="Product Image" />
+                                    <div class="product-card-body">
+                                        <h3 class="product-card-title">
+                                            <?php echo $productName; ?>
+                                        </h3>
 
-                            <div class="product-card">
-                                <img src="./productimg/<?php echo $row["image"]; ?>" alt="Product Image" />
-                                <div class="product-card-body">
-                                    <h3 class="product-card-title">
-                                        <?php echo $productName; ?>
-                                    </h3>
-
-                                    <p class="product-card-price">₱
-                                        <?php echo $row["price"]; ?>
-                                    </p>
+                                        <p class="product-card-price">₱
+                                            <?php echo $row["price"]; ?>
+                                        </p>
+                                    </div>
                                 </div>
-                        </a>
+                            </a>
+                        </div>
                     </div>
-                </div>
-                <?php
-                            }
-                        } else {
-                            echo "No products available.";
-                        }
-                    } catch (Exception $e) {
-                        echo "Error: " . $e->getMessage();
-                    }
+                    <?php
+        }
 
-                    $conn->close();
-                    ?>
+        // Calculate total pages
+        $sqlTotal = "SELECT COUNT(*) AS total FROM products";
+        $resultTotal = $conn->query($sqlTotal);
+        $rowTotal = $resultTotal->fetch_assoc();
+        $totalProducts = $rowTotal['total'];
+        $totalPages = ceil($totalProducts / $productsPerPage);
+
+        // Pagination links
+        echo '<div class="pagination">';
+        for ($i = 1; $i <= $totalPages; $i++) {
+            echo '<a href="?page=' . $i . '">' . $i . '</a> ';
+        }
+        echo '</div>';
+
+    } else {
+        echo "No products available.";
+    }
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+}
+
+$conn->close();
+?>
+
+                </div>
 
             </div>
         </div>
-    </div>
     </div>
     <section class="design-element">
         <div class="container">
