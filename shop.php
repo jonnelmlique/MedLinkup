@@ -103,7 +103,7 @@ if (isset($_SESSION['userid']) && isset($_SESSION['username'])) {
 
                 <div id="productContainer" class="row">
 
-                    <!-- <?php
+                    <?php
 
                     try {
                         $sql = "SELECT productid, productname, price, image FROM products";
@@ -143,14 +143,10 @@ if (isset($_SESSION['userid']) && isset($_SESSION['username'])) {
 
                     $conn->close();
                     ?>
- -->
-                    <div id="loader" class="text-center" style="display: none;">
-                        <img src="loader.gif" alt="Loading...">
-                    </div>
 
-                </div>
             </div>
         </div>
+    </div>
     </div>
     <section class="design-element">
         <div class="container">
@@ -176,39 +172,7 @@ if (isset($_SESSION['userid']) && isset($_SESSION['username'])) {
     <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script>
-    var page = 1; // Current page
 
-    function loadMore() {
-        // Send AJAX request to load more products
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                var response = xhr.responseText;
-                document.getElementById('productContainer').innerHTML += response;
-                page++; // Increment page number
-            }
-        };
-        xhr.open('GET', 'load_more_products.php?page=' + page, true);
-        xhr.send();
-    }
-
-    // Function to check if user has scrolled to the bottom of the page
-    function isBottomOfPage() {
-        return (window.innerHeight + window.scrollY) >= document.body.offsetHeight;
-    }
-
-    // Function to handle scroll event
-    window.onscroll = function(ev) {
-        if (isBottomOfPage()) {
-            loadMore(); // Load more products
-        }
-    };
-
-    window.onload = function() {
-        loadMore();
-    };
-    </script>
     <script>
     document.getElementById('searchInput').addEventListener('input', function() {
         var searchText = this.value.trim();
