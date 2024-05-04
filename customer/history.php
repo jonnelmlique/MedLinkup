@@ -10,7 +10,7 @@ if (!isset($_SESSION['userid'])) {
 $userid = $_SESSION['userid'];
 
 try {
-   
+
 
     $sql_completed = "SELECT COUNT(DISTINCT(transactionid)) AS num_completed_orders FROM orderprocess WHERE userid = ? AND status = 'Completed'";
     $stmt_completed = $conn->prepare($sql_completed);
@@ -127,17 +127,19 @@ try {
 
                         <h1 class="lefth">History (<?php echo $num_completed_orders; ?>)</h1>
                         <?php
-                       
+
                         try {
                             $sql_completed_orders = "SELECT p.productname, op.totalprice, op.ordercompleted, op.status, op.transactionid
                             FROM orderprocess op
                             JOIN products p ON op.productid = p.productid
-                            WHERE op.status = 'Completed'
+                            WHERE op.status = 'Completed' AND op.userid = ?
                             GROUP BY op.transactionid";
 
                             $stmt_completed_orders = $conn->prepare($sql_completed_orders);
+                            $stmt_completed_orders->bind_param("i", $userid);
                             $stmt_completed_orders->execute();
                             $result_completed_orders = $stmt_completed_orders->get_result();
+
                         } catch (Exception $e) {
                             echo "Error: " . $e->getMessage();
                         }
