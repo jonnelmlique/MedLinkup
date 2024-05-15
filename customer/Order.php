@@ -133,9 +133,10 @@
             products p ON o.productid = p.productid
         JOIN 
             shippingaddresses s ON o.addressid = s.addressid
-        WHERE 
-            o.userid = $userid AND 
-            o.status = 'Processing' OR o.status = 'Pending'
+            WHERE 
+    o.userid = $userid AND 
+    (o.status = 'Processing' OR o.status = 'Pending')
+
         GROUP BY 
             o.transactionid
         ORDER BY 
@@ -144,26 +145,26 @@
                         $result = mysqli_query($conn, $query);
                         if (mysqli_num_rows($result) > 0) {
                             ?>
-                        <?php
+                            <?php
                             while ($row = mysqli_fetch_assoc($result)) {
                                 ?>
-                        <a href="orderdetails.php?transactionid=<?php echo $row['transactionid']; ?>"
-                            style="text-decoration: none; color: inherit;">
-                            <div class="product-box">
-                                <div class="product-details">
-                                    <img src="../productimg/<?php echo $row['image']; ?>"
-                                        alt="<?php echo $row['productname']; ?>" class="product-image">
-                                    <div class="product-info">
-                                        <div class="product-name"><?php echo $row['productname']; ?></div>
-                                        <div class="product-status"><span
-                                                class="s <?php echo strtolower($row['status']); ?>"><?php echo $row['status']; ?></span>
+                                <a href="orderdetails.php?transactionid=<?php echo $row['transactionid']; ?>"
+                                    style="text-decoration: none; color: inherit;">
+                                    <div class="product-box">
+                                        <div class="product-details">
+                                            <img src="../productimg/<?php echo $row['image']; ?>"
+                                                alt="<?php echo $row['productname']; ?>" class="product-image">
+                                            <div class="product-info">
+                                                <div class="product-name"><?php echo $row['productname']; ?></div>
+                                                <div class="product-status"><span
+                                                        class="s <?php echo strtolower($row['status']); ?>"><?php echo $row['status']; ?></span>
+                                                </div>
+                                                <div class="product-price price">₱<?php echo $row['totalprice']; ?></div>
+                                            </div>
                                         </div>
-                                        <div class="product-price price">₱<?php echo $row['totalprice']; ?></div>
                                     </div>
-                                </div>
-                            </div>
-                        </a>
-                        <?php
+                                </a>
+                                <?php
                             }
                         } else {
                             echo '<p class="orderdisplay">No orders</p>';

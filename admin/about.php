@@ -71,6 +71,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 ?>
+<?php
+
+include '../src/config/config.php';
+
+session_start();
+
+if (!isset($_SESSION['userid'])) {
+
+    header("Location: ../auth/login.php");
+    exit();
+}
+
+if ($_SESSION['usertype'] != 'admin') {
+
+    if ($_SESSION['usertype'] == 'customer') {
+        header("Location: ../customer/dashboard.php");
+        exit();
+    } elseif ($_SESSION['usertype'] == 'supplier') {
+        header("Location: ../supplier/dashboard.php");
+        exit();
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 

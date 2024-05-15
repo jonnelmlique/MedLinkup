@@ -1,7 +1,20 @@
 <?php
 include '../src/config/config.php';
 
+
 session_start();
+
+if (isset($_SESSION['userid'])) {
+    if ($_SESSION['usertype'] == 'admin') {
+        header("Location: ../admin/dashboard.php");
+    } elseif ($_SESSION['usertype'] == 'supplier') {
+        header("Location: ../supplier/dashboard.php");
+    } else {
+        header("Location: ../index.php");
+    }
+    exit();
+}
+
 
 $message = '';
 
@@ -128,6 +141,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     placeholder="Password" required>
                                 <div class="invalid-feedback">Please enter your password.</div>
                             </div>
+
                             <div class="mb-3 form-check">
                                 <input type="checkbox" class="form-check-input" id="showPasswordCheckbox">
                                 <label class="form-check-label" for="showPasswordCheckbox">Show Password</label>
@@ -187,17 +201,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     ?>
     <script>
-        $(document).ready(function () {
-            $('#showPasswordCheckbox').change(function () {
-                var passwordInput = $('#password');
-                var isChecked = $(this).is(':checked');
-                if (isChecked) {
-                    passwordInput.attr('type', 'text');
-                } else {
-                    passwordInput.attr('type', 'password');
-                }
-            });
+    $(document).ready(function() {
+        $('#showPasswordCheckbox').change(function() {
+            var passwordInput = $('#password');
+            var isChecked = $(this).is(':checked');
+            if (isChecked) {
+                passwordInput.attr('type', 'text');
+            } else {
+                passwordInput.attr('type', 'password');
+            }
         });
+    });
     </script>
 
 </body>

@@ -195,6 +195,26 @@ try {
                 </a>
             </li>
         </ul>
+
+        <div class="printsale">
+            <button class=" printdailysale"
+                style="background-color: lightblue; color: black; border: 1px solid lightblue; padding: 10px 20px; border-radius: 5px;">
+                Print
+                Daily</button>
+            <button class="printmonthlysale"
+                style="background-color: lightgreen; color: black; border: 1px solid lightgreen; padding: 10px 20px; border-radius: 5px;">Print
+                Monthly</button>
+            <button class="printannualsale"
+                style="background-color: orange; color: black; border: 1px solid orange; padding: 10px 20px; border-radius: 5px;">Print
+                Annual</button>
+            <button class="printoverall"
+                style="background-color: lightcoral; color: black; border: 1px solid lightcoral; padding: 10px 20px; border-radius: 5px;">Print
+                Overall</button>
+        </div>
+
+
+
+
         <?php
         try {
             $sql_orders = "SELECT op.*, p.productname, u.username, op.totalprice
@@ -217,43 +237,45 @@ try {
                     <h3>Sales History</h3>
                 </div>
                 <?php if ($num_orders > 0): ?>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Ordered By</th>
-                                <th>Product</th>
-                                <th>Total</th>
-                                <th>Date Completed</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php while ($row = $result_orders->fetch_assoc()): ?>
-                                <tr onclick="window.location='orderdetails.php?transactionid=<?php echo $row['transactionid']; ?>';"
-                                    style="cursor: pointer;">
-                                    <td>
-                                        <p><?php echo $row['username']; ?></p>
-                                    </td>
-                                    <td>
-                                        <p><?php echo $row['productname']; ?></p>
-                                    </td>
-                                    <td>
-                                        <p><?php echo number_format($row['totalprice'], 2, '.', ','); ?></p>
-                                    </td>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Ordered By</th>
+                            <th>Product</th>
+                            <th>Total</th>
+                            <th>Date Completed</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php while ($row = $result_orders->fetch_assoc()): ?>
+                        <tr onclick="window.location='orderdetails.php?transactionid=<?php echo $row['transactionid']; ?>';"
+                            style="cursor: pointer;">
+                            <td>
+                                <p><?php echo $row['username']; ?></p>
+                            </td>
+                            <td>
+                                <p><?php echo $row['productname']; ?></p>
+                            </td>
+                            <td>
+                                <p><?php echo number_format($row['totalprice'], 2, '.', ','); ?></p>
+                            </td>
 
-                                    <td><?php echo date("d-m-Y", strtotime($row['ordercompleted'])); ?></td>
-                                    <td><span class="status completed"><?php echo $row['status']; ?></span></td>
-                                </tr>
-                            <?php endwhile; ?>
-                        </tbody>
+                            <td><?php echo date("d-m-Y", strtotime($row['ordercompleted'])); ?></td>
+                            <td><span class="status completed"><?php echo $row['status']; ?></span></td>
+                        </tr>
+                        <?php endwhile; ?>
+                    </tbody>
 
-                    </table>
+                </table>
                 <?php else: ?>
-                    <p>No recent orders</p>
+                <p>No recent orders</p>
                 <?php endif; ?>
             </div>
         </div>
     </main>
+
+
 
 
     <!-- node -->
@@ -262,7 +284,40 @@ try {
     <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
+    <script>
+    $(document).ready(function() {
+        $(".printoverall").click(function(e) {
+            e.preventDefault();
+            window.open('printoverall.php', '_blank', 'width=800,height=600');
+        });
+    });
+    </script>
+    <script>
+    $(document).ready(function() {
+        $(".printannualsale").click(function(e) {
+            e.preventDefault();
+            window.open('printannual.php', '_blank', 'width=800,height=600');
+        });
+    });
+    </script>
+    <script>
+    $(document).ready(function() {
+        $(".printmonthlysale").click(function(e) {
+            e.preventDefault();
+            window.open('printmonthly.php', '_blank', 'width=800,height=600');
+        });
+    });
+    </script>
+    <script>
+    $(document).ready(function() {
+        $(".printdailysale").click(function(e) {
+            e.preventDefault();
+            window.open('printdaily.php', '_blank', 'width=800,height=600');
+        });
+    });
+    </script>
 </body>
 
 </html>

@@ -1,0 +1,3 @@
+"userID=<?php echo $userID; ?>&productID=<?php echo $productID; ?>&quantity=<?php echo $quantity; ?>&totalPrice=<?php echo $totalPrice + $shippingFee - $discount_percentage; ?>&totalProductPrice=<?php echo $totalPrice; ?>&shippingFee=<?php echo $shippingFee; ?>&status=Pending&paymentMethod=COD&addressID=<?php echo $shippingAddress['addressid']; ?>&discount_amount=<?php echo $discount_amount; ?>&transactionID="
++
+transactionID;
